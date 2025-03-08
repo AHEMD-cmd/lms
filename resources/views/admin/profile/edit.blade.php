@@ -128,7 +128,7 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0"> </h6>
                                         </div>
-                                        <div class="col-sm-9 text-secondary">   
+                                        <div class="col-sm-9 text-secondary">
                                             <img id="showImage"
                                                 src="{{ !empty(Auth::user()->photo) ? url(Auth::user()->photo) : url('upload/no_image.jpg') }}"
                                                 alt="Admin" class="rounded-circle p-1 bg-primary" width="80">
@@ -151,6 +151,9 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
 
     <script type="text/javascript">
         $(document).ready(function() {

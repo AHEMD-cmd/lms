@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 
 
@@ -18,4 +19,7 @@ Route::middleware(['auth', 'role:admin'])
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::get('/profile/change-password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
         Route::patch('/profile/change-password', [ProfileController::class, 'changePasswordUpdate'])->name('profile.change-password.update');
+
+        ############################# Admin Category Routes #############################
+        Route::resource('categories', CategoryController::class);
     });

@@ -16,15 +16,17 @@
 
 <!-- Sweet Alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-    @if (session('success'))
+    @if (session('message'))
 
         Swal.fire({
             toast: true,
             position: 'top-end', // Position at top-right corner
             icon: 'success',
-            title: '{{ session('success') }}',
+            title: '{{ session('message') }}',
             showConfirmButton: false,
             timer: 3000, // Auto-close after 3 seconds
             timerProgressBar: true,
@@ -35,3 +37,13 @@
         });
     @endif
 </script>
+
+<!--Datatable-->
+<script src="{{ asset('assets/dashboard') }}/plugins/datatable/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('assets/dashboard') }}/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#example').DataTable();
+	  } );
+</script>
+<!--End Datatable-->

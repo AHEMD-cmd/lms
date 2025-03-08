@@ -56,7 +56,7 @@
 											@csrf
 											<div class="col-12">
 												<label for="inputEmailAddress" class="form-label">Email</label>
-												<input type="email" class="form-control" id="inputEmailAddress" placeholder="jhon@example.com" name="email">
+												<input type="email" class="form-control" id="inputEmailAddress" placeholder="jhon@example.com" name="email" value="{{ old('email') }}">
 											</div>
 											<div class="col-12">
 												<label for="inputChoosePassword" class="form-label">Password</label>

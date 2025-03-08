@@ -12,7 +12,7 @@
         <!--sidebar wrapper -->
         @include('layouts.dashboard.admin.includes._sidebar')
         <!--end sidebar wrapper -->
-        
+
         <!--start header -->
         @include('layouts.dashboard.admin.includes._header')
         <!--end header -->
@@ -222,6 +222,8 @@
     <!--end switcher-->
     <!-- Bootstrap JS -->
     @include('layouts.dashboard.admin.includes._scripts')
+
+    @yield('scripts')
 </body>
 
 </html>

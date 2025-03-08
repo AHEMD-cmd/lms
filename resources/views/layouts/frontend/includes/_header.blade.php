@@ -39,10 +39,25 @@
                         </div>
                         <ul
                             class="generic-list-item d-flex flex-wrap align-items-center fs-14 border-left border-left-gray pl-3 ml-3">
-                            <li class="d-flex align-items-center pr-3 mr-3 border-right border-right-gray"><i
-                                    class="la la-sign-in mr-1"></i><a href="{{route('login')}}"> Login</a></li>
-                            <li class="d-flex align-items-center"><i class="la la-user mr-1"></i><a
-                                    href="{{route('register')}}"> Register</a></li>
+                            @auth
+                                <li class="d-flex align-items-center pr-3 mr-3 border-right border-right-gray"><i
+                                        class="la la-dashboard mr-1"></i><a href="{{ route('dashboard') }}"> dashboard</a>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-link p-0">
+                                            <i class="la la-sign-out mr-1"></i> Logout
+                                        </button>
+                                    </form>
+                                </li>
+                            @endauth
+                            @guest
+                                <li class="d-flex align-items-center pr-3 mr-3 border-right border-right-gray"><i
+                                        class="la la-sign-in mr-1"></i><a href="{{ route('login') }}"> Login</a></li>
+                                <li class="d-flex align-items-center"><i class="la la-user mr-1"></i><a
+                                        href="{{ route('register') }}"> Register</a></li>
+                            @endguest
                         </ul>
                     </div><!-- end header-widget -->
                 </div><!-- end col-lg-6 -->
@@ -304,8 +319,7 @@
                                                                 Learning <i
                                                                     class="la la-arrow-right icon ml-1"></i></a>
                                                         </div>
-                                                        <img src="images/menu-banner-img.jpg"
-                                                            alt="menu banner image"
+                                                        <img src="images/menu-banner-img.jpg" alt="menu banner image"
                                                             class="w-100 h-100 rounded-rounded">
                                                     </div>
                                                 </li>
@@ -465,8 +479,8 @@
         </ul>
     </div><!-- end off-canvas-menu -->
     <div class="off-canvas-menu custom-scrollbar-styled category-off-canvas-menu">
-        <div class="off-canvas-menu-close cat-menu-close icon-element icon-element-sm shadow-sm"
-            data-toggle="tooltip" data-placement="left" title="Close menu">
+        <div class="off-canvas-menu-close cat-menu-close icon-element icon-element-sm shadow-sm" data-toggle="tooltip"
+            data-placement="left" title="Close menu">
             <i class="la la-times"></i>
         </div><!-- end off-canvas-menu-close -->
         <ul class="generic-list-item off-canvas-menu-list pt-90px">
