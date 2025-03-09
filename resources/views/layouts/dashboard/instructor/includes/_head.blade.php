@@ -22,6 +22,10 @@
 	<link rel="stylesheet" href="{{asset('assets/dashboard')}}/css/header-colors.css"/>
 	<!-- end inject -->
 
+	<!-- Datatable -->
+	<link href="{{asset('assets/dashboard')}}/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+	<!-- End Datatable -->
+
 	{{-- Sweet Alert --}}
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 

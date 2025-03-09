@@ -222,6 +222,7 @@
     <!--end switcher-->
     <!-- Bootstrap JS -->
     @include('layouts.dashboard.instructor.includes._scripts')
+    @yield('scripts')
 </body>
 
 </html>

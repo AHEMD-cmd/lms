@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Frontend\Instructor\StoreRequest;
+use App\Http\Requests\Frontend\Instructor\StoreInstructorRequest;
 
 class InstructorController extends Controller
 {
@@ -14,7 +14,7 @@ class InstructorController extends Controller
         return view('frontend.instructor.create');
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreInstructorRequest $request)
     {
         User::updateOrCreate(['email' => $request->email], $request->validated());
 

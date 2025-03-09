@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Category\StoreRequest;
-use App\Http\Requests\Admin\Category\UpdateRequest;
-use Illuminate\Http\Request;
 use App\Models\Category;
-use Intervention\Image\Facades\Image;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Category\StoreCategoryRequest;
+use App\Http\Requests\Admin\Category\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -23,7 +21,7 @@ class CategoryController extends Controller
         return view('admin.category.create', compact('categories'));
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreCategoryRequest $request)
     {
         $data = $request->validated();
 
@@ -42,7 +40,7 @@ class CategoryController extends Controller
         return view('admin.category.edit', compact('category', 'categories'));
     }
 
-    public function update(UpdateRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
         $data = $request->validated();
 

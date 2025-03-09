@@ -4,11 +4,9 @@
 
 @section('content')
 
-    @if (auth()->user()->status === '1')
-        <h4>Your account Is <span class="text-success">Active</span> </h4>
-    @else
+    @if (auth()->user()->status == 0)
         <h4>Your Account Is <span class="text-danger">InActive</span> </h4>
-        <p class="text-danger"><b> Please wait untill admin will     check and approve your account</b> </p>
+        <p class="text-danger"><b> Please wait untill admin will check and approve your account</b> </p>
     @endif
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
