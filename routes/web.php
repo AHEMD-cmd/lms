@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\ProfileController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\InstructorController;
 use App\Http\Controllers\Student\DashboardController;
 
 /*
@@ -17,5 +18,10 @@ use App\Http\Controllers\Student\DashboardController;
 */
 
 Route::get('/', HomeController::class);
+
+Route::get('become-instructor', [InstructorController::class, 'create'])->name('become.instructor');
+Route::post('become-instructor', [InstructorController::class, 'store'])->name('become.instructor.store');
+
+
 
 require __DIR__.'/auth.php';

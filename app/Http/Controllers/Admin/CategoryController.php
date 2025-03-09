@@ -13,10 +13,9 @@ class CategoryController extends Controller
 {
     public function index()
     {
-
         $categories = Category::tree()->get();
         return view('admin.category.index', compact('categories'));
-    } // End Method 
+    }
 
     public function create()
     {
@@ -37,10 +36,9 @@ class CategoryController extends Controller
         return redirect()->back()->with('message', 'Category created successfully');
     }
 
-
     public function edit(Category $category)
     {
-        $categories = Category::tree()->where('id', '!=', $category->id)->get()->toTree();
+        $categories = Category::tree()->where('id', '!=', $category->id)->get();
         return view('admin.category.edit', compact('category', 'categories'));
     }
 
@@ -55,9 +53,9 @@ class CategoryController extends Controller
         $category->update($data);
 
         return redirect()->back()->with('message', 'Category updated successfully');
-    } 
-    
-    
+    }
+
+
     public function destroy(Category $category)
     {
         $category->delete();

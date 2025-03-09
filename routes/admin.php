@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\InstructorController;
 
 
 
@@ -22,4 +23,7 @@ Route::middleware(['auth', 'role:admin'])
 
         ############################# Admin Category Routes #############################
         Route::resource('categories', CategoryController::class);
+
+        ############################# Admin Instructor Routes #############################
+        Route::resource('instructors', InstructorController::class)->only(['index', 'update', 'destroy']);
     });

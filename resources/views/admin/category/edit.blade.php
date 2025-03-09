@@ -48,29 +48,8 @@
                                 {{ old('parent_id', $category->parent_id) == $categoryOption->id ? 'selected' : '' }}>
                                 {{ str_repeat('—', $categoryOption->depth) }}{{ $categoryOption->name }}
                             </option>
-                            @if ($categoryOption->children->isNotEmpty())
-                                @foreach ($categoryOption->children as $child)
-                                    <option value="{{ $child->id }}"
-                                        {{ old('parent_id', $category->parent_id) == $child->id ? 'selected' : '' }}>
-                                        {{ str_repeat('—', $categoryOption->depth + 1) }}{{ $child->name }}
-                                    </option>
-                                @endforeach
-                            @endif
                         @endforeach
                     </select>
-
-                    {{-- <select name="parent_id" class="form-control" id="parent_id">
-                        <option value="">-- None --</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @if ($category->children->isNotEmpty())
-                                @foreach ($category->children as $child)
-                                    <option value="{{ $child->id }}">— {{ $child->name }}</option>
-                                @endforeach
-                            @endif
-                        @endforeach
-                    </select> --}}
-
                     @error('parent_id')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror

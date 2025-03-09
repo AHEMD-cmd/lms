@@ -4,6 +4,9 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
+
+####################### for store methods #######################
+
 if (!function_exists('uploadPhoto')) {
     function uploadPhoto(UploadedFile $photo, string $path = 'images'): string
     {
@@ -20,6 +23,8 @@ if (!function_exists('uploadEditedPhoto')) {
         return $imageUrl;
     }
 }
+
+####################### for update methods #######################
 
 if (!function_exists('updatePhoto')) {
     function updatePhoto(UploadedFile $photo, string $path = 'images', $oldPhoto = 'photo'): string
