@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Course extends Model
 {
     use HasFactory, Sluggable;
-
+    
     public function instructor()
     {
         return $this->belongsTo(User::class, 'instructor_id', 'id')->withDefault([
@@ -41,7 +42,6 @@ class Course extends Model
             ]
         ];
     }
-
     
     public static function boot()
     {
@@ -56,6 +56,16 @@ class Course extends Model
                 File::delete(public_path($course->video));
             }
         });
+    }
+
+
+    public function getVideoPathAttribute()
+    {
+        if (!$this->video) {
+            return null; 
+        }
+
+        return Storage::disk('s3')->url($this->video);
     }
 
 }

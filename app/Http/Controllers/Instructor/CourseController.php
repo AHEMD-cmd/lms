@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Instructor;
 use App\Models\Course;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Services\Instructor\Course\CourseService;
 use App\Http\Requests\Instructor\Course\StoreCourseRequest;
 use App\Http\Requests\Instructor\Course\UpdateCourseRequest;

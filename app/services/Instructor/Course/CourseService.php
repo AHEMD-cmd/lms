@@ -16,7 +16,7 @@ class CourseService
         }
 
         if ($request->file('video')) {
-            $data['video'] = uploadPhoto($request->file('video'), 'courses-video');
+            $data['video'] = uploadVideo($request->file('video'), 'courses-video');
         }
 
         $course = Course::create(Arr::except($data, ['course_goals']));
@@ -43,7 +43,7 @@ class CourseService
         }
 
         if ($request->file('video')) {
-            $data['video'] = updatePhoto($request->file('video'), 'courses-video', $course->video);
+            $data['video'] = updateVideo($request->file('video'), 'courses-video', $course->video);
         }
 
         $course->update(Arr::except($data, ['course_goals']));

@@ -24,6 +24,7 @@ Route::middleware(['auth', 'role:instructor'])
 
         ############### Instructor Course Routes ###############
         Route::resource('courses', CourseController::class);
+        Route::get('/get-video-url/{courseId}', [CourseController::class, 'getVideoUrl'])->name('get-video-url');
 
         ############### Instructor Course Sections Routes ###############
         Route::resource('courses.sections', CourseSectionController::class);

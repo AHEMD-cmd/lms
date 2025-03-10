@@ -3,6 +3,7 @@
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 
 ####################### for store methods #######################
@@ -10,7 +11,14 @@ use Intervention\Image\Facades\Image;
 if (!function_exists('uploadPhoto')) {
     function uploadPhoto(UploadedFile $photo, string $path = 'images'): string
     {
-        return 'uploads/' . $photo->store($path, 'public');
+        return $photo->store($path, 's3');
+    }
+}
+
+if (!function_exists('uploadVideo')) {
+    function uploadVideo(UploadedFile $photo, string $path = 'videos'): string
+    {
+        return $photo->store($path, 's3');
     }
 }
 
@@ -32,7 +40,18 @@ if (!function_exists('updatePhoto')) {
         if ($oldPhoto && File::exists(public_path($oldPhoto))) {
             File::delete(public_path($oldPhoto));
         }
-        return 'uploads/' . $photo->store($path, 'public');
+        return $photo->store($path, 's3');
+    }
+}
+
+if (!function_exists('updateVideo')) {
+    function updateVideo(UploadedFile $video, string $path = 'courses-video', $oldVideo = 'video')
+    {
+        if ($oldVideo && Storage::disk('s3')->exists($oldVideo)) {
+            Storage::disk('s3')->delete($oldVideo);
+        }
+
+        return $video->store($path, 's3');
     }
 }
 

@@ -40,15 +40,15 @@
         <div class="card-body p-4">
             <h5 class="mb-4">Edit Course: {{ $course->title }}</h5>
 
-            <form id="myForm" action="{{ route('instructor.courses.update', $course->id) }}" method="post" class="row g-3"
-                enctype="multipart/form-data">
+            <form id="myForm" action="{{ route('instructor.courses.update', $course->id) }}" method="post"
+                class="row g-3" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
                 <div class="form-group col-md-6">
                     <label for="name" class="form-label">Course Name <span class="text-danger">*</span></label>
-                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name"
-                        value="{{ old('name', $course->name) }}">
+                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                        id="name" value="{{ old('name', $course->name) }}">
                     @error('name')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -56,8 +56,8 @@
 
                 <div class="form-group col-md-6">
                     <label for="title" class="form-label">Course Title <span class="text-danger">*</span></label>
-                    <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title"
-                        value="{{ old('title', $course->title) }}">
+                    <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
+                        id="title" value="{{ old('title', $course->title) }}">
                     @error('title')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -65,7 +65,8 @@
 
                 <div class="form-group col-md-6">
                     <label for="image" class="form-label">Course Image <span class="text-danger">*</span></label>
-                    <input class="form-control @error('image') is-invalid @enderror" name="image" type="file" id="image">
+                    <input class="form-control @error('image') is-invalid @enderror" name="image" type="file"
+                        id="image">
                     @error('image')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -85,19 +86,25 @@
                     @enderror
                 </div>
 
-                <div class="form-group col-md-6">
-                    @if ($course->video)
-                        <video width="200" controls>
-                            <source src="{{ asset($course->video) }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    @endif
+                <div class="form-group col-md-6 d-flex align-items-center">
+                    <div class="me-3">
+                        @if ($course->video_path)
+                            <video width="200" controls id="course-video" class="rounded">
+                                <source src="{{ $course->video_path }}" type="video/mp4">
+                            </video>
+                        @endif
+                    </div>
+                    <div>
+                        <p class="mb-1">Current Video</p>
+                        <small class="text-muted">Note: The video will be replaced if you upload a new one.</small>
+                    </div>
                 </div>
 
                 <div class="form-group col-md-6">
                     <label for="category_id" class="form-label">Course Category <span class="text-danger">*</span></label>
                     <select name="category_id" id="category_id"
-                        class="form-select mb-3 @error('category_id') is-invalid @enderror" aria-label="Default select example">
+                        class="form-select mb-3 @error('category_id') is-invalid @enderror"
+                        aria-label="Default select example">
                         <option value="" disabled>Select a category</option>
                         @foreach ($categories as $cat)
                             <option value="{{ $cat->id }}"
@@ -111,12 +118,16 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="has_certificate" class="form-label">Has Certificate <span class="text-danger">*</span></label>
+                    <label for="has_certificate" class="form-label">Has Certificate <span
+                            class="text-danger">*</span></label>
                     <select name="has_certificate" id="has_certificate"
-                        class="form-select mb-3 @error('has_certificate') is-invalid @enderror" aria-label="Default select example">
+                        class="form-select mb-3 @error('has_certificate') is-invalid @enderror"
+                        aria-label="Default select example">
                         <option value="" disabled>Select one</option>
-                        <option value="1" {{ old('has_certificate', $course->has_certificate) == 1 ? 'selected' : '' }}>Yes</option>
-                        <option value="0" {{ old('has_certificate', $course->has_certificate) == 0 ? 'selected' : '' }}>No</option>
+                        <option value="1"
+                            {{ old('has_certificate', $course->has_certificate) == 1 ? 'selected' : '' }}>Yes</option>
+                        <option value="0"
+                            {{ old('has_certificate', $course->has_certificate) == 0 ? 'selected' : '' }}>No</option>
                     </select>
                     @error('has_certificate')
                         <span class="text-danger">{{ $message }}</span>
@@ -128,9 +139,12 @@
                     <select name="level" id="level" class="form-select mb-3 @error('level') is-invalid @enderror"
                         aria-label="Default select example">
                         <option value="" disabled>Select one</option>
-                        <option value="Beginner" {{ old('level', $course->level) == 'Beginner' ? 'selected' : '' }}>Beginner</option>
-                        <option value="Middle" {{ old('level', $course->level) == 'Middle' ? 'selected' : '' }}>Middle</option>
-                        <option value="Advance" {{ old('level', $course->level) == 'Advance' ? 'selected' : '' }}>Advance</option>
+                        <option value="Beginner" {{ old('level', $course->level) == 'Beginner' ? 'selected' : '' }}>
+                            Beginner</option>
+                        <option value="Middle" {{ old('level', $course->level) == 'Middle' ? 'selected' : '' }}>Middle
+                        </option>
+                        <option value="Advance" {{ old('level', $course->level) == 'Advance' ? 'selected' : '' }}>Advance
+                        </option>
                     </select>
                     @error('level')
                         <span class="text-danger">{{ $message }}</span>
@@ -139,8 +153,8 @@
 
                 <div class="form-group col-md-3">
                     <label for="price" class="form-label">Course Price <span class="text-danger">*</span></label>
-                    <input type="number" name="price" class="form-control @error('price') is-invalid @enderror" id="price"
-                        value="{{ old('price', $course->price) }}">
+                    <input type="number" name="price" class="form-control @error('price') is-invalid @enderror"
+                        id="price" value="{{ old('price', $course->price) }}">
                     @error('price')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -148,8 +162,8 @@
 
                 <div class="form-group col-md-3">
                     <label for="discount" class="form-label">Discount Price (optional)</label>
-                    <input type="number" name="discount" class="form-control @error('discount') is-invalid @enderror" id="discount"
-                        value="{{ old('discount', $course->discount) }}">
+                    <input type="number" name="discount" class="form-control @error('discount') is-invalid @enderror"
+                        id="discount" value="{{ old('discount', $course->discount) }}">
                     @error('discount')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -157,8 +171,8 @@
 
                 <div class="form-group col-md-6">
                     <label for="duration" class="form-label">Duration</label>
-                    <input type="text" name="duration" class="form-control @error('duration') is-invalid @enderror" id="duration"
-                        value="{{ old('duration', $course->duration) }}">
+                    <input type="text" name="duration" class="form-control @error('duration') is-invalid @enderror"
+                        id="duration" value="{{ old('duration', $course->duration) }}">
                     @error('duration')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -166,8 +180,8 @@
 
                 <div class="form-group col-md-6">
                     <label for="resources" class="form-label">Resources</label>
-                    <input type="text" name="resources" class="form-control @error('resources') is-invalid @enderror" id="resources"
-                        value="{{ old('resources', $course->resources) }}">
+                    <input type="text" name="resources" class="form-control @error('resources') is-invalid @enderror"
+                        id="resources" value="{{ old('resources', $course->resources) }}">
                     @error('resources')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -204,12 +218,16 @@
                                     <div class="form-group col-md-6">
                                         <label for="goals_{{ $index }}" class="form-label">Goals</label>
                                         <input type="text" name="course_goals[]" id="goals_{{ $index }}"
-                                            class="form-control" placeholder="Goals" value="{{ old('course_goals.' . $index, $goal->goal) }}">
+                                            class="form-control" placeholder="Goals"
+                                            value="{{ old('course_goals.' . $index, $goal->goal) }}">
                                     </div>
                                     <div class="form-group col-md-6" style="padding-top: 20px">
-                                        <span class="btn btn-success btn-sm add-goal"><i class="fa fa-plus-circle">Add</i></span>
-                                        @if ($index > 0) <!-- Allow removal of additional goals -->
-                                            <span class="btn btn-danger btn-sm remove-goal"><i class="fa fa-minus-circle">Remove</i></span>
+                                        <span class="btn btn-success btn-sm add-goal"><i
+                                                class="fa fa-plus-circle">Add</i></span>
+                                        @if ($index > 0)
+                                            <!-- Allow removal of additional goals -->
+                                            <span class="btn btn-danger btn-sm remove-goal"><i
+                                                    class="fa fa-minus-circle">Remove</i></span>
                                         @endif
                                     </div>
                                 </div>
@@ -256,24 +274,24 @@
     </div>
 
     <!-- Hidden template for adding new goals -->
-    
-        <div class="whole_extra_item_add" id="whole_extra_item_add" style="visibility: hidden">
-            <div class="whole_extra_item_delete" id="whole_extra_item_delete">
-                <div class="container mt-2">
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="goals">Goals</label>
-                            <input type="text" name="course_goals[]" id="goals" class="form-control"
-                                placeholder="Goals">
-                        </div>
-                        <div class="form-group col-md-6" style="padding-top: 20px">
-                            <span class="btn btn-success btn-sm add-goal"><i class="fa fa-plus-circle">Add</i></span>
-                            <span class="btn btn-danger btn-sm remove-goal"><i class="fa fa-minus-circle">Remove</i></span>
-                        </div>
+
+    <div class="whole_extra_item_add" id="whole_extra_item_add" style="visibility: hidden">
+        <div class="whole_extra_item_delete" id="whole_extra_item_delete">
+            <div class="container mt-2">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="goals">Goals</label>
+                        <input type="text" name="course_goals[]" id="goals" class="form-control"
+                            placeholder="Goals">
+                    </div>
+                    <div class="form-group col-md-6" style="padding-top: 20px">
+                        <span class="btn btn-success btn-sm add-goal"><i class="fa fa-plus-circle">Add</i></span>
+                        <span class="btn btn-danger btn-sm remove-goal"><i class="fa fa-minus-circle">Remove</i></span>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 @endsection
 
