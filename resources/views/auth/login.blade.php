@@ -48,12 +48,12 @@
                             <form method="post" class="pt-4" action="{{ route('login') }}">
                                 @csrf
                                 <div class="d-flex flex-wrap align-items-center pb-4">
-                                    <button class="btn theme-btn flex-grow-1 mx-2 mb-2"><i
-                                            class="la la-google mr-2"></i>Google</button>
-                                    <button class="btn theme-btn flex-grow-1 mx-2 mb-2"><i
-                                            class="la la-facebook mr-2"></i>Facebook</button>
-                                    <button class="btn theme-btn flex-grow-1 mx-2 mb-2"><i
-                                            class="la la-twitter mr-2"></i>Twitter</button>
+                                    <a href="{{ route('auth.redirect', 'google') }}" class="btn theme-btn flex-grow-1 mx-2 mb-2"><i
+                                            class="la la-google mr-2"></i>Google</a>
+                                    <a href="{{ route('auth.redirect', 'facebook') }}" class="btn theme-btn flex-grow-1 mx-2 mb-2"><i
+                                            class="la la-facebook mr-2"></i>Facebook</a>
+                                    <a href="{{ route('auth.redirect', 'twitter') }}" class="btn theme-btn flex-grow-1 mx-2 mb-2"><i
+                                            class="la la-twitter mr-2"></i>Twitter</a>
                                 </div>
                                 <div class="text-center pt-3 pb-4">
                                     <div class="icon-element icon-element-md fs-25 shadow-sm">Or</div>
@@ -69,7 +69,7 @@
                                 @endif
 
                                 <div class="input-box">
-                                    <label class="label-text">Email or Username</label>
+                                    <label class="label-text">Email</label>
                                     <div class="form-group">
                                         <input class="form-control form--control" type="text" name="email"
                                             placeholder="Email or Username" value="{{ old('email') }}">

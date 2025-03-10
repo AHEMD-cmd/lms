@@ -5,6 +5,7 @@ use App\Http\Controllers\Student\ProfileController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\InstructorController;
 use App\Http\Controllers\Student\DashboardController;
+use App\Http\Controllers\Frontend\SocialLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,5 +24,7 @@ Route::get('become-instructor', [InstructorController::class, 'create'])->name('
 Route::post('become-instructor', [InstructorController::class, 'store'])->name('become.instructor.store');
 
 
+Route::get('/auth/{provider}/redirect', [SocialLoginController::class, 'redirectToProvider'])->name('auth.redirect');
+Route::get('/auth/{provider}/callback', [SocialLoginController::class, 'handleProviderCallback'])->name('auth.callback');
 
 require __DIR__.'/auth.php';
