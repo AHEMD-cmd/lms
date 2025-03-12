@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Student\ProfileController;
 use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Frontend\InstructorController;
+use App\Http\Controllers\Frontend\CourseController;
+use App\Http\Controllers\Student\ProfileController;
+use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Student\DashboardController;
+use App\Http\Controllers\Frontend\InstructorController;
 use App\Http\Controllers\Frontend\SocialLoginController;
 
 /*
@@ -17,14 +19,24 @@ use App\Http\Controllers\Frontend\SocialLoginController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+require __DIR__.'/auth.php';
 
-Route::get('/', HomeController::class);
+Route::get('/', HomeController::class)->name('home');
 
+############################### Become Instructor Routes ################################
 Route::get('become-instructor', [InstructorController::class, 'create'])->name('become.instructor');
 Route::post('become-instructor', [InstructorController::class, 'store'])->name('become.instructor.store');
 
-
+############################### Social Media Auth Routes ################################
 Route::get('/auth/{provider}/redirect', [SocialLoginController::class, 'redirectToProvider'])->name('auth.redirect');
 Route::get('/auth/{provider}/callback', [SocialLoginController::class, 'handleProviderCallback'])->name('auth.callback');
 
-require __DIR__.'/auth.php';
+############################### Courses Routes ################################
+Route::resource('courses', CourseController::class)->only(['index', 'show']);
+
+############################### Categories Routes ################################
+Route::resource('categories', CategoryController::class)->only(['index', 'show']);
+
+############################### Instructor Page Routes ################################
+Route::resource('instructors', InstructorController::class)->only(['show']);
+

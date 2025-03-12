@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Instructor\ProfileController;
-use App\Http\Controllers\Instructor\DashboardController;
+use App\Http\Controllers\Student\DashboardController;
 
 
 

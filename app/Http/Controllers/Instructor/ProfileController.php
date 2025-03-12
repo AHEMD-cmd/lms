@@ -24,7 +24,7 @@ class ProfileController extends Controller
         $data = $request->validated();
 
         if ($request->file('photo')) {
-            $data['photo'] = updatePhoto($request->file('photo'), 'admin', Auth::user()->photo);
+            $data['photo'] = updatePhoto($request->file('photo'), 'instructors', Auth::user()->photo);
         }
 
         Auth::user()->update($data);

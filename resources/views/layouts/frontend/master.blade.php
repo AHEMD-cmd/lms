@@ -43,7 +43,7 @@
 
     @include('layouts.frontend.includes._scripts')
 
-    @yield('scripts')
+    @stack('scripts')
 </body>
 
 </html>

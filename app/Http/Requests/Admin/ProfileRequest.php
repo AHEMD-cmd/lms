@@ -26,6 +26,7 @@ class ProfileRequest extends FormRequest
             'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
+            'instructor_description' => 'nullable|string|max:1000',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
         ];
     }

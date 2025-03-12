@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 if (!function_exists('uploadPhoto')) {
     function uploadPhoto(UploadedFile $photo, string $path = 'images'): string
     {
-        return $photo->store($path, 's3');
+        return 'uploads/' . $photo->store($path, 'public');
     }
 }
 
@@ -40,7 +40,7 @@ if (!function_exists('updatePhoto')) {
         if ($oldPhoto && File::exists(public_path($oldPhoto))) {
             File::delete(public_path($oldPhoto));
         }
-        return $photo->store($path, 's3');
+        return 'uploads/' . $photo->store($path, 'public');
     }
 }
 

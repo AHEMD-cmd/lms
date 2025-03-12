@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Course extends Model
 {
     use HasFactory, Sluggable;
-    
+
     public function instructor()
     {
         return $this->belongsTo(User::class, 'instructor_id', 'id')->withDefault([
@@ -34,6 +34,11 @@ class Course extends Model
         return $this->hasMany(CourseSection::class)->with('lectures');
     }
 
+    public function lectures()
+    {
+        return $this->hasMany(Lecture::class);
+    }
+
     public function sluggable(): array
     {
         return [
@@ -42,7 +47,7 @@ class Course extends Model
             ]
         ];
     }
-    
+
     public static function boot()
     {
         parent::boot();
@@ -53,7 +58,7 @@ class Course extends Model
             }
 
             if ($course->video) {
-                File::delete(public_path($course->video));
+                Storage::disk('s3')->delete($course->video);
             }
         });
     }
@@ -62,10 +67,19 @@ class Course extends Model
     public function getVideoPathAttribute()
     {
         if (!$this->video) {
-            return null; 
+            return null;
         }
 
         return Storage::disk('s3')->url($this->video);
     }
 
+    public function getDiscountPercentageAttribute()
+    {
+        return $this->discount ? round((($this->price - $this->discount) / $this->price) * 100, 0) : null;
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

@@ -20,6 +20,11 @@ class Category extends Model
             ]
         ];
     }
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
     
     protected static function boot()
     {
@@ -30,6 +35,11 @@ class Category extends Model
                 File::delete(public_path($category->image));
             }
         });
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 
 }

@@ -2,6 +2,15 @@
 
 @section('title', 'Instructor Profile')
 
+@section('css')
+    <style>
+        /* Optional: Sezt editor height */
+        .ck-editor__editable {
+            min-height: 200px;
+        }
+    </style>
+@endsection
+
 @section('content')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
@@ -26,7 +35,7 @@
         <div class="container">
             <div class="main-body">
                 <div class="row">
-                    <div class="col-lg-4">
+                    {{-- <div class="col-lg-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
@@ -58,11 +67,12 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-8">
+                    </div> --}}
+                    <div class="col-lg-12">
                         <div class="card">
 
-                            <form method="POST" action="{{ route('instructor.profile.update') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('instructor.profile.update') }}"
+                                enctype="multipart/form-data">
                                 @csrf
                                 @method('patch')
                                 <div class="card-body">
@@ -114,6 +124,18 @@
                                             <div class="text-danger text-end">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">About you</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <textarea type="text" name="instructor_description" class="form-control" id="editor">
+                                                {{ Auth::user()->instructor_description }}</textarea>
+                                        </div>
+                                        @error('instructor_description')
+                                            <div class="text-danger text-end">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
@@ -128,7 +150,7 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0"> </h6>
                                         </div>
-                                        <div class="col-sm-9 text-secondary">   
+                                        <div class="col-sm-9 text-secondary">
                                             <img id="showImage"
                                                 src="{{ !empty(Auth::user()->photo) ? url(Auth::user()->photo) : url('upload/no_image.jpg') }}"
                                                 alt="instructor" class="rounded-circle p-1 bg-primary" width="80">
@@ -152,6 +174,11 @@
         </div>
     </div>
 
+
+@endsection
+
+@section('scripts')
+    {{-- image preview --}}
     <script type="text/javascript">
         $(document).ready(function() {
             $('#image').change(function(e) {
@@ -163,5 +190,12 @@
             });
         });
     </script>
+    {{-- end image preview --}}
 
+    <!--========== For Description Section  ===========-->
+    <script>
+        ClassicEditor.create(document.querySelector('#editor'))
+    </script>
+
+    <!--========== End of For Description Section  ===========-->
 @endsection

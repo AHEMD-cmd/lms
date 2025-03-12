@@ -10,33 +10,37 @@
  <script src="{{ asset('assets/frontend') }}/js/datedropper.min.js"></script>
  <script src="{{ asset('assets/frontend') }}/js/emojionearea.min.js"></script>
  <script src="{{ asset('assets/frontend') }}/js/tooltipster.bundle.min.js"></script>
+ <script src="{{ asset('assets/frontend') }}/js/plyr.js"></script>
  <script src="{{ asset('assets/frontend') }}/js/jquery.lazy.min.js"></script>
  <script src="{{ asset('assets/frontend') }}/js/main.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+ <script>
+     var player = new Plyr('#player');
+ </script>
 
  @section('scripts')
      <script>
          @if (session('message'))
              Swal.fire({
                  toast: true,
-                 position: 'top-end', 
+                 position: 'top-end',
                  icon: 'success',
                  title: "{{ session('message') }}",
                  showConfirmButton: false,
-                 timer: 3000 
+                 timer: 3000
              });
          @endif
 
-        //  @if ($errors->any())
-        //      Swal.fire({
-        //          toast: true,
-        //          position: 'top-end', 
-        //          icon: 'error',
-        //          title: "{{ $errors->first() }}",
-        //          showConfirmButton: false,
-        //          timer: 3000 
-        //      });
-        //  @endif
+         //  @if ($errors->any())
+         //      Swal.fire({
+         //          toast: true,
+         //          position: 'top-end', 
+         //          icon: 'error',
+         //          title: "{{ $errors->first() }}",
+         //          showConfirmButton: false,
+         //          timer: 3000 
+         //      });
+         //  @endif
      </script>
  @endsection

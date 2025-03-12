@@ -23,4 +23,11 @@ class InstructorController extends Controller
             'message' => 'Instructor created successfully'
         ], 201);
     }
+
+    public function show(User $instructor)
+    {
+        $instructor->load('courses');
+        $courses = $instructor->courses;
+        return view('frontend.instructor.show', compact('instructor', 'courses'));
+    }
 }
