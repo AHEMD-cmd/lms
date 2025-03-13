@@ -286,7 +286,7 @@
                                                     <span class="dot-status bg-1"></span>
                                                 </p>
                                                 <ul class="cart-dropdown-menu after-none header-wishlist">
-                                                    @include('frontend.home.includes.header-wishlist', ['wishlistedCourses' => $wishlistedCourses])
+                                                    @include('frontend.partials.header-wishlist')
                                                 </ul>
                                             </li>
                                         </ul>

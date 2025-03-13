@@ -24,7 +24,7 @@ class WishListController extends Controller
         return response([
             'status' => 'success',
             'message' => 'Course added to wish list successfully',
-            'wishlistedCourses' => view('frontend.home.includes.header-wishlist')->with('wishlistedCourses', $request->user()->wishList)->render(),
+            'wishlistedCourses' => view('frontend.partials.header-wishlist')->with('wishlistedCourses', $request->user()->wishList)->render(),
         ], 200);
     }
 }

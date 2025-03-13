@@ -714,7 +714,7 @@
                         class="text-color hover-underline">{{ $course->instructor->name }}</a></h3>
                 <div class="view-more-carousel-2 owl-action-styled">
 
-                    @foreach ($course->instructor->courses as $course)
+                    @foreach ($course->instructor->courses->take(6) as $course)
                         <div class="card card-item">
                             <div class="card-image">
                                 <a href="course-details.html" class="d-block">
