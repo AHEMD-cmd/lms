@@ -3,11 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\CourseController;
-use App\Http\Controllers\Student\ProfileController;
 use App\Http\Controllers\Frontend\CategoryController;
-use App\Http\Controllers\Student\DashboardController;
+use App\Http\Controllers\Frontend\WishListController;
 use App\Http\Controllers\Frontend\InstructorController;
-use App\Http\Controllers\Frontend\SocialLoginController;
+use App\Http\Controllers\Frontend\SocialAuthController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +28,8 @@ Route::get('become-instructor', [InstructorController::class, 'create'])->name('
 Route::post('become-instructor', [InstructorController::class, 'store'])->name('become.instructor.store');
 
 ############################### Social Media Auth Routes ################################
-Route::get('/auth/{provider}/redirect', [SocialLoginController::class, 'redirectToProvider'])->name('auth.redirect');
-Route::get('/auth/{provider}/callback', [SocialLoginController::class, 'handleProviderCallback'])->name('auth.callback');
+Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirectToProvider'])->name('auth.redirect');
+Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('auth.callback');
 
 ############################### Courses Routes ################################
 Route::resource('courses', CourseController::class)->only(['index', 'show']);
@@ -39,4 +39,10 @@ Route::resource('categories', CategoryController::class)->only(['index', 'show']
 
 ############################### Instructor Page Routes ################################
 Route::resource('instructors', InstructorController::class)->only(['show']);
+
+Route::middleware('auth')->group(function () {
+    ############################### Wish List Routes ################################
+    Route::get('wish-list', [WishListController::class, 'index'])->name('wish.list.index');
+    Route::post('wish-list/{course}', [WishListController::class, 'store'])->name('wish.list.store');
+});
 

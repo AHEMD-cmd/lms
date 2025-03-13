@@ -23,3 +23,4 @@ class CourseController extends Controller
         return view('frontend.courses.show', compact('course', 'relatedCourses'));
     }
 }
+

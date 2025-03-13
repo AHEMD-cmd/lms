@@ -52,13 +52,13 @@
                                 <td>
                                     <div class="form-check-danger form-check form-switch">
                                         <input class="form-check-input status-toggle large-checkbox" type="checkbox"
-                                            id="status-{{ $instructor->id }}" data-instructor-id="{{ $instructor->id }}"
+                                            id="status-{{ $instructor->id }}" data-instructor-slug="{{ $instructor->slug }}"
                                             {{ $instructor->status ? 'checked' : '' }}>
                                         <label class="form-check-label" for="status-{{ $instructor->id }}"></label>
                                     </div>
                                 </td>
                                 <td>
-                                    <form action="{{ route('admin.instructors.destroy', $instructor->id) }}" method="POST"
+                                    <form action="{{ route('admin.instructors.destroy', $instructor->slug) }}" method="POST"
                                         class="delete-form">
                                         @csrf
                                         @method('DELETE')
@@ -84,13 +84,13 @@
         $(document).ready(function() {
             $('.status-toggle').on('change', function() {
                 let checkbox = $(this);
-                let instructorId = checkbox.data('instructor-id');
+                let instructorSlug = checkbox.data('instructor-slug');
                 let status = checkbox.is(':checked') ? 1 : 0; // 1 for checked, 0 for unchecked
 
                 // Send AJAX request
                 $.ajax({
-                    url: '{{ route('admin.instructors.update', ':id') }}'.replace(':id',
-                        instructorId),
+                    url: '{{ route('admin.instructors.update', ':slug') }}'.replace(':slug',
+                        instructorSlug),
                     type: 'PUT', // Use PUT for updates
                     data: {
                         status: status,

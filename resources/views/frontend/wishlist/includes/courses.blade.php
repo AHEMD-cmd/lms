@@ -80,7 +80,8 @@
 
                                                     <div class="icon-element icon-element-sm shadow-sm cursor-pointer wishlist"
                                                         data-id="{{ $course->id }}" title="Add to Wishlist">
-                                                        <i class="la la-heart{{ auth()->user()->wishList->contains($course->id) ? '' : '-o' }}"></i>
+                                                        <i
+                                                            class="la la-heart{{ auth()->user()->wishList->contains($course->id) ? '' : '-o' }}"></i>
                                                     </div>
                                                 @endauth
                                             </div>
@@ -131,8 +132,6 @@
                             } else {
                                 $icon.removeClass('la-heart').addClass('la-heart-o');
                             }
-                            $('.header-wishlist').html(response.wishlistedCourses);
-                            
                         }
                     },
                     error: function(xhr) {

@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return 'slug';
     }
+
+    public function wishList()
+    {
+        return $this->belongsToMany(Course::class, 'wish_lists', 'user_id', 'course_id');
+    }
 }

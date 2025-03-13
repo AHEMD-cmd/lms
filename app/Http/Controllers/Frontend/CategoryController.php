@@ -15,6 +15,7 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         $category->load('courses');
-        return view('frontend.categories.show', compact('category'));
+        $courses = $category->courses()->paginate(1);
+        return view('frontend.categories.show', compact('category', 'courses'));
     }
 }

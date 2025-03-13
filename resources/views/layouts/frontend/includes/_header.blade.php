@@ -98,11 +98,13 @@
                                         <ul class="cat-dropdown-menu">
                                             @foreach ($categoriesTree as $category)
                                                 <li>
-                                                    <a href="{{route('categories.show', $category->slug)}}">{{ $category->name }} <i
-                                                            class="la la-angle-right"></i></a>
+                                                    <a href="{{ route('categories.show', $category->slug) }}">{{ $category->name }}
+                                                        <i class="la la-angle-right"></i></a>
                                                     <ul class="sub-menu">
                                                         @foreach ($category->children as $child)
-                                                            <li><a href="{{route('categories.show', $child->slug)}}">{{ $child->name }}</a></li>
+                                                            <li><a
+                                                                    href="{{ route('categories.show', $child->slug) }}">{{ $child->name }}</a>
+                                                            </li>
                                                         @endforeach
                                                     </ul>
                                                 </li>
@@ -113,7 +115,7 @@
                                 </ul>
                             </div><!-- end menu-category -->
                             <form method="post">
-                                  <div class="form-group mb-0">
+                                <div class="form-group mb-0">
                                     <input class="form-control form--control pl-3" type="text" name="search"
                                         placeholder="Search for anything">
                                     <span class="la la-search search-icon"></span>
@@ -121,7 +123,7 @@
                             </form>
                             <nav class="main-menu">
                                 <ul>
-                                    <li>
+                                    {{-- <li>
                                         <a href="#">Home <i class="la la-angle-down fs-12"></i></a>
                                         <ul class="dropdown-menu-item">
                                             <li><a href="index.html">Home One</a></li>
@@ -129,7 +131,7 @@
                                             <li><a href="home-3.html">Home Three</a></li>
                                             <li><a href="home-4.html">Home four</a></li>
                                         </ul>
-                                    </li>
+                                    </li> --}}
                                     <li>
                                         <a href="#">courses <i class="la la-angle-down fs-12"></i></a>
                                         <ul class="dropdown-menu-item">
@@ -226,21 +228,22 @@
                                     </li>
                                 </ul><!-- end ul -->
                             </nav><!-- end main-menu -->
-                            <div class="shop-cart mr-4">
+
+                            <div class="shop-cart pr-3 mr-3 ">
                                 <ul>
                                     <li>
                                         <p class="shop-cart-btn d-flex align-items-center">
-                                            <i class="la la-shopping-cart"></i>
-                                            <span class="product-count">2</span>
+                                            <i class="la la-shopping-cart fs-22"></i>
+                                            <span class="dot-status bg-1"></span>
                                         </p>
-                                        <ul class="cart-dropdown-menu">
+                                        <ul class="cart-dropdown-menu after-none">
                                             <li class="media media-card">
                                                 <a href="shopping-cart.html" class="media-img">
-                                                    <img src="images/small-img.jpg" alt="Cart image">
+                                                    <img class="mr-3" src="images/small-img.jpg" alt="Cart image">
                                                 </a>
                                                 <div class="media-body">
-                                                    <h5><a href="course-details.html">The Complete JavaScript
-                                                            Course 2021: From Zero to Expert!</a></h5>
+                                                    <h5><a href="shopping-cart.html">The Complete JavaScript Course
+                                                            2021: From Zero to Expert!</a></h5>
                                                     <span class="d-block lh-18 py-1">Kamran Ahmed</span>
                                                     <p class="text-black font-weight-semi-bold lh-18">$12.99 <span
                                                             class="before-price fs-14">$129.99</span></p>
@@ -248,11 +251,11 @@
                                             </li>
                                             <li class="media media-card">
                                                 <a href="shopping-cart.html" class="media-img">
-                                                    <img src="images/small-img.jpg" alt="Cart image">
+                                                    <img class="mr-3" src="images/small-img.jpg" alt="Cart image">
                                                 </a>
                                                 <div class="media-body">
-                                                    <h5><a href="course-details.html">The Complete JavaScript
-                                                            Course 2021: From Zero to Expert!</a></h5>
+                                                    <h5><a href="shopping-cart.html">The Complete JavaScript Course
+                                                            2021: From Zero to Expert!</a></h5>
                                                     <span class="d-block lh-18 py-1">Kamran Ahmed</span>
                                                     <p class="text-black font-weight-semi-bold lh-18">$12.99 <span
                                                             class="before-price fs-14">$129.99</span></p>
@@ -266,13 +269,31 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <a href="shopping-cart.html" class="btn theme-btn w-100">Got to
-                                                    cart <i class="la la-arrow-right icon ml-1"></i></a>
+                                                <a href="shopping-cart.html" class="btn theme-btn w-100">Got to cart
+                                                    <i class="la la-arrow-right icon ml-1"></i></a>
                                             </li>
                                         </ul>
                                     </li>
                                 </ul>
                             </div><!-- end shop-cart -->
+                            @auth
+                                <a href="{{route('wish.list.index')}}">
+                                    <div class="shop-cart wishlist-cart pr-3 mr-3 ">
+                                        <ul>
+                                            <li>
+                                                <p class="shop-cart-btn">
+                                                    <i class="la la-heart-o"></i>
+                                                    <span class="dot-status bg-1"></span>
+                                                </p>
+                                                <ul class="cart-dropdown-menu after-none header-wishlist">
+                                                    @include('frontend.home.includes.header-wishlist', ['wishlistedCourses' => $wishlistedCourses])
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div><!-- end shop-cart -->
+                                </a>
+                            @endauth
+
                             <div class="nav-right-button">
                                 <a href="admission.html" class="btn theme-btn d-none d-lg-inline-block"><i
                                         class="la la-user-plus mr-1"></i> Admission</a>
