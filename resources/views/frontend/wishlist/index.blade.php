@@ -5,8 +5,8 @@
 @section('content')
 
     <!-- ================================
-                START BREADCRUMB AREA
-            ================================= -->
+                    START BREADCRUMB AREA
+                ================================= -->
     <section class="breadcrumb-area py-5 bg-white pattern-bg">
         <div class="container">
             <div class="breadcrumb-content">
@@ -43,12 +43,12 @@
         </div><!-- end container -->
     </section><!-- end breadcrumb-area -->
     <!-- ================================
-                    END BREADCRUMB AREA
-                ================================= -->
+                        END BREADCRUMB AREA
+                    ================================= -->
 
     <!-- ================================
-                       START MY COURSES
-                ================================= -->
+                           START MY COURSES
+                    ================================= -->
     <section class="my-courses-area pt-30px pb-90px">
         <div class="container">
             <div class="my-course-content-wrap">
@@ -1466,14 +1466,17 @@
                                                             <div class="course-badge">Bestseller</div>
                                                         @endif
                                                         @if ($course->discount)
-                                                            <div class="course-badge blue">-{{ $course->discount_percentage }}%</div>
+                                                            <div class="course-badge blue">
+                                                                -{{ $course->discount_percentage }}%</div>
                                                         @endif
                                                     </div>
                                                 </div><!-- end card-image -->
                                                 <div class="card-body">
                                                     <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">{{ $course->level }}</h6>
-                                                    <h5 class="card-title"><a href="course-details.html">{{ $course->title }}</a></h5>
-                                                    <p class="card-text"><a href="teacher-detail.html">{{ $course->instructor->name }}</a>
+                                                    <h5 class="card-title"><a
+                                                            href="course-details.html">{{ $course->title }}</a></h5>
+                                                    <p class="card-text"><a
+                                                            href="teacher-detail.html">{{ $course->instructor->name }}</a>
                                                     </p>
                                                     <div class="rating-wrap d-flex align-items-center py-2">
                                                         <div class="review-stars">
@@ -1488,14 +1491,20 @@
                                                     </div><!-- end rating-wrap -->
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         @if ($course->discount)
-                                                            <p class="card-price text-black font-weight-bold">{{ $course->discount }}<span
-                                                                    class="before-price font-weight-medium">{{ $course->price }}</span></p>
+                                                            <p class="card-price text-black font-weight-bold">
+                                                                {{ $course->discount }}<span
+                                                                    class="before-price font-weight-medium">{{ $course->price }}</span>
+                                                            </p>
                                                         @else
-                                                            <p class="card-price text-black font-weight-bold">12.99</p>
+                                                            <p class="card-price text-black font-weight-bold">{{ $course->price }}</p>
                                                         @endif
-                                                        <div class="icon-element icon-element-sm shadow-sm cursor-pointer"
-                                                            title="Remove from Wishlist"><i class="la la-heart"></i>
-                                                        </div>
+                                                        @auth
+                                                            <div class="icon-element icon-element-sm shadow-sm cursor-pointer wishlist"
+                                                                data-id="{{ $course->id }}" title="Add to Wishlist">
+                                                                <i
+                                                                    class="la la-heart{{ auth()->user()->wishList->contains($course->id) ? '' : '-o' }}"></i>
+                                                            </div>
+                                                        @endauth
                                                     </div>
                                                 </div><!-- end card-body -->
                                             </div><!-- end card -->
@@ -1778,12 +1787,12 @@
         </div><!-- end container -->
     </section><!-- end my-courses-area -->
     <!-- ================================
-                       START MY COURSES
-                ================================= -->
+                           START MY COURSES
+                    ================================= -->
 
     <!--======================================
-                        START CTA AREA
-                ======================================-->
+                            START CTA AREA
+                    ======================================-->
     <section class="cta-area py-5 bg-gray position-relative overflow-hidden">
         <span class="stroke-shape stroke-shape-1"></span>
         <span class="stroke-shape stroke-shape-2"></span>
@@ -1814,8 +1823,8 @@
         </div><!-- end container -->
     </section><!-- end cta-area -->
     <!--======================================
-                        END CTA AREA
-                ======================================-->
+                            END CTA AREA
+                    ======================================-->
 
 @endsection
 

@@ -39,6 +39,7 @@ class WishListController extends Controller
         return response([
             'status' => 'success',
             'message' => 'Course removed from wish list successfully',
+            'wishlistedCoursesNumber' => $request->user()->wishList->count(),
             'wishlistedCourses' => view('frontend.partials.header-wishlist')->with('wishlistedCourses', $request->user()->wishList)->render(),
         ], 200);
     }

@@ -528,7 +528,7 @@
                                         <div class="preview-course-video-content">
                                             <div class="overlay"></div>
                                             <div class="play-button">
-                                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                                <svg versi  on="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                                                     viewBox="-307.4 338.8 91.8 91.8"
                                                     style=" enable-background:new -307.4 338.8 91.8 91.8;"
                                                     xml:space="preserve">
