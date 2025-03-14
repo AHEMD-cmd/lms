@@ -27,4 +27,19 @@ class WishListController extends Controller
             'wishlistedCourses' => view('frontend.partials.header-wishlist')->with('wishlistedCourses', $request->user()->wishList)->render(),
         ], 200);
     }
+
+    public function destroy(Request $request)
+    {
+        $request->validate([
+            'course_id' => 'required|exists:courses,id',
+        ]);
+
+        $request->user()->wishList()->toggle($request->course_id);
+
+        return response([
+            'status' => 'success',
+            'message' => 'Course removed from wish list successfully',
+            'wishlistedCourses' => view('frontend.partials.header-wishlist')->with('wishlistedCourses', $request->user()->wishList)->render(),
+        ], 200);
+    }
 }

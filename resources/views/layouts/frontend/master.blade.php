@@ -35,7 +35,7 @@
     <!-- ================================
                  END FOOTER AREA
             ================================= -->
-    @include('frontend.home.includes.footer-area')
+    @include('layouts.frontend.includes._footer')
     <!-- end footer-area -->
     <!-- ================================
                   END FOOTER AREA

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Cart;
 use App\Models\Course;
 use App\Models\Category;
 use Illuminate\Pagination\Paginator;
@@ -43,6 +44,11 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $wishlistedCourses = Auth::check() ? auth()->user()->wishList : [];
             $view->with('wishlistedCourses', $wishlistedCourses);
+        });
+
+        View::composer('*', function ($view) {
+            $cartItems = Cart::bySessionId()->get();
+            $view->with('cartItems', $cartItems);
         });
     }
 }

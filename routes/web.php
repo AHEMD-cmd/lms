@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\CourseController;
 use App\Http\Controllers\Frontend\CategoryController;
@@ -40,9 +41,13 @@ Route::resource('categories', CategoryController::class)->only(['index', 'show']
 ############################### Instructor Page Routes ################################
 Route::resource('instructors', InstructorController::class)->only(['show']);
 
+############################### Cart Routes ################################
+Route::resource('carts', CartController::class)->only(['index', 'store', 'destroy']);
+
 Route::middleware('auth')->group(function () {
     ############################### Wish List Routes ################################
     Route::get('wish-list', [WishListController::class, 'index'])->name('wish.list.index');
     Route::post('wish-list/{course}', [WishListController::class, 'store'])->name('wish.list.store');
+    Route::delete('wish-list/{course}', [WishListController::class, 'destroy'])->name('wish.list.destroy');
 });
 

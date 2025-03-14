@@ -1,6 +1,6 @@
 @extends('layouts.frontend.master')
 
-@section('title', 'Become Instructor')
+@section('title', $category->name)
 
 @section('content')
 

@@ -13,14 +13,14 @@
                     </ul>
                     <h3 class="fs-20 font-weight-semi-bold pt-4 pb-2">We are on</h3>
                     <ul class="social-icons social-icons-styled">
-                        <li class="mr-1"><a href="#" class="facebook-bg"><i
-                                    class="la la-facebook"></i></a></li>
-                        <li class="mr-1"><a href="#" class="twitter-bg"><i
-                                    class="la la-twitter"></i></a></li>
-                        <li class="mr-1"><a href="#" class="instagram-bg"><i
-                                    class="la la-instagram"></i></a></li>
-                        <li class="mr-1"><a href="#" class="linkedin-bg"><i
-                                    class="la la-linkedin"></i></a></li>
+                        <li class="mr-1"><a href="#" class="facebook-bg"><i class="la la-facebook"></i></a>
+                        </li>
+                        <li class="mr-1"><a href="#" class="twitter-bg"><i class="la la-twitter"></i></a>
+                        </li>
+                        <li class="mr-1"><a href="#" class="instagram-bg"><i class="la la-instagram"></i></a>
+                        </li>
+                        <li class="mr-1"><a href="#" class="linkedin-bg"><i class="la la-linkedin"></i></a>
+                        </li>
                     </ul>
                 </div><!-- end footer-item -->
             </div><!-- end col-lg-3 -->
@@ -31,7 +31,7 @@
                     <ul class="generic-list-item">
                         <li><a href="#">About us</a></li>
                         <li><a href="#">Contact us</a></li>
-                        <li><a href="#">Become a Teacher</a></li>
+                        <li><a href="{{ route('become.instructor') }}">Become a Teacher</a></li>
                         <li><a href="#">Support</a></li>
                         <li><a href="#">FAQs</a></li>
                         <li><a href="#">Blog</a></li>
@@ -58,8 +58,8 @@
                     <span class="section-divider section--divider"></span>
                     <div class="mobile-app">
                         <p class="pb-3 lh-24">Download our mobile app and learn on the go.</p>
-                        <a href="#" class="d-block mb-2 hover-s"><img src="images/appstore.png"
-                                alt="App store" class="img-fluid"></a>
+                        <a href="#" class="d-block mb-2 hover-s"><img src="images/appstore.png" alt="App store"
+                                class="img-fluid"></a>
                         <a href="#" class="d-block hover-s"><img src="images/googleplay.png"
                                 alt="Google play store" class="img-fluid"></a>
                     </div>
@@ -109,3 +109,58 @@
         </div><!-- end container -->
     </div><!-- end copyright-content -->
 </section>
+
+
+
+
+<!-- start scroll top -->
+<div id="scroll-top">
+    <i class="la la-arrow-up" title="Go top"></i>
+</div>
+<!-- end scroll top -->
+@foreach ($categories as $category)
+    @foreach ($category->courses->take(6)->shuffle() as $course)
+        <div class="tooltip_templates">
+            <div id="tooltip_content_{{ $course->id }}">
+                <div class="card card-item">
+                    <div class="card-body">
+                        <p class="card-text pb-2">By <a href="teacher-detail.html">{{ $course->instructor->name }}</a>
+                        </p>
+                        <h5 class="card-title pb-1"><a href="course-details.html">{{ $course->name }}</a></h5>
+                        <div class="d-flex align-items-center pb-1">
+                            @if ($course->bestseller)
+                                <h6 class="ribbon fs-14 mr-2"> Bestseller </h6>
+                            @endif
+                            <p class="text-success fs-14 font-weight-medium">Updated<span
+                                    class="font-weight-bold pl-1">{{ $course->updated_at->format('j F Y ') }}</span>
+                            </p>
+                        </div>
+                        <ul
+                            class="generic-list-item generic-list-item-bullet generic-list-item--bullet d-flex align-items-center fs-14">
+                            <li>{{ $course->duration }}</li>
+                            <li>{{ $course->level }}</li>
+                        </ul>
+                        <p class="card-text pt-1 fs-14 lh-22">{!! Str::limit($course->description, 35) !!}</p>
+                        <ul class="generic-list-item fs-14 py-3">
+                            @foreach ($course->courseGoals as $goal)
+                                <li><i class="la la-check mr-1 text-black"></i>{{ $goal->goal }}</li>
+                            @endforeach
+
+                        </ul>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? route('carts.index') : ''}}" class="btn theme-btn flex-grow-1 mr-3 {{ !in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? 'add-to-cart' : '' }}"
+                                data-course-id="{{ $course->id }}"><i class="la la-shopping-cart mr-1 fs-18"></i>
+                                {{in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? 'Go to Cart' : 'Add to Cart'}}</a>
+                            <div class="icon-element icon-element-sm shadow-sm cursor-pointer"
+                                title="Add to Wishlist">
+                                <i class="la la-heart-o"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end card -->
+            </div>
+        </div><!-- end tooltip_templates -->
+    @endforeach
+@endforeach
+
+

@@ -118,7 +118,7 @@
 
                 $.ajax({
                     url: '/wish-list/' + courseId, // Route URL
-                    method: 'POST',
+                    method: $icon.hasClass('la-heart-o') ? 'POST' : 'DELETE',
                     data: {
                         course_id: courseId, // Send course_id in request body
                         _token: '{{ csrf_token() }}' // CSRF token for Laravel

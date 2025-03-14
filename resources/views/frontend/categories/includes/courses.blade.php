@@ -2,7 +2,7 @@
     <div class="row">
         @foreach ($courses as $course)
             <div class="col-lg-6 responsive-column-half">
-                <div class="card card-item card-preview" data-tooltip-content="#tooltip_content_1">
+                <div class="card card-item card-preview" data-tooltip-content="#tooltip_content_{{ $course->id }}">
                     <div class="card-image">
                         <a href="{{ route('courses.show', $course->slug) }}" class="d-block">
                             <img class="card-img-top lazy" src="{{ asset($course->image) }}"
