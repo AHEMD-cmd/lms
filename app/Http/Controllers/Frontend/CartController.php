@@ -28,6 +28,7 @@ class CartController extends Controller
         return response([
             'status' => 'success',
             'message' => 'Course added to cart successfully',
+            'cartItemsNumber' => CartService::getCartData()->count(),
             'cartItems' => view('frontend.partials.header-cart')->with('cartItems', CartService::getCartData())->render(),
         ], 201);
     }

@@ -242,7 +242,9 @@
                                             <li>
                                                 <p class="shop-cart-btn">
                                                     <i class="la la-heart-o"></i>
-                                                    <span class="dot-status bg-1"></span>
+                                                    @if ($wishlistedCourses->count() > 0)
+                                                        <span class="dot-status bg-1"></span>
+                                                    @endif
                                                 </p>
                                                 <ul class="cart-dropdown-menu after-none header-wishlist">
                                                     @include('frontend.partials.header-wishlist')

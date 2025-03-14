@@ -1,7 +1,7 @@
 <li>
     <p class="shop-cart-btn d-flex align-items-center">
         <i class="la la-shopping-cart fs-22"></i>
-        <span class="dot-status bg-1"></span>
+        <span class="product-count">{{$cartItems->count()}}</span>
     </p>
     <ul class="cart-dropdown-menu after-none">
         @foreach ($cartItems as $cartItem)

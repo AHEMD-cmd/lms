@@ -24,9 +24,18 @@
                     @endif
                 </div>
             </div>
-            <a href="#"
+            {{-- <a href="#"
                 class="btn theme-btn theme-btn-sm theme-btn-transparent lh-28 w-100 mt-3">Add
-                to cart <i class="la la-arrow-right icon ml-1"></i></a>
+                to cart <i class="la la-arrow-right icon ml-1"></i></a> --}}
+
+                <button
+                href="{{ in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? route('carts.index') : '' }}"
+                class="btn theme-btn theme-btn-sm theme-btn-transparent lh-28 w-100 mt-3 {{ !in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? 'add-to-cart' : '' }}"
+                data-course-id="{{ $course->id }}"><i
+                    class="la la-shopping-cart mr-1 fs-18"></i>
+                {{ in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? 'Go to Cart' : 'Add to Cart' }}</button>
+
+                
         </li>
     @endforeach
     <li>

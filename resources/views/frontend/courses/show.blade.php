@@ -5,8 +5,8 @@
 @section('content')
 
     <!-- ================================
-                                    START BREADCRUMB AREA
-                                ================================= -->
+                                        START BREADCRUMB AREA
+                                    ================================= -->
     <section class="breadcrumb-area pt-50px pb-50px bg-white pattern-bg">
         <div class="container">
             <div class="col-lg-8 mr-auto">
@@ -82,12 +82,12 @@
         </div><!-- end container -->
     </section><!-- end breadcrumb-area -->
     <!-- ================================
-                                    END BREADCRUMB AREA
-                                ================================= -->
+                                        END BREADCRUMB AREA
+                                    ================================= -->
 
     <!--======================================
-                                        START COURSE DETAILS AREA
-                                ======================================-->
+                                            START COURSE DETAILS AREA
+                                    ======================================-->
     <section class="course-details-area pb-20px">
         <div class="container">
             <div class="row">
@@ -570,8 +570,14 @@
                                         <span class="text-color-3">4 days</span> left at this price!
                                     </p>
                                     <div class="buy-course-btn-box">
-                                        <button type="button" class="btn theme-btn w-100 mb-2"><i
-                                                class="la la-shopping-cart fs-18 mr-1"></i> Add to cart</button>
+
+                                        <button
+                                            href="{{ in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? route('carts.index') : '' }}"
+                                            class="btn theme-btn w-100 mb-2 {{ !in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? 'add-to-cart' : '' }}"
+                                            data-course-id="{{ $course->id }}"><i
+                                                class="la la-shopping-cart mr-1 fs-18"></i>
+                                            {{ in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? 'Go to Cart' : 'Add to Cart' }}</button>
+
                                         <button type="button" class="btn theme-btn w-100 theme-btn-white mb-2"><i
                                                 class="la la-shopping-bag mr-1"></i> Buy this course</button>
                                     </div>
@@ -701,12 +707,12 @@
         </div><!-- end container -->
     </section><!-- end course-details-area -->
     <!--======================================
-                                        END COURSE DETAILS AREA
-                                ======================================-->
+                                            END COURSE DETAILS AREA
+                                    ======================================-->
 
     <!--======================================
-                                        START RELATED COURSE AREA
-                                ======================================-->
+                                            START RELATED COURSE AREA
+                                    ======================================-->
     <section class="related-course-area bg-gray pt-60px pb-60px">
         <div class="container">
             <div class="related-course-wrap">
@@ -733,7 +739,8 @@
                             <div class="card-body">
                                 <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">{{ $course->level }}</h6>
                                 <h5 class="card-title"><a href="course-details.html">{{ $course->title }}</a></h5>
-                                <p class="card-text"><a href="teacher-detail.html">{{ $course->instructor->name }}</a></p>
+                                <p class="card-text"><a href="teacher-detail.html">{{ $course->instructor->name }}</a>
+                                </p>
                                 <div class="rating-wrap d-flex align-items-center py-2">
                                     <div class="review-stars">
                                         <span class="rating-number">4.4</span>
@@ -761,12 +768,12 @@
     </section>
     <!-- end related-course-area -->
     <!--======================================
-                                        END RELATED COURSE AREA
-                                ======================================-->
+                                            END RELATED COURSE AREA
+                                    ======================================-->
 
     <!--======================================
-                                        START CTA AREA
-                                ======================================-->
+                                            START CTA AREA
+                                    ======================================-->
     <section class="cta-area pt-60px pb-60px position-relative overflow-hidden">
         <span class="stroke-shape stroke-shape-1"></span>
         <span class="stroke-shape stroke-shape-2"></span>
@@ -803,7 +810,7 @@
                 </div><!-- end col-lg-9 -->
                 <div class="col-lg-3">
                     <div class="cta-btn-box text-right">
-                        <a href="{{route('become.instructor')}}" class="btn theme-btn">Tech on Aduca <i
+                        <a href="{{ route('become.instructor') }}" class="btn theme-btn">Tech on Aduca <i
                                 class="la la-arrow-right icon ml-1"></i> </a>
                     </div>
                 </div><!-- end col-lg-3 -->
@@ -811,8 +818,8 @@
         </div><!-- end container -->
     </section><!-- end cta-area -->
     <!--======================================
-                                        END CTA AREA
-                                ======================================-->
+                                            END CTA AREA
+                                    ======================================-->
 
 
 

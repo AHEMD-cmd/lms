@@ -62,6 +62,7 @@
                             // $('.header-cart-number').html(response.cartItemsNumber);
 
                             if (response.cartItemsNumber === 0) {
+                                $('.product-count').text(response.cartItemsNumber);
                                 $('.empty-cart').show();
                                 $('.hide-empty-cart').attr('style', 'display: none !important;');
 

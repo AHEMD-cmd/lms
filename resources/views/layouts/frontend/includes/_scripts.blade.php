@@ -48,6 +48,9 @@
                  },
                  success: function(response) {
                      if (response.status === 'success') {
+                        // update cart items number in the header
+                        $('.product-count').text(response.cartItemsNumber);
+
                          $this.attr('href', "{{ route('carts.index') }}")
                              .removeClass('add-to-cart')
                              .addClass('go-to-cart')
