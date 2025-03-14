@@ -61,7 +61,7 @@
                             // Update cart items number in the header
                             // $('.header-cart-number').html(response.cartItemsNumber);
 
-                            if (response.cartItemsNumber == 0) {
+                            if (response.cartItemsNumber === 0) {
                                 $('.empty-cart').show();
                                 $('.hide-empty-cart').attr('style', 'display: none !important;');
 

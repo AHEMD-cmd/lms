@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\Cart;
 use Illuminate\Http\Request;
+use App\Services\Cart\CartService;
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\PreventDuplicateCartItem;
 use App\Http\Requests\Frontend\Cart\StoreCartRequest;
 
 class CartController extends Controller
 {
 
-    public function __construct()
+    public function __construct(CartService $cart)
     {
         $this->middleware('PreventDuplicateCartItem')->only('store');
     }
@@ -28,7 +28,7 @@ class CartController extends Controller
         return response([
             'status' => 'success',
             'message' => 'Course added to cart successfully',
-            'cartItems' => view('frontend.partials.header-cart')->with('cartItems', Cart::bySessionId()->get())->render(),
+            'cartItems' => view('frontend.partials.header-cart')->with('cartItems', CartService::getCartData())->render(),
         ], 201);
     }
 
@@ -39,8 +39,8 @@ class CartController extends Controller
         return response([
             'status' => 'success',
             'message' => 'Course removed from cart successfully',
-            'cartItemsNumber' => Cart::bySessionId()->count(),
-            'cartItems' => view('frontend.partials.header-cart')->with('cartItems', Cart::bySessionId()->get())->render(),
+            'cartItemsNumber' => CartService::getCartData()->count(),
+            'cartItems' => view('frontend.partials.header-cart')->with('cartItems', CartService::getCartData())->render(),
         ], 200);
     }
 }

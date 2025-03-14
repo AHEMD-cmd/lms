@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Cart;
 use App\Models\Course;
 use App\Models\Category;
+use App\Services\Cart\CartService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
@@ -47,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('*', function ($view) {
-            $cartItems = Cart::bySessionId()->get();
+            $cartItems = CartService::getCartData();
             $view->with('cartItems', $cartItems);
         });
     }
