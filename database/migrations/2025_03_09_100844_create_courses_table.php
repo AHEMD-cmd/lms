@@ -28,7 +28,7 @@ return new class extends Migration
             $table->boolean('has_certificate')->nullable();
 
             $table->integer('price')->nullable();
-            $table->integer('discount')->nullable();
+            $table->integer('discount')->nullable()->comment('the price after discount');
             $table->text('prerequisites')->nullable();
             $table->boolean('bestseller')->nullable()->default(0);
             $table->boolean('featured')->nullable()->default(0);

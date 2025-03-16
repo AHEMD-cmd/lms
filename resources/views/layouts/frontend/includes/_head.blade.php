@@ -25,4 +25,7 @@
 <link rel="stylesheet" href="{{ asset('assets/frontend') }}/css/style.css">
 <!-- end inject -->
 
+@yield('styles')
+
 <title>@yield('title')</title>
+

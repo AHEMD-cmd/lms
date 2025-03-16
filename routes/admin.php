@@ -1,10 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InstructorController;
+use App\Http\Controllers\Admin\InstructorCourseController;
 
 
 
@@ -26,4 +29,14 @@ Route::middleware(['auth', 'role:admin'])
 
         ############################# Admin Instructor Routes #############################
         Route::resource('instructors', InstructorController::class)->only(['index', 'update', 'destroy']);
+
+        ############################# Admin Course Routes #############################
+        Route::resource('courses', CourseController::class)->only(['index', 'show', 'update', 'destroy']);
+
+        ############################# Admin Coupon Routes #############################
+        Route::resource('coupons', CouponController::class);
+        Route::patch('coupons/{coupon}/update-status', [CouponController::class, 'updateStatus'])->name('coupons.update-status');
+
+        ############################# Admin Instructor Course Routes #############################
+        Route::resource('instructors.courses', InstructorCourseController::class)->only(['index']);
     });

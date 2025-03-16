@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained('courses')->cascadeOnDelete();
+            $table->integer('price')->comment('price of the course');
+            $table->integer('discounted_price')->nullable()->comment('will get the value of the course price when item added to cart and updated when coupon is applies');
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->string('session_id');
             $table->timestamps();

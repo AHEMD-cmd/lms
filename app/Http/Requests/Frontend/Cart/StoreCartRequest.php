@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Frontend\Cart;
 
+use App\Models\Course;
 use App\Services\Cart\CartService;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -30,9 +31,11 @@ class StoreCartRequest extends FormRequest
     public function validated($key = null, $default = null)
     {
         $validated = parent::validated($key, $default);
-
+        $course = Course::findOrFail($validated['course_id']);
         return array_merge($validated, [
             'session_id' => CartService::getCartId(),
+            'price' => $course->price,
+            'discounted_price' => $course->discount ? $course->discount : $course->price,
         ]);
     }
 }

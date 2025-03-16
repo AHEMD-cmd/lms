@@ -54,6 +54,34 @@
             </ul>
         </li>
 
+        <li>
+            <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class='bx bx-book'></i>
+                </div>
+                <div class="menu-title">Manage Course</div>
+            </a>
+            <ul>
+                <li> <a href="{{ route('admin.courses.index') }}"><i class='bx bx-radio-circle'></i>All
+                        Course</a>
+                </li>
+
+            </ul>
+        </li>
+
+        <li>
+            <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class='bx bx-credit-card'></i>
+                </div>
+                <div class="menu-title">Manage Coupons</div>
+            </a>
+            <ul>
+                <li> <a href="{{ route('admin.coupons.index') }}"><i class='bx bx-radio-circle'></i>All
+                        Coupons</a>
+                </li>
+
+            </ul>
+        </li>
+
 
     </ul>
     <!--end navigation-->

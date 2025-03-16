@@ -1,7 +1,7 @@
 <li>
     <p class="shop-cart-btn d-flex align-items-center">
         <i class="la la-shopping-cart fs-22"></i>
-        <span class="product-count">{{$cartItems->count()}}</span>
+        <span class="product-count">{{ $cartItems->count() }}</span>
     </p>
     <ul class="cart-dropdown-menu after-none">
         @foreach ($cartItems as $cartItem)
@@ -30,8 +30,14 @@
 
         <li class="media media-card">
             <div class="media-body fs-16">
-                <p class="text-black font-weight-semi-bold lh-18">Total: <span class="cart-total">$12.99</span> <span
-                        class="before-price fs-14">$129.99</span></p>
+                @if ($cartItems->sum('discounted_price') < $cartItems->sum('price'))
+                    <p class="text-black font-weight-semi-bold lh-18">Total: <span
+                            class="cart-total">${{ $cartItems->sum('discounted_price') }}</span> <span
+                            class="before-price fs-14">${{ $cartItems->sum('price') }}</span></p>
+                @else
+                    <p class="text-black font-weight-semi-bold lh-18">Total: <span
+                            class="cart-total">${{ $cartItems->sum('price') }}</span></p>
+                @endif
             </div>
         </li>
     </ul>

@@ -10,7 +10,7 @@ class InstructorController extends Controller
 {
     public function index()
     {
-        $instructors = User::where('role', 'instructor')->latest()->get();
+        $instructors = User::where('role', 'instructor')->latest()->paginate(10);
         return view('admin.instructor.index', compact('instructors'));
     }
 

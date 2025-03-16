@@ -37,6 +37,23 @@
             }
         });
     @endif
+
+    @if (session('error'))
+
+        Swal.fire({
+            toast: true,
+            position: 'top-end', // Position at top-right corner
+            icon: 'error',
+            title: '{{ session('error') }}',
+            showConfirmButton: false,
+            timer: 4000, // Auto-close after 4 seconds
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+    @endif
 </script>
 
 <!--Datatable-->

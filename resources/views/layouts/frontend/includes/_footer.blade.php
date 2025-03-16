@@ -148,19 +148,15 @@
 
                         </ul>
                         <div class="d-flex justify-content-between align-items-center">
-                            <a href="{{in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? route('carts.index') : ''}}" class="btn theme-btn flex-grow-1 mr-3 {{ !in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? 'add-to-cart' : '' }}"
+                            <a href="{{ in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? route('carts.index') : '' }}"
+                                class="btn theme-btn flex-grow-1 mr-3 {{ !in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? 'add-to-cart' : '' }}"
                                 data-course-id="{{ $course->id }}"><i class="la la-shopping-cart mr-1 fs-18"></i>
-                                {{in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? 'Go to Cart' : 'Add to Cart'}}</a>
-                            <div class="icon-element icon-element-sm shadow-sm cursor-pointer"
-                                title="Add to Wishlist">
-                                <i class="la la-heart-o"></i>
-                            </div>
+                                {{ in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? 'Go to Cart' : 'Add to Cart' }}</a>
                         </div>
+
                     </div>
                 </div><!-- end card -->
             </div>
         </div><!-- end tooltip_templates -->
     @endforeach
 @endforeach
-
-

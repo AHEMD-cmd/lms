@@ -38,6 +38,7 @@
 
              let $this = $(this);
              let courseId = $this.data('course-id');
+             let price = $this.data('price');
 
              $.ajax({
                  url: "{{ route('carts.store') }}",
@@ -94,10 +95,11 @@
                              $icon.removeClass('la-heart').addClass('la-heart-o');
                          }
                          $('.header-wishlist').html(response.wishlistedCourses);
+
                          if (response.wishlistedCoursesNumber === 0) {
                              $('.header-go-to-wishlist').hide();
                              $('.explore-courses').show();
-                         }else{
+                         } else {
                              $('.explore-courses').hide();
                              $('.header-go-to-wishlist').show();
                          }

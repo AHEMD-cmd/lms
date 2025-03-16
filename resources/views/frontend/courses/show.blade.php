@@ -570,14 +570,13 @@
                                         <span class="text-color-3">4 days</span> left at this price!
                                     </p>
                                     <div class="buy-course-btn-box">
-
                                         <button
                                             href="{{ in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? route('carts.index') : '' }}"
                                             class="btn theme-btn w-100 mb-2 {{ !in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? 'add-to-cart' : '' }}"
                                             data-course-id="{{ $course->id }}"><i
                                                 class="la la-shopping-cart mr-1 fs-18"></i>
                                             {{ in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? 'Go to Cart' : 'Add to Cart' }}</button>
-
+                                            <input type="text">
                                         <button type="button" class="btn theme-btn w-100 theme-btn-white mb-2"><i
                                                 class="la la-shopping-bag mr-1"></i> Buy this course</button>
                                     </div>

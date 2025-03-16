@@ -1,6 +1,6 @@
 @extends('layouts.dashboard.admin.master')
 
-@section('title', 'Category')
+@section('title', 'Categories')
 
 @section('content')
 

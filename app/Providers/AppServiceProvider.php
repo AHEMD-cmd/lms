@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Cart;
+use App\Models\Coupon;
 use App\Models\Course;
 use App\Models\Category;
+use App\Observers\CouponObserver;
 use App\Services\Cart\CartService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +30,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::unguard();
+
+        // Observers
+        Coupon::observe(CouponObserver::class);
 
         // Use Bootstrap pagination
         Paginator::useBootstrap();

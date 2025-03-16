@@ -42,7 +42,7 @@ Route::resource('categories', CategoryController::class)->only(['index', 'show']
 Route::resource('instructors', InstructorController::class)->only(['show']);
 
 ############################### Cart Routes ################################
-Route::resource('carts', CartController::class)->only(['index', 'store', 'destroy']);
+Route::resource('carts', CartController::class)->only(['index', 'update', 'store', 'destroy']);
 
 Route::middleware('auth')->group(function () {
     ############################### Wish List Routes ################################

@@ -1,4 +1,4 @@
-<section class="cart-area section-padding">
+<section class="cart-area mt-4">
     <div class="container">
         <div class="table-responsive">
             <table class="table generic-table">
@@ -31,8 +31,8 @@
                             </td>
                             <td>
                                 <ul class="generic-list-item font-weight-semi-bold">
-                                    @if ($item->course->discount)
-                                        <li class="text-black lh-18">${{ $item->course->discount }}</li>
+                                    @if ($item->discounted_price < $item->course->price)
+                                        <li class="text-black lh-18">${{ $item->discounted_price }}</li>
                                         <li class="before-price lh-18">${{ $item->course->price }}</li>
                                     @else
                                         <li class="text-black lh-18">${{ $item->course->price }}</li>
@@ -41,18 +41,14 @@
                             </td>
 
                             <td>
-                                <button type="button" class="icon-element icon-element-xs shadow-sm border-0"
+                                <button type="button" class="icon-element icon-element-xs shadow-sm border-0 delete-item"
                                     data-toggle="tooltip" data-placement="top"
                                     data-cart-id="{{ $item->id }}">
                                     <i class="la la-times"></i>
                                 </button>
-
-
                             </td>
                         </tr>
-
                     @empty
-
                         <tr>
                             <td colspan="4" class="text-center">
                                 <i class="la la-frown-o fs-30 text-gray mb-3"></i>
@@ -60,28 +56,22 @@
                             </td>
                         </tr>
                     @endforelse
-                    <tr style="display: none;" class="empty-cart">
-                        <td colspan="4" class="text-center">
-                            <i class="la la-frown-o fs-30 text-gray mb-3"></i>
-                            <p class="text-gray mb-0">Empty Cart Explore Our Courses</p>
-                        </td>
-                    </tr>
-
-
                 </tbody>
             </table>
             @if (count($cartItems) > 0)
                 <div class="d-flex flex-wrap align-items-center justify-content-between pt-4 hide-empty-cart">
-                    <form method="post">
+                    <form method="post" id="apply-coupon-code-form">
                         <div class="input-group mb-2">
-                            <input class="form-control form--control pl-3" type="text" name="search"
-                                placeholder="Coupon code">
+                            <input class="form-control form--control pl-3" type="text" name="code"
+                                placeholder="Coupon code" id="coupon-code">
                             <div class="input-group-append">
-                                <button class="btn theme-btn">Apply Code</button>
+                                <button class="btn theme-btn coupon-btn">Apply Code</button>
                             </div>
                         </div>
+                        <div class="text-black d-block mt-1 coupon-applied"></div>
+                        <div class="text-black d-block mt-1 coupon-error" style="color: red !important;"></div>
                     </form>
-                    <a href="#" class="btn theme-btn mb-2">Update Cart</a>
+                    {{-- <a href="#" class="btn theme-btn mb-2">Update Cart</a> --}}
                 </div>
             @endif
 
@@ -95,11 +85,15 @@
                     <ul class="generic-list-item pb-4">
                         <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
                             <span class="text-black">Subtotal:</span>
-                            <span>$44.99</span>
+                            <span>${{ $cartItems->sum('discounted_price') }}</span>
+                        </li>
+                        <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
+                            <span class="text-black">Coupon discounts:</span>
+                            <span>${{ $cartItems->sum('price') - $cartItems->sum('discounted_price') }}</span>
                         </li>
                         <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
                             <span class="text-black">Total:</span>
-                            <span>$44.99</span>
+                            <span>${{ $cartItems->sum('discounted_price') }}</span>
                         </li>
                     </ul>
                     <a href="checkout.html" class="btn theme-btn w-100">Checkout <i
