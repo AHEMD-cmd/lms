@@ -89,7 +89,7 @@
                         </li>
                         <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
                             <span class="text-black">Coupon discounts:</span>
-                            <span>${{ $cartItems->sum('price') - $cartItems->sum('discounted_price') }}</span>
+                            <span>-${{ $cartItems->sum('price') - $cartItems->sum('discounted_price') }}</span>
                         </li>
                         <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
                             <span class="text-black">Total:</span>

@@ -24,7 +24,7 @@ class WishListController extends Controller
         return response([
             'status' => 'success',
             'message' => 'Course added to wish list successfully',
-            'wishlistedCourses' => view('frontend.partials.header-wishlist')->with('wishlistedCourses', $request->user()->wishList)->render(),
+            'wishlistedCourses' => view('frontend.partials.header-wishlist')->with('wishlistedCourses', $request->user()->wishList->take(1))->render(),
         ], 200);
     }
 
@@ -40,7 +40,7 @@ class WishListController extends Controller
             'status' => 'success',
             'message' => 'Course removed from wish list successfully',
             'wishlistedCoursesNumber' => $request->user()->wishList->count(),
-            'wishlistedCourses' => view('frontend.partials.header-wishlist')->with('wishlistedCourses', $request->user()->wishList)->render(),
+            'wishlistedCourses' => view('frontend.partials.header-wishlist')->with('wishlistedCourses', $request->user()->wishList->take(1) )->render(),
         ], 200);
     }
 }

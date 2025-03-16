@@ -31,7 +31,7 @@ class CartController extends Controller
             'status' => 'success',
             'message' => 'Course added to cart successfully',
             'cartItemsNumber' => CartService::getCartData()->count(),
-            'cartItems' => view('frontend.partials.header-cart')->with('cartItems', CartService::getCartData())->render(),
+            'cartItems' => view('frontend.partials.header-cart')->with('cartItems', CartService::getCartData()->take(2))->render(),
         ], 201);
     }
 
@@ -48,7 +48,7 @@ class CartController extends Controller
             'status' => 'success',
             'message' => 'Coupon applied successfully',
             'usedTimes' => $usedTimes,
-            'headerCartItems' => view('frontend.partials.header-cart')->with('cartItems', CartService::getCartData())->render(),
+            'headerCartItems' => view('frontend.partials.header-cart')->with('cartItems', CartService::getCartData()->take(2))->render(),
             'cartItems' => view('frontend.cart.includes.cart-items')->with('cartItems', CartService::getCartData())->render(),
         ], 201);
     }
@@ -61,7 +61,7 @@ class CartController extends Controller
             'status' => 'success',
             'message' => 'Course removed from cart successfully',
             'cartItemsNumber' => CartService::getCartData()->count(),
-            'cartItems' => view('frontend.cart.includes.cart-items')->with('cartItems', CartService::getCartData())->render(),
+            'cartItems' => view('frontend.cart.includes.cart-items')->with('cartItems', CartService::getCartData()->take(2))->render(),
             'headerCartItems' => view('frontend.partials.header-cart')->with('cartItems', CartService::getCartData())->render(),
         ], 200);
     }

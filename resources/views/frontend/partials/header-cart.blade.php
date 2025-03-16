@@ -4,7 +4,7 @@
         <span class="product-count">{{ $cartItems->count() }}</span>
     </p>
     <ul class="cart-dropdown-menu after-none">
-        @foreach ($cartItems as $cartItem)
+        @foreach ($cartItems->take(2) as $cartItem)
             <li class="media media-card">
                 <a href="{{ route('courses.show', $cartItem->course->slug) }}" class="media-img">
                     <img class="mr-3" src="{{ asset($cartItem->course->image) }}" alt="{{ $cartItem->course->title }}">

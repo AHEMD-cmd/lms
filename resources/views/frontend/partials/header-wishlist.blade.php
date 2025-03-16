@@ -1,4 +1,4 @@
-@foreach ($wishlistedCourses as $course)
+@foreach ($wishlistedCourses->take(2) as $course)
     <li>
         <div class="media media-card">
             <a href="course-details.html" class="media-img">
@@ -13,8 +13,10 @@
                         {{ $course->discount }}
                         <span class="before-price fs-14">{{ $course->price }}</span>
                     </p>
-                @else
-                    <span class="before-price fs-14">{{ $course->price }}</span>
+                    @else
+                    <p class="text-black font-weight-semi-bold lh-18">
+                        {{ $course->price }}
+                    </p>
                 @endif
             </div>
         </div>
@@ -22,7 +24,7 @@
                 class="btn theme-btn theme-btn-sm theme-btn-transparent lh-28 w-100 mt-3">Add
                 to cart <i class="la la-arrow-right icon ml-1"></i></a> --}}
 
-        {{-- <button
+        {{-- <button    
             href="{{ in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? route('carts.index') : '' }}"
             class="btn theme-btn theme-btn-sm theme-btn-transparent lh-28 w-100 mt-3 {{ !in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? 'add-to-cart' : '' }}"
             data-course-id="{{ $course->id }}"><i class="la la-shopping-cart mr-1 fs-18"></i>
