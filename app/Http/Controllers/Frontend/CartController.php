@@ -56,7 +56,6 @@ class CartController extends Controller
     public function destroy(Request $request, Cart $cart)
     {
         $cart->delete();
-        
         return response([
             'status' => 'success',
             'message' => 'Course removed from cart successfully',

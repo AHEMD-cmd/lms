@@ -161,7 +161,7 @@ return [
          */
         Intervention\Image\ImageServiceProvider::class,
 
-
+        App\Providers\SmtpProvider::class,
         /*
          * Application Service Providers...
          */

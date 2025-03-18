@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InstructorController;
+use App\Http\Controllers\Admin\SmtpSettingController;
 use App\Http\Controllers\Admin\InstructorCourseController;
 
 
@@ -39,4 +40,7 @@ Route::middleware(['auth', 'role:admin'])
 
         ############################# Admin Instructor Course Routes #############################
         Route::resource('instructors.courses', InstructorCourseController::class)->only(['index']);
+
+        ############################# Admin Smtp Settings Routes #############################
+        Route::resource('smtp-settings', SmtpSettingController::class)->only(['edit', 'update']);
     });

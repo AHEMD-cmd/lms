@@ -52,7 +52,7 @@
                         <tr>
                             <td colspan="4" class="text-center">
                                 <i class="la la-frown-o fs-30 text-gray mb-3"></i>
-                                <p class="text-gray mb-0">Empty Cart Explore Our Courses</p>
+                                <p class="text-gray mb-0">Empty Cart <br><a href="/">Explore Our Courses</a></p>
                             </td>
                         </tr>
                     @endforelse
