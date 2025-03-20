@@ -3,12 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\ReplyController;
 use App\Http\Controllers\Frontend\CourseController;
 use App\Http\Controllers\Frontend\CategoryController;
+use App\Http\Controllers\Frontend\QuestionController;
 use App\Http\Controllers\Frontend\WishListController;
 use App\Http\Controllers\Frontend\InstructorController;
 use App\Http\Controllers\Frontend\SocialAuthController;
-
+use App\Http\Controllers\Frontend\CourseLectureController;
+use App\Http\Controllers\Frontend\QuestionUpvoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +23,8 @@ use App\Http\Controllers\Frontend\SocialAuthController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -49,5 +53,18 @@ Route::middleware('auth')->group(function () {
     Route::get('wish-list', [WishListController::class, 'index'])->name('wish.list.index');
     Route::post('wish-list/{course}', [WishListController::class, 'store'])->name('wish.list.store');
     Route::delete('wish-list/{course}', [WishListController::class, 'destroy'])->name('wish.list.destroy');
-});
 
+    ############################### Course Lectures Routes ###########################
+    Route::resource('courses.lectures', CourseLectureController::class)->only(['index']);
+
+    ############################### Course Questions Routes ###########################
+    Route::resource('questions', QuestionController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
+
+    ############################### Question Replies Routes ###########################
+    Route::resource('replies', ReplyController::class)->only(['store']);
+    
+    ############################### Question Upvote Routes ###########################
+    Route::resource('questions.upvotes', QuestionUpvoteController::class)->only(['store']);
+
+
+});

@@ -40,7 +40,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
@@ -68,6 +68,8 @@ class Kernel extends HttpKernel
         'PreventDuplicateCartItem' => \App\Http\Middleware\PreventDuplicateCartItem::class,
         'CheckValidaCoupon' => \App\Http\Middleware\CheckValidaCoupon::class,
         'check.auto.coupon' => \App\Http\Middleware\CheckAutoAppliedCoupon::class,
-
+        'check.coupon.limits' => \App\Http\Middleware\CheckCouponLimits::class,
+        'increment.questions' => \App\Http\Middleware\IncrementQuestionsCount::class,
+        'reset.questions' => \App\Http\Middleware\ResetQuestionsCount::class,
     ];
 }

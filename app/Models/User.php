@@ -34,6 +34,11 @@ class User extends Authenticatable
         return $this->hasMany(Course::class, 'instructor_id', 'id');
     }
 
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
     public function sluggable(): array
     {
         return [
@@ -51,5 +56,10 @@ class User extends Authenticatable
     public function wishList()
     {
         return $this->belongsToMany(Course::class, 'wish_lists', 'user_id', 'course_id');
+    }
+
+    public function upvotedQuestions()
+    {
+        return $this->belongsToMany(Question::class, 'question_upvotes')->withTimestamps();
     }
 }

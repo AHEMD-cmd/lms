@@ -585,7 +585,8 @@ Author Email:   contact@techydevs.com
         /*==== When question-meta-content or question-replay-btn will click then this action will work =====*/
         $document.on('click', '.question-meta-content, .question-replay-btn', function () {
             $('.replay-question-wrap, .question-overview-result-wrap').addClass('active');
-        });
+        });   
+        
         /*==== When question-meta-content or question-replay-btn will click then this action will work =====*/
         $document.on('click', '.back-to-question-btn', function () {
             $('.new-question-wrap, .question-overview-result-wrap, .replay-question-wrap').removeClass('active');

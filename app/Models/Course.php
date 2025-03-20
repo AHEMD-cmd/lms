@@ -39,6 +39,11 @@ class Course extends Model
         return $this->hasMany(Lecture::class);
     }
 
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
     public function sluggable(): array
     {
         return [

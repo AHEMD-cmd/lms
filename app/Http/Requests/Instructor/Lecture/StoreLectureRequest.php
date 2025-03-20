@@ -27,4 +27,18 @@ class StoreLectureRequest extends FormRequest
             'url' => ['required', 'string', 'max:255'],
         ];
     }
+
+    public function validated($key = null, $default = null)
+    {
+        $validated = parent::validated($key, $default);
+
+        return array_merge($validated, [
+            'number' => $this->lastCourseLectureNumber() + 1,
+        ]);
+    }
+
+    public function lastCourseLectureNumber()
+    {
+        return $this->route('course')->lectures->count() > 0 ? $this->route('course')->lectures()->latest()->first()->number : 0;
+    }
 }

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('limit_number')->nullable()->comment('The number of times the coupon can be used');
             $table->integer('times_used')->default(0)->comment('The number of times the coupon has been used');
             $table->boolean('is_active')->default(1)->comment('1 = active, 0 = inactive');
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }

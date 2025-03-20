@@ -50,16 +50,16 @@
                                 <td>{{ $course->price }}</td>
                                 <td>{{ $course->discount }}</td>
                                 <td>
-                                    <a href="{{ route('instructor.courses.edit', $course->id) }}" class="btn btn-info"
+                                    <a href="{{ route('instructor.courses.edit', $course->slug) }}" class="btn btn-info"
                                         title="Edit"><i class="lni lni-eraser"></i> </a>
-                                    <form action="{{ route('instructor.courses.destroy', $course->id) }}" method="POST"
+                                    <form action="{{ route('instructor.courses.destroy', $course->slug) }}" method="POST"
                                         class="d-inline-block delete-form">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger" id="delete" title="delete"><i
                                                 class="lni lni-trash"></i> </button>
                                     </form>
-                                    <a href="{{ route('instructor.courses.sections.index',$course->id) }}" class="btn btn-warning" title="Lecture"><i class="lni lni-list"></i> </a>                    
+                                    <a href="{{ route('instructor.courses.sections.index',$course->slug) }}" class="btn btn-warning" title="Lecture"><i class="lni lni-list"></i> </a>                    
                                 </td>
                             </tr>
                         @endforeach

@@ -27,4 +27,9 @@ class Coupon extends Model
             && $this->end_date->isFuture()
             && ($this->times_used < $this->limit_number);
     }
+
+    public function scopeByInstructor()
+    {
+        return $this->where('instructor_id', auth()->user()->id);
+    }
 }

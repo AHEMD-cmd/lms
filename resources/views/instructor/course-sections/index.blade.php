@@ -47,7 +47,7 @@
 
 
                                             <a class="btn btn-primary"
-                                                onclick="addLectureDiv({{ $course->id }}, {{ $section->id }}, 'addLectureContainer{{ $key }}')"
+                                                onclick="addLectureDiv('{{ $course->slug }}', {{ $section->id }}, 'addLectureContainer{{ $key }}')"
                                                 id="addLectureBtn{{ $key }}"> Add Lecture </a>
 
                                         </div>
@@ -137,10 +137,10 @@
 @section('scripts')
     <script>
         // ############## show lecture form ################
-        function addLectureDiv(courseId, sectionId, containerId) {
+        function addLectureDiv(courseSlug, sectionId, containerId) {
             $(`#${containerId}`).show();
             const form = $(`#${containerId} form`);
-            const url = `/instructor/courses/${courseId}/sections/${sectionId}/lectures`;
+            const url = `/instructor/courses/${courseSlug}/sections/${sectionId}/lectures`;
             form.attr('action', url);
         }
 

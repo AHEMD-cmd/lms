@@ -8,6 +8,15 @@ use App\Models\Coupon;
 
 class CheckAutoAppliedCoupon
 {
+    
+    /**
+     * Check if only one auto-applied coupon is allowed for this type (platform, instructor, course)
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return \Illuminate\Http\Response
+     */
+
     public function handle(Request $request, Closure $next)
     {
         if ($request->auto_applied) {

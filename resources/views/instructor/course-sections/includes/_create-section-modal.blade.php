@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
 
-                <form action="{{ route('instructor.courses.sections.store', $course->id) }}" method="POST">
+                <form action="{{ route('instructor.courses.sections.store', $course->slug) }}" method="POST">
                     @csrf
 
                     <input type="hidden" name="id" value="{{ $course->id }}">

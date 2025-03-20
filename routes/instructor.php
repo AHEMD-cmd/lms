@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Instructor\CouponController;
 use App\Http\Controllers\Instructor\CourseController;
 use App\Http\Controllers\Instructor\ProfileController;
 use App\Http\Controllers\Instructor\DashboardController;
@@ -31,4 +32,8 @@ Route::middleware(['auth', 'role:instructor'])
 
         ############### Instructor Course Lectures Routes ###############
         Route::resource('courses.sections.lectures', CourseLectureController::class);
+
+        ############################# Instructor Coupon Routes #############################
+        Route::resource('coupons', CouponController::class);
+        Route::patch('coupons/{coupon}/update-status', [CouponController::class, 'updateStatus'])->name('coupons.update-status');
     });

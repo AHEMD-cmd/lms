@@ -99,7 +99,7 @@
                         <small class="text-muted">Note: The video will be replaced if you upload a new one.</small>
                     </div>
                 </div>
-
+                
                 <div class="form-group col-md-6">
                     <label for="category_id" class="form-label">Course Category <span class="text-danger">*</span></label>
                     <select name="category_id" id="category_id"

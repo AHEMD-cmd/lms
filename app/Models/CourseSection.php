@@ -13,4 +13,11 @@ class CourseSection extends Model
     {
         return $this->hasMany(Lecture::class);
     }
+
+    public function course()
+    {
+        return $this->hasMany(Course::class);
+    }
+
+
 }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('video')->nullable();
             $table->string('url')->nullable();
             $table->text('content')->nullable(); 
+            $table->string('number'); 
             $table->timestamps();
         });
     }

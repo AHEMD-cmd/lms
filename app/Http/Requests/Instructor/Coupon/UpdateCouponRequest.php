@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\Coupon;
+namespace App\Http\Requests\Instructor\Coupon;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCouponRequest extends FormRequest
+class UpdateCouponRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,15 +22,15 @@ class StoreCouponRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', 'string', 'unique:coupons,code', 'max:100'],
+            'code' => ['required', 'string', 'unique:coupons,code,' . $this->route('coupon')->id, 'max:100', ],
             'type' => ['required', 'string', 'in:platform,instructor,course'],
             'auto_applied' => ['nullable', 'boolean'],
             'instructor_id' => ['required_if:type,instructor', 'nullable', 'exists:users,id,role,instructor'],
             'course_id' => ['required_if:type,course', 'nullable', 'exists:courses,id'],
-            'discount_percentage' => ['required', 'integer', 'min:0', 'max:100'],
-            'start_date' => ['required', 'date', 'after_or_equal:' . now()->startOfDay()->format('Y-m-d H:i')],
+            'discount_percentage' => ['required', 'integer', 'min:0', 'max:100', 'in:100,90,50'],
+            'start_date' => ['required', 'date', 'after_or_equal:' . $this->route('coupon')->start_date->format('Y-m-d H:i')],
             'end_date' => ['required', 'date', 'after:start_date'],
-            'limit_number' => ['required', 'integer', 'min:1'],
+            'limit_number' => ['required', 'integer', 'min:1', 'max:1000'],
         ];
     }
 
@@ -39,8 +39,7 @@ class StoreCouponRequest extends FormRequest
         $validated = parent::validated($key, $default);
 
         return array_merge($validated, [
-            'is_active' => 1,
-            'created_by' => auth()->user()->id
+            'auto_applied' => $this->auto_applied ?? 0,
         ]);
     }
 }

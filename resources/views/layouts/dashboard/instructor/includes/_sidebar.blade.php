@@ -38,6 +38,24 @@
                     </li>
                 </ul>
             </li>
+
+            <li>
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class='bx bx-credit-card'></i>
+                    </div>
+                    <div class="menu-title">Manage Coupons</div>
+                </a>
+                <ul>
+
+                    <li> <a href="{{ route('instructor.coupons.index') }}"><i class='bx bx-radio-circle'></i>All Coupons
+                        </a>
+                    </li>
+
+                    <li> <a href="{{ route('instructor.coupons.create') }}"><i class='bx bx-radio-circle'></i>Create Coupon
+                        </a>
+                    </li>
+                </ul>
+            </li>
         @endif
     </ul>
     <!--end navigation-->
