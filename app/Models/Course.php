@@ -44,6 +44,11 @@ class Course extends Model
         return $this->hasMany(Question::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function sluggable(): array
     {
         return [
@@ -86,5 +91,45 @@ class Course extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function averageRating()
+    {
+        return $this->reviews()->where('status', 1)->avg('rate') ?? 0;
+    }
+
+    public function doesRateHaveFraction()
+    {
+        return ceil($this->averageRating()) - $this->averageRating() > 0 ? true : false;
+    }
+
+    public function getFiveStarPercentage()
+    {
+        $total = $this->reviews()->count();
+        return $total ? (int) ($this->reviews()->where('rate', '5')->count() / $total * 100) : 0;
+    }
+
+    public function getFourStarPercentage()
+    {
+        $total = $this->reviews()->count();
+        return $total ? (int) ($this->reviews()->where('rate', '4')->count() / $total * 100) : 0;
+    }
+
+    public function getThreeStarPercentage()
+    {
+        $total = $this->reviews()->count();
+        return $total ? (int) ($this->reviews()->where('rate', '3')->count() / $total * 100) : 0;
+    }
+
+    public function getTwoStarPercentage()
+    {
+        $total = $this->reviews()->count();
+        return $total ? (int) ($this->reviews()->where('rate', '2')->count() / $total * 100) : 0;
+    }
+
+    public function getOneStarPercentage()
+    {
+        $total = $this->reviews()->count();
+        return $total ? (int) ($this->reviews()->where('rate', '1')->count() / $total * 100) : 0;
     }
 }

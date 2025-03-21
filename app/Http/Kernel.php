@@ -69,7 +69,9 @@ class Kernel extends HttpKernel
         'CheckValidaCoupon' => \App\Http\Middleware\CheckValidaCoupon::class,
         'check.auto.coupon' => \App\Http\Middleware\CheckAutoAppliedCoupon::class,
         'check.coupon.limits' => \App\Http\Middleware\CheckCouponLimits::class,
-        'increment.questions' => \App\Http\Middleware\IncrementQuestionsCount::class,
         'reset.questions' => \App\Http\Middleware\ResetQuestionsCount::class,
+        'increment.questions' => \App\Http\Middleware\IncrementQuestionsCount::class,
+        'reset.reviews' => \App\Http\Middleware\ResetReviewsCount::class,
+        'increment.reviews' => \App\Http\Middleware\IncrementReviewsCount::class,
     ];
 }

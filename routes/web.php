@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\InstructorController;
 use App\Http\Controllers\Frontend\SocialAuthController;
 use App\Http\Controllers\Frontend\CourseLectureController;
 use App\Http\Controllers\Frontend\QuestionUpvoteController;
+use App\Http\Controllers\Frontend\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,9 +63,10 @@ Route::middleware('auth')->group(function () {
 
     ############################### Question Replies Routes ###########################
     Route::resource('replies', ReplyController::class)->only(['store']);
-    
+
+    ############################### Review Routes ###########################
+    Route::resource('courses.reviews', ReviewController::class)->only(['index', 'store', 'update', 'delete']);
+
     ############################### Question Upvote Routes ###########################
     Route::resource('questions.upvotes', QuestionUpvoteController::class)->only(['store']);
-
-
 });

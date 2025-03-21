@@ -1,12 +1,10 @@
 @extends('layouts.frontend.master')
 
-@section('title', 'Become Instructor')
+@section('title', $course->title)
 
-@section('content')
-
+@section('content') START BREADCRUMB AREA
     <!-- ================================
-                                        START BREADCRUMB AREA
-                                    ================================= -->
+                                                                            ================================= -->
     <section class="breadcrumb-area pt-50px pb-50px bg-white pattern-bg">
         <div class="container">
             <div class="col-lg-8 mr-auto">
@@ -17,8 +15,8 @@
 
                     </ul>
                     <div class="section-heading">
-                        <h2 class="section__title">{{ $course->name }}</h2>
-                        <p class="section__desc pt-2 lh-30">{{ $course->title }}</p>
+                        <h2 class="section__title">{{ $course->title }}</h2>
+                        <p class="section__desc pt-2 lh-30">{{ $course->short_description }}</p>
                     </div><!-- end section-heading -->
                     <div class="d-flex flex-wrap align-items-center pt-3">
 
@@ -29,16 +27,20 @@
 
                         <div class="rating-wrap d-flex flex-wrap align-items-center">
                             <div class="review-stars">
-                                <span class="rating-number">5</span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star-o"></span>
-                                <span class="la la-star-o"></span>
-                                <span class="la la-star-o"></span>
-                                <span class="la la-star-o"></span>
+                                <span class="rating-number">{{ $course->averageRating() }}</span>
+                                @for ($i = 1; $i <= $course->averageRating(); $i++)
+                                    <span class="la la-star"></span>
+                                @endfor
+
+                                @if ($course->doesRateHaveFraction())
+                                    <span class="la la-star-half-alt"></span>
+                                @endif
+
+
 
 
                             </div>
-                            <span class="rating-total pl-1">(100 ratings)</span>
+                            <span class="rating-total pl-1">({{ $course->reviews()->count() }} ratings)</span>
                             <span class="student-total pl-2">100 students</span>
                         </div>
                     </div><!-- end d-flex -->
@@ -63,7 +65,8 @@
                         </p>
                     </div><!-- end d-flex -->
                     <div class="bread-btn-box pt-3">
-                        <button class="btn theme-btn theme-btn-sm theme-btn-transparent lh-28 mr-2 mb-2">
+                        <button class="btn theme-btn theme-btn-sm theme-btn-transparent lh-28 mr-2 mb-2 wishlist"
+                            data-id="{{ $course->id }}">
                             <i class="la la-heart-o mr-1"></i>
                             <span class="swapping-btn" data-text-swap="Wishlisted"
                                 data-text-original="Wishlist">Wishlist</span>
@@ -82,12 +85,12 @@
         </div><!-- end container -->
     </section><!-- end breadcrumb-area -->
     <!-- ================================
-                                        END BREADCRUMB AREA
-                                    ================================= -->
+                                                                                END BREADCRUMB AREA
+                                                                            ================================= -->
 
     <!--======================================
-                                            START COURSE DETAILS AREA
-                                    ======================================-->
+                                                                                    START COURSE DETAILS AREA
+                                                                            ======================================-->
     <section class="course-details-area pb-20px">
         <div class="container">
             <div class="row">
@@ -222,9 +225,11 @@
                                                 alt="{{ $course->instructor->name }}">
                                         </a>
                                         <ul class="generic-list-item pt-3">
-                                            <li><i class="la la-star mr-2 text-color-3"></i> 4.6 Instructor Rating</li>
+                                            <li><i class="la la-star mr-2 text-color-3"></i>
+                                                {{ $course->instructor->averageRating() }} Instructor Rating</li>
                                             <li><i class="la la-user mr-2 text-color-3"></i> 45,786 Students</li>
-                                            <li><i class="la la-comment-o mr-2 text-color-3"></i> 2,533 Reviews</li>
+                                            <li><i class="la la-comment-o mr-2 text-color-3"></i>
+                                                {{ $course->instructor->instructorReviews->count() }} Reviews</li>
                                             <li><i class="la la-play-circle-o mr-2 text-color-3"></i>
                                                 {{ count($course->instructor->courses) }} Courses</li>
                                             <li><a href="teacher-detail.html">View all Courses</a></li>
@@ -272,18 +277,20 @@
                             <div class="feedback-wrap">
                                 <div class="media media-card align-items-center">
                                     <div class="review-rating-summary">
-                                        <span class="stats-average__count">3</span>
+                                        <span class="stats-average__count">{{ $course->averageRating() }}</span>
                                         <div class="rating-wrap pt-1">
                                             <div class="review-stars">
 
-                                                <span class="la la-star"></span>
-                                                <span class="la la-star-o"></span>
-                                                <span class="la la-star-o"></span>
-                                                <span class="la la-star-o"></span>
-                                                <span class="la la-star-o"></span>
+                                                @for ($i = 1; $i <= $course->averageRating(); $i++)
+                                                    <span class="la la-star"></span>
+                                                @endfor
+
+                                                @if ($course->doesRateHaveFraction())
+                                                    <span class="la la-star-half-alt"></span>
+                                                @endif
 
                                             </div>
-                                            <span class="rating-total d-block">(4)</span>
+                                            <span class="rating-total d-block">({{ $course->reviews->count() }})</span>
                                             <span>Course Rating</span>
                                         </div><!-- end rating-wrap -->
                                     </div><!-- end review-rating-summary -->
@@ -292,57 +299,70 @@
                                             <div class="review-bars__text">5 stars</div>
                                             <div class="review-bars__fill">
                                                 <div class="skillbar-box">
-                                                    <div class="skillbar" data-percent="77%">
+                                                    <div class="skillbar"
+                                                        data-percent="{{ $course->getFiveStarPercentage() }}%">
                                                         <div class="skillbar-bar bg-3"></div>
                                                     </div> <!-- End Skill Bar -->
                                                 </div>
                                             </div><!-- end review-bars__fill -->
-                                            <div class="review-bars__percent">77%</div>
+                                            <div class="review-bars__percent">{{ $course->getFiveStarPercentage() }}%
+                                            </div>
                                         </div><!-- end review-bars -->
+
                                         <div class="review-bars d-flex align-items-center mb-2">
                                             <div class="review-bars__text">4 stars</div>
                                             <div class="review-bars__fill">
                                                 <div class="skillbar-box">
-                                                    <div class="skillbar" data-percent="54%">
+                                                    <div class="skillbar"
+                                                        data-percent="{{ $course->getFourStarPercentage() }}%">
                                                         <div class="skillbar-bar bg-3"></div>
                                                     </div> <!-- End Skill Bar -->
                                                 </div>
                                             </div><!-- end review-bars__fill -->
-                                            <div class="review-bars__percent">54%</div>
+                                            <div class="review-bars__percent">{{ $course->getFourStarPercentage() }}%
+                                            </div>
                                         </div><!-- end review-bars -->
+
                                         <div class="review-bars d-flex align-items-center mb-2">
                                             <div class="review-bars__text">3 stars</div>
                                             <div class="review-bars__fill">
                                                 <div class="skillbar-box">
-                                                    <div class="skillbar" data-percent="14%">
+                                                    <div class="skillbar"
+                                                        data-percent="{{ $course->getThreeStarPercentage() }}%">
                                                         <div class="skillbar-bar bg-3"></div>
                                                     </div> <!-- End Skill Bar -->
                                                 </div>
                                             </div><!-- end review-bars__fill -->
-                                            <div class="review-bars__percent">14%</div>
+                                            <div class="review-bars__percent">{{ $course->getThreeStarPercentage() }}%
+                                            </div>
                                         </div><!-- end review-bars -->
+
                                         <div class="review-bars d-flex align-items-center mb-2">
                                             <div class="review-bars__text">2 stars</div>
                                             <div class="review-bars__fill">
                                                 <div class="skillbar-box">
-                                                    <div class="skillbar" data-percent="5%">
+                                                    <div class="skillbar"
+                                                        data-percent="{{ $course->getTwoStarPercentage() }}%">
                                                         <div class="skillbar-bar bg-3"></div>
                                                     </div> <!-- End Skill Bar -->
                                                 </div>
                                             </div><!-- end review-bars__fill -->
-                                            <div class="review-bars__percent">5%</div>
+                                            <div class="review-bars__percent">{{ $course->getTwoStarPercentage() }}%</div>
                                         </div><!-- end review-bars -->
+
                                         <div class="review-bars d-flex align-items-center mb-2">
                                             <div class="review-bars__text">1 stars</div>
                                             <div class="review-bars__fill">
                                                 <div class="skillbar-box">
-                                                    <div class="skillbar" data-percent="2%">
+                                                    <div class="skillbar"
+                                                        data-percent="{{ $course->getOneStarPercentage() }}%">
                                                         <div class="skillbar-bar bg-3"></div>
                                                     </div> <!-- End Skill Bar -->
                                                 </div>
                                             </div><!-- end review-bars__fill -->
-                                            <div class="review-bars__percent">2%</div>
+                                            <div class="review-bars__percent">{{ $course->getOneStarPercentage() }}%</div>
                                         </div><!-- end review-bars -->
+
                                     </div><!-- end media-body -->
                                 </div>
                             </div><!-- end feedback-wrap -->
@@ -354,165 +374,72 @@
                                     <form method="post" class="mr-3 flex-grow-1">
                                         <div class="form-group">
                                             <input class="form-control form--control pl-3" type="text" name="search"
-                                                placeholder="Search reviews">
+                                                id="review-search" placeholder="Search reviews">
                                             <span class="la la-search search-icon"></span>
                                         </div>
                                     </form>
                                     <div class="select-container mb-3">
-                                        <select class="select-container-select">
-                                            <option value="all-rating">All ratings</option>
-                                            <option value="five-star">Five stars</option>
-                                            <option value="four-star">Four stars</option>
-                                            <option value="three-star">Three stars</option>
-                                            <option value="two-star">Two stars</option>
-                                            <option value="one-star">One star</option>
+                                        <select class="select-container-select" id="rating-filter">
+                                            <option value="">All ratings</option>
+                                            <option value="5">Five stars</option>
+                                            <option value="4">Four stars</option>
+                                            <option value="3">Three stars</option>
+                                            <option value="2">Two stars</option>
+                                            <option value="1">One star</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="media media-card border-bottom border-bottom-gray pb-4 mb-4">
-                                    <div class="media-img mr-4 rounded-full">
-                                        <img class="rounded-full lazy" src="images/img-loading.png"
-                                            data-src="images/small-avatar-1.jpg" alt="User image">
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="d-flex flex-wrap align-items-center justify-content-between pb-1">
-                                            <h5>Kavi arasan</h5>
-                                            <div class="review-stars">
-                                                <span class="la la-star"></span>
-                                                <span class="la la-star"></span>
-                                                <span class="la la-star"></span>
-                                                <span class="la la-star"></span>
-                                                <span class="la la-star"></span>
-                                            </div>
-                                        </div>
-                                        <span class="d-block lh-18 pb-2">a month ago</span>
-                                        <p class="pb-2">This is one of the best courses I have taken in Udemy. It is very
-                                            complete, and it has made continue learning about Java and SQL databases as
-                                            well.</p>
-                                        <div class="helpful-action">
-                                            <span class="d-block fs-13">Was this review helpful?</span>
-                                            <button class="btn">Yes</button>
-                                            <button class="btn">No</button>
-                                            <span class="btn-text fs-14 cursor-pointer pl-1" data-toggle="modal"
-                                                data-target="#reportModal">Report</span>
-                                        </div>
-                                    </div>
-                                </div><!-- end media -->
-                                <div class="media media-card border-bottom border-bottom-gray pb-4 mb-4">
-                                    <div class="media-img mr-4 rounded-full">
-                                        <img class="rounded-full lazy" src="images/img-loading.png"
-                                            data-src="images/small-avatar-2.jpg" alt="User image">
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="d-flex flex-wrap align-items-center justify-content-between pb-1">
-                                            <h5>Jitesh Shaw</h5>
-                                            <div class="review-stars">
-                                                <span class="la la-star"></span>
-                                                <span class="la la-star"></span>
-                                                <span class="la la-star"></span>
-                                                <span class="la la-star"></span>
-                                                <span class="la la-star"></span>
-                                            </div>
-                                        </div>
-                                        <span class="d-block lh-18 pb-2">1 months ago</span>
-                                        <p class="pb-2">This is one of the best courses I have taken in Udemy. It is very
-                                            complete, and it has made continue learning about Java and SQL databases as
-                                            well.</p>
-                                        <div class="helpful-action">
-                                            <span class="d-block fs-13">Was this review helpful?</span>
-                                            <button class="btn">Yes</button>
-                                            <button class="btn">No</button>
-                                            <span class="btn-text fs-14 cursor-pointer pl-1" data-toggle="modal"
-                                                data-target="#reportModal">Report</span>
-                                        </div>
-                                    </div>
-                                </div><!-- end media -->
-                                <div class="media media-card border-bottom border-bottom-gray pb-4 mb-4">
-                                    <div class="media-img mr-4 rounded-full">
-                                        <img class="rounded-full lazy" src="images/img-loading.png"
-                                            data-src="images/small-avatar-3.jpg" alt="User image">
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="d-flex flex-wrap align-items-center justify-content-between pb-1">
-                                            <h5>Miguel Sanches</h5>
-                                            <div class="review-stars">
-                                                <span class="la la-star"></span>
-                                                <span class="la la-star"></span>
-                                                <span class="la la-star"></span>
-                                                <span class="la la-star"></span>
-                                                <span class="la la-star"></span>
-                                            </div>
-                                        </div>
-                                        <span class="d-block lh-18 pb-2">2 month ago</span>
-                                        <p class="pb-2">This is one of the best courses I have taken in Udemy. It is very
-                                            complete, and it has made continue learning about Java and SQL databases as
-                                            well.</p>
-                                        <div class="helpful-action">
-                                            <span class="d-block fs-13">Was this review helpful?</span>
-                                            <button class="btn">Yes</button>
-                                            <button class="btn">No</button>
-                                            <span class="btn-text fs-14 cursor-pointer pl-1" data-toggle="modal"
-                                                data-target="#reportModal">Report</span>
-                                        </div>
-                                    </div>
-                                </div><!-- end media -->
+                                <div id="course-reviews-container">
+                                    @include('frontend.courses.includes._reviews')
+                                </div>
                             </div><!-- end review-wrap -->
                             <div class="see-more-review-btn text-center">
-                                <button type="button" class="btn theme-btn theme-btn-transparent">Load more
-                                    reviews</button>
+                                <button type="button" class="btn theme-btn theme-btn-transparent"
+                                    id="load-more-reviews">Load more reviews</button>
                             </div>
                         </div><!-- end course-overview-card -->
+                        @auth
+                            @if (!in_array($course->id, auth()->user()->reviews()->pluck('course_id')->toArray()))
+                                <div class="course-overview-card pt-4">
+                                    <h3 class="fs-24 font-weight-semi-bold pb-4">Add a Review</h3>
 
-                        <div class="course-overview-card pt-4">
-                            <h3 class="fs-24 font-weight-semi-bold pb-4">Add a Review</h3>
-                            <div class="leave-rating-wrap pb-4">
-                                <div class="leave-rating leave--rating">
-                                    <input type="radio" name='rate' id="star5" />
-                                    <label for="star5"></label>
-                                    <input type="radio" name='rate' id="star4" />
-                                    <label for="star4"></label>
-                                    <input type="radio" name='rate' id="star3" />
-                                    <label for="star3"></label>
-                                    <input type="radio" name='rate' id="star2" />
-                                    <label for="star2"></label>
-                                    <input type="radio" name='rate' id="star1" />
-                                    <label for="star1"></label>
-                                </div><!-- end leave-rating -->
-                            </div>
-                            <form method="post" class="row">
-                                <div class="input-box col-lg-6">
-                                    <label class="label-text">Name</label>
-                                    <div class="form-group">
-                                        <input class="form-control form--control" type="text" name="name"
-                                            placeholder="Your Name">
-                                        <span class="la la-user input-icon"></span>
-                                    </div>
-                                </div><!-- end input-box -->
-                                <div class="input-box col-lg-6">
-                                    <label class="label-text">Email</label>
-                                    <div class="form-group">
-                                        <input class="form-control form--control" type="email" name="email"
-                                            placeholder="Email Address">
-                                        <span class="la la-envelope input-icon"></span>
-                                    </div>
-                                </div><!-- end input-box -->
-                                <div class="input-box col-lg-12">
-                                    <label class="label-text">Message</label>
-                                    <div class="form-group">
-                                        <textarea class="form-control form--control pl-3" name="message" placeholder="Write Message" rows="5"></textarea>
-                                    </div>
-                                </div><!-- end input-box -->
-                                <div class="btn-box col-lg-12">
-                                    <div class="custom-control custom-checkbox mb-3 fs-15">
-                                        <input type="checkbox" class="custom-control-input" id="saveCheckbox" required>
-                                        <label class="custom-control-label custom--control-label" for="saveCheckbox">
-                                            Save my name, and email in this browser for the next time I comment.
-                                        </label>
-                                    </div><!-- end custom-control -->
-                                    <button class="btn theme-btn" type="submit">Submit Review</button>
-                                </div><!-- end btn-box -->
-                            </form>
-                        </div><!-- end course-overview-card -->
+                                    <form method="post" class="row" action="{{ route('reviews.store') }}">
+                                        @csrf
+                                        <!-- Rating Section -->
+                                        <div class="input-box col-lg-12 leave-rating-wrap pb-4">
+                                            <label class="label-text d-block mb-2">Rate the Course</label>
+                                            <div
+                                                class="leave-rating leave--rating d-flex flex-row-reverse justify-content-center">
+                                                <input type="radio" name='rate' id="star5" value="5" />
+                                                <label for="star5"></label>
+                                                <input type="radio" name='rate' id="star4" value="4" />
+                                                <label for="star4"></label>
+                                                <input type="radio" name='rate' id="star3" value="3" />
+                                                <label for="star3"></label>
+                                                <input type="radio" name='rate' id="star2" value="2" />
+                                                <label for="star2"></label>
+                                                <input type="radio" name='rate' id="star1" value="1" />
+                                                <label for="star1"></label>
+                                            </div>
+                                        </div>
+
+                                        <input name='course_id' type="hidden" value="{{ $course->id }}" />
+                                        <!-- Comment Section -->
+                                        <div class="input-box col-lg-12">
+                                            <label class="label-text">Message</label>
+                                            <div class="form-group">
+                                                <textarea class="form-control form--control pl-3" name="comment" placeholder="Write Message" rows="5"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <!-- Submit Button -->
+                                        <div class="btn-box col-lg-12 text-center">
+                                            <button class="btn theme-btn" type="submit">Submit Review</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            @endif
+                        @endauth
 
                     </div><!-- end course-details-content-wrap -->
                 </div><!-- end col-lg-8 -->
@@ -528,8 +455,8 @@
                                         <div class="preview-course-video-content">
                                             <div class="overlay"></div>
                                             <div class="play-button">
-                                                <svg versi  on="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                                                    viewBox="-307.4 338.8 91.8 91.8"
+                                                <svg versi on="1.1" xmlns="http://www.w3.org/2000/svg" x="0px"
+                                                    y="0px" viewBox="-307.4 338.8 91.8 91.8"
                                                     style=" enable-background:new -307.4 338.8 91.8 91.8;"
                                                     xml:space="preserve">
                                                     <style type="text/css">
@@ -576,7 +503,6 @@
                                             data-course-id="{{ $course->id }}"><i
                                                 class="la la-shopping-cart mr-1 fs-18"></i>
                                             {{ in_array($course->id, $cartItems->pluck('course_id')->toArray()) ? 'Go to Cart' : 'Add to Cart' }}</button>
-                                            <input type="text">
                                         <button type="button" class="btn theme-btn w-100 theme-btn-white mb-2"><i
                                                 class="la la-shopping-bag mr-1"></i> Buy this course</button>
                                     </div>
@@ -706,12 +632,12 @@
         </div><!-- end container -->
     </section><!-- end course-details-area -->
     <!--======================================
-                                            END COURSE DETAILS AREA
-                                    ======================================-->
+                                                                                    END COURSE DETAILS AREA
+                                                                            ======================================-->
 
     <!--======================================
-                                            START RELATED COURSE AREA
-                                    ======================================-->
+                                                                                    START RELATED COURSE AREA
+                                                                            ======================================-->
     <section class="related-course-area bg-gray pt-60px pb-60px">
         <div class="container">
             <div class="related-course-wrap">
@@ -719,26 +645,29 @@
                         class="text-color hover-underline">{{ $course->instructor->name }}</a></h3>
                 <div class="view-more-carousel-2 owl-action-styled">
 
-                    @foreach ($course->instructor->courses->take(6) as $course)
+                    @foreach ($course->instructor->courses->take(6) as $instructorCourse)
                         <div class="card card-item">
                             <div class="card-image">
                                 <a href="course-details.html" class="d-block">
-                                    <img class="card-img-top" src="{{ asset($course->image) }}"
-                                        alt="{{ $course->title }}">
+                                    <img class="card-img-top" src="{{ asset($instructorCourse->image) }}"
+                                        alt="{{ $instructorCourse->title }}">
                                 </a>
                                 <div class="course-badge-labels">
-                                    @if ($course->bestseller)
+                                    @if ($instructorCourse->bestseller)
                                         <div class="course-badge">Bestseller</div>
                                     @endif
-                                    @if ($course->discount)
-                                        <div class="course-badge blue">-{{ $course->discount_percentage }}%</div>
+                                    @if ($instructorCourse->discount)
+                                        <div class="course-badge blue">-{{ $instructorCourse->discount_percentage }}%
+                                        </div>
                                     @endif
                                 </div>
                             </div><!-- end card-image -->
                             <div class="card-body">
-                                <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">{{ $course->level }}</h6>
-                                <h5 class="card-title"><a href="course-details.html">{{ $course->title }}</a></h5>
-                                <p class="card-text"><a href="teacher-detail.html">{{ $course->instructor->name }}</a>
+                                <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">{{ $instructorCourse->level }}</h6>
+                                <h5 class="card-title"><a href="course-details.html">{{ $instructorCourse->title }}</a>
+                                </h5>
+                                <p class="card-text"><a
+                                        href="teacher-detail.html">{{ $instructorCourse->instructor->name }}</a>
                                 </p>
                                 <div class="rating-wrap d-flex align-items-center py-2">
                                     <div class="review-stars">
@@ -767,12 +696,12 @@
     </section>
     <!-- end related-course-area -->
     <!--======================================
-                                            END RELATED COURSE AREA
-                                    ======================================-->
+                                                                                    END RELATED COURSE AREA
+                                                                            ======================================-->
 
     <!--======================================
-                                            START CTA AREA
-                                    ======================================-->
+                                                                                    START CTA AREA
+                                                                            ======================================-->
     <section class="cta-area pt-60px pb-60px position-relative overflow-hidden">
         <span class="stroke-shape stroke-shape-1"></span>
         <span class="stroke-shape stroke-shape-2"></span>
@@ -817,8 +746,8 @@
         </div><!-- end container -->
     </section><!-- end cta-area -->
     <!--======================================
-                                            END CTA AREA
-                                    ======================================-->
+                                                                                    END CTA AREA
+                                                                            ======================================-->
 
 
 
@@ -939,12 +868,97 @@
             </div><!-- end modal-content -->
         </div><!-- end modal-dialog -->
     </div><!-- end modal -->
-
-
 @endsection
 
 
-@section('scripts')
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            // ################## add course to wishlist ###################
+            $('.wishlist').on('click', function() {
+                var courseId = $(this).data('id'); // Get course ID from data-id
+                var icon = $(this).find('i'); // Target the icon inside
 
+                $.ajax({
+                    url: '/wish-list/' + courseId, // Route URL
+                    method: $icon.hasClass('la-heart-o') ? 'POST' : 'DELETE',
+                    data: {
+                        course_id: courseId, // Send course_id in request body
+                        _token: '{{ csrf_token() }}' // CSRF token for Laravel
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            // Toggle icon class based on current state
+                            if ($icon.hasClass('la-heart-o')) {
+                                $icon.removeClass('la-heart-o').addClass('la-heart');
+                            } else {
+                                $icon.removeClass('la-heart').addClass('la-heart-o');
+                            }
+                            $('.header-wishlist').html(response.wishlistedCourses);
 
-@endsection
+                            if (response.wishlistedCoursesNumber === 0) {
+                                $('.header-go-to-wishlist').hide();
+                                $('.explore-courses').show();
+                            } else {
+                                $('.explore-courses').hide();
+                                $('.header-go-to-wishlist').show();
+                            }
+
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            icon: 'error',
+                            title: xhr.responseJSON.message,
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                    }
+                });
+            });
+
+            // ###################### seach reviews #######################
+            function fetchReviews(search = '', rating = '', loadMore = false) {
+
+                $.ajax({
+                    url: '{{ route('courses.reviews.index', $course->slug) }}',
+                    method: 'GET',
+                    data: {
+                        search: search,
+                        rating: rating,
+                        loadMore: loadMore == true ? 1 : 0
+                    },
+                    success: function(response) {
+                        $('#course-reviews-container').html(response.reviews);
+                    },
+                    error: function(xhr) {
+                        console.log('Error:', xhr);
+                    }
+                });
+            }
+
+            // Search input event (trigger on keyup)
+            $('#review-search').on('keyup', function() {
+                let search = $(this).val();
+                let rating = $('#rating-filter').val();
+                fetchReviews(search, rating, false);
+            });
+
+            // Rating filter event (trigger on change)
+            $('#rating-filter').on('change', function() {
+                let search = $('#review-search').val();
+                let rating = $(this).val();
+                fetchReviews(search, rating, false);
+
+            });
+            // Rating filter event (trigger on change)
+            $('#load-more-reviews').on('click', function() {
+                let search = $('#review-search').val();
+                let rating = $(this).val();
+                fetchReviews(search, rating, true);
+            });
+        });
+    </script>
+@endpush

@@ -15,7 +15,7 @@ class CourseLectureController extends Controller
     public function index(Course $course)
     {
         $course->load('sections', 'questions');
-        $questions = $course->questions()->topLevel()->latest()->limit(1)->get();
+        $questions = $course->questions()->topLevel()->latest()->limit(session('questionsCount'))->get();
 
         return view('frontend.course-lectures.index', compact('course', 'questions'));
     }

@@ -38,6 +38,47 @@ class User extends Authenticatable
     {
         return $this->hasMany(Question::class);
     }
+    /**
+     * Get the reviews of the auth student
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Get the number of reviews an instructor has 
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function instructorReviews()
+    {
+        return $this->hasManyThrough(
+            Review::class,
+            Course::class,
+            'instructor_id',
+            'course_id',
+            'id',
+            'id'
+        )->where('reviews.status', 1);
+    }
+
+    public function averageRating()
+    {
+        return $this->instructorReviews()->avg('rate') ?? 0;
+    }
+
+    public function wishList()
+    {
+        return $this->belongsToMany(Course::class, 'wish_lists', 'user_id', 'course_id');
+    }
+
+    public function upvotedQuestions()
+    {
+        return $this->belongsToMany(Question::class, 'question_upvotes')->withTimestamps();
+    }
 
     public function sluggable(): array
     {
@@ -51,15 +92,5 @@ class User extends Authenticatable
     public function getRouteKeyName()
     {
         return 'slug';
-    }
-
-    public function wishList()
-    {
-        return $this->belongsToMany(Course::class, 'wish_lists', 'user_id', 'course_id');
-    }
-
-    public function upvotedQuestions()
-    {
-        return $this->belongsToMany(Question::class, 'question_upvotes')->withTimestamps();
     }
 }
