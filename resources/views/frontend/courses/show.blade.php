@@ -4,7 +4,7 @@
 
 @section('content') START BREADCRUMB AREA
     <!-- ================================
-                                                                            ================================= -->
+                                                                                                                ================================= -->
     <section class="breadcrumb-area pt-50px pb-50px bg-white pattern-bg">
         <div class="container">
             <div class="col-lg-8 mr-auto">
@@ -67,7 +67,8 @@
                     <div class="bread-btn-box pt-3">
                         <button class="btn theme-btn theme-btn-sm theme-btn-transparent lh-28 mr-2 mb-2 wishlist"
                             data-id="{{ $course->id }}">
-                            <i class="la la-heart-o mr-1"></i>
+                            <i
+                                class="la la-heart{{ auth()->user()->wishList->contains($course->id) ? '' : '-o' }} mr-1"></i>
                             <span class="swapping-btn" data-text-swap="Wishlisted"
                                 data-text-original="Wishlist">Wishlist</span>
                         </button>
@@ -85,12 +86,12 @@
         </div><!-- end container -->
     </section><!-- end breadcrumb-area -->
     <!-- ================================
-                                                                                END BREADCRUMB AREA
-                                                                            ================================= -->
+                                                                                                                    END BREADCRUMB AREA
+                                                                                                                ================================= -->
 
     <!--======================================
-                                                                                    START COURSE DETAILS AREA
-                                                                            ======================================-->
+                                                                                                                        START COURSE DETAILS AREA
+                                                                                                                ======================================-->
     <section class="course-details-area pb-20px">
         <div class="container">
             <div class="row">
@@ -403,7 +404,8 @@
                                 <div class="course-overview-card pt-4">
                                     <h3 class="fs-24 font-weight-semi-bold pb-4">Add a Review</h3>
 
-                                    <form method="post" class="row" action="{{ route('reviews.store') }}">
+                                    <form method="post" class="row"
+                                        action="{{ route('courses.reviews.store', $course->id) }}">
                                         @csrf
                                         <!-- Rating Section -->
                                         <div class="input-box col-lg-12 leave-rating-wrap pb-4">
@@ -632,12 +634,12 @@
         </div><!-- end container -->
     </section><!-- end course-details-area -->
     <!--======================================
-                                                                                    END COURSE DETAILS AREA
-                                                                            ======================================-->
+                                                                                                                        END COURSE DETAILS AREA
+                                                                                                                ======================================-->
 
     <!--======================================
-                                                                                    START RELATED COURSE AREA
-                                                                            ======================================-->
+                                                                                                                        START RELATED COURSE AREA
+                                                                                                                ======================================-->
     <section class="related-course-area bg-gray pt-60px pb-60px">
         <div class="container">
             <div class="related-course-wrap">
@@ -696,12 +698,12 @@
     </section>
     <!-- end related-course-area -->
     <!--======================================
-                                                                                    END RELATED COURSE AREA
-                                                                            ======================================-->
+                                                                                                                        END RELATED COURSE AREA
+                                                                                                                ======================================-->
 
     <!--======================================
-                                                                                    START CTA AREA
-                                                                            ======================================-->
+                                                                                                                        START CTA AREA
+                                                                                                                ======================================-->
     <section class="cta-area pt-60px pb-60px position-relative overflow-hidden">
         <span class="stroke-shape stroke-shape-1"></span>
         <span class="stroke-shape stroke-shape-2"></span>
@@ -746,8 +748,8 @@
         </div><!-- end container -->
     </section><!-- end cta-area -->
     <!--======================================
-                                                                                    END CTA AREA
-                                                                            ======================================-->
+                                                                                                                        END CTA AREA
+                                                                                                                ======================================-->
 
 
 
@@ -834,27 +836,31 @@
                     </button>
                 </div><!-- end modal-header -->
                 <div class="modal-body">
-                    <form method="post">
+                    <form id="reportForm" method="post">
+                        @csrf
                         <div class="input-box">
                             <label class="label-text">Select Report Type</label>
                             <div class="form-group">
                                 <div class="select-container w-auto">
-                                    <select class="select-container-select">
+                                    <select class="select-container-select" name="report_type" id="report_type">
                                         <option value>-- Select One --</option>
-                                        <option value="1">Inappropriate Course Content</option>
-                                        <option value="2">Inappropriate Behavior</option>
-                                        <option value="3">Aduca Policy Violation</option>
-                                        <option value="4">Spammy Content</option>
-                                        <option value="5">Other</option>
+                                        <option value="Inappropriate Course Content">Inappropriate Course Content</option>
+                                        <option value="Inappropriate Behavior">Inappropriate Behavior</option>
+                                        <option value="Aduca Policy Violation">Aduca Policy Violation</option>
+                                        <option value="Spammy Content">Spammy Content</option>
+                                        <option value="Other">Other</option>
                                     </select>
                                 </div>
+                                <span class="error-message text-danger"> </span>
                             </div>
                         </div>
+                        <input type="hidden" name="review_id" id="review_id">
                         <div class="input-box">
                             <label class="label-text">Write Message</label>
                             <div class="form-group">
-                                <textarea class="form-control form--control pl-3" name="message" placeholder="Provide additional details here..."
-                                    rows="5"></textarea>
+                                <textarea class="form-control form--control pl-3" name="message" id="message"
+                                    placeholder="Provide additional details here..." rows="5"></textarea>
+                                    <span class="error-message text-danger"> </span>
                             </div>
                         </div>
                         <div class="btn-box text-right pt-2">
@@ -869,6 +875,7 @@
         </div><!-- end modal-dialog -->
     </div><!-- end modal -->
 @endsection
+
 
 
 @push('scripts')
@@ -959,6 +966,66 @@
                 let rating = $(this).val();
                 fetchReviews(search, rating, true);
             });
+
+            // ###################### Report course or review #######################
+            // When the "Report" span is clicked
+            $('.report-review').on('click', function() {
+                let reviewId = $(this).data('id');
+                $('#review_id').val(reviewId);
+            });
+
+            // Handle form submission via AJAX
+            $(document).on('submit', '#reportForm', function(e) {
+                e.preventDefault(); // Prevent default form submission
+
+                $.ajax({
+                    url: '{{ route('courses.reports.store', $course->slug) }}',
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            icon: 'success',
+                            title: response.message,
+                            showConfirmButton: false,
+                            timer: 3000,
+                            customClass: {
+                                popup: 'black-toast'
+                            }
+                        });
+                        $('#reportModal').modal('hide'); // Close the modal
+                        $('#reportForm')[0].reset(); // Reset the form
+                    },
+                    error: function(xhr) {
+                        $('.error-message').text(''); // Reset all error spans to empty
+                        
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            let errors = xhr.responseJSON.errors;
+                            // Loop through errors and display them under respective inputs
+                            $.each(errors, function(field, messages) {
+                                let $errorSpan = $('#' + field).closest('.form-group').find('.error-message');
+                                if ($errorSpan.length) {
+                                    $errorSpan.text(messages[0]); 
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                icon: 'error',
+                                title: 'Failed to submit report',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                customClass: {
+                                    popup: 'black-toast'
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+
         });
     </script>
 @endpush

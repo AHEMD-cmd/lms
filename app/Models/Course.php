@@ -49,6 +49,11 @@ class Course extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
+
     public function sluggable(): array
     {
         return [

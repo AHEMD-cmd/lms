@@ -1,8 +1,8 @@
 @foreach ($wishlistedCourses->take(2) as $course)
     <li>
         <div class="media media-card">
-            <a href="course-details.html" class="media-img">
-                <img class="mr-3" src="{{ asset($course->image) }}" alt="Cart image">
+            <a href="/courses/{{ $course->slug }}" class="media-img">
+                <img class="mr-3" src="{{ asset($course->image) }}" alt="{{ $course->title }}">
             </a>
             <div class="media-body">
                 <h5><a href="course-details.html">{{ $course->name }}</a>
@@ -35,7 +35,7 @@
 @endforeach
 @if ($wishlistedCourses->count() > 0)
     <li class="header-go-to-wishlist">
-        <a href="{{ route('wish.list.index') }}" class="btn theme-btn w-100">Got to wishlist <i
+        <a href="{{ route("wish.list.index") }}" class="btn theme-btn w-100">Got to wishlist <i
                 class="la la-arrow-right icon ml-1"></i></a>
     </li>
 @else

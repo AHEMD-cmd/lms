@@ -48,6 +48,11 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
+
     /**
      * Get the number of reviews an instructor has 
      *

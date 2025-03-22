@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\InstructorController;
 use App\Http\Controllers\Frontend\SocialAuthController;
 use App\Http\Controllers\Frontend\CourseLectureController;
 use App\Http\Controllers\Frontend\QuestionUpvoteController;
+use App\Http\Controllers\Frontend\ReportController;
 use App\Http\Controllers\Frontend\ReviewController;
 
 /*
@@ -69,4 +70,8 @@ Route::middleware('auth')->group(function () {
 
     ############################### Question Upvote Routes ###########################
     Route::resource('questions.upvotes', QuestionUpvoteController::class)->only(['store']);
-});
+    
+    ############################### Course OR Review Reports Routes ###########################
+    Route::resource('courses.reports', ReportController::class)->only('store');
+    
+}); 

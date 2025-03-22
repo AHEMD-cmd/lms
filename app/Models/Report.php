@@ -5,22 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Review extends Model
+class Report extends Model
 {
     use HasFactory;
 
+    // Relationships
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function scopeActive($query)
+    public function course()
     {
-        return $query->where('status', 1);
+        return $this->belongsTo(Course::class);
     }
 
-    public function reports()
+    public function review()
     {
-        return $this->hasMany(Report::class);
+        return $this->belongsTo(Review::class);
     }
 }
