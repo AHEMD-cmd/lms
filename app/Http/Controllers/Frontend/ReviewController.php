@@ -16,21 +16,22 @@ class ReviewController extends Controller
 
     public function index(Request $request, Course $course)
     {
-        $query = $course->reviews();
+        $allReviews = $course->reviews();
 
         // Apply search filter if provided
         if ($request->has('search') && !empty($request->search)) {
-            $query->where('comment', 'like', '%' . $request->search . '%');
+            $allReviews->where('comment', 'like', '%' . $request->search . '%');
         }
 
         // Apply rating filter if provided
         if ($request->has('rating') && !empty($request->rating)) {
-            $query->where('rate', $request->rating);
+            $allReviews->where('rate', $request->rating);
         }
 
-        $reviews = $query->take(session('reviewsCount'))->get();
+        $reviews = $allReviews->take(session('reviewsCount'))->get();
         return response([
             'reviewsCount' => $reviews->count(),
+            'allReviewsCount' => $allReviews->count(),
             'reviews' => view('frontend.courses.includes._reviews', compact('reviews'))->render()
         ]);
     }
