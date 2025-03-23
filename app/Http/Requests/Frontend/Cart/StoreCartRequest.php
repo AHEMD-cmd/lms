@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Frontend\Cart;
 
 use App\Models\Course;
+use App\Rules\NoDuplicateCartItem;
 use App\Services\Cart\CartService;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,7 +25,7 @@ class StoreCartRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'course_id' => 'required|exists:courses,id',
+            'course_id' => ['required', 'exists:courses,id', new NoDuplicateCartItem],
         ];
     }
 

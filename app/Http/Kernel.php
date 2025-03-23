@@ -65,7 +65,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => \App\Http\Middleware\CheckRole::class,
-        'PreventDuplicateCartItem' => \App\Http\Middleware\PreventDuplicateCartItem::class,
         'CheckValidaCoupon' => \App\Http\Middleware\CheckValidaCoupon::class,
         'check.auto.coupon' => \App\Http\Middleware\CheckAutoAppliedCoupon::class,
         'check.coupon.limits' => \App\Http\Middleware\CheckCouponLimits::class,

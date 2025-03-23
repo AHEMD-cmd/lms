@@ -14,7 +14,7 @@ class CartController extends Controller
 
     public function __construct(CartService $cart)
     {
-        $this->middleware('PreventDuplicateCartItem')->only('store');
+        // $this->middleware('PreventDuplicateCartItem')->only('store');
         $this->middleware('CheckValidaCoupon')->only('update');
     }
 

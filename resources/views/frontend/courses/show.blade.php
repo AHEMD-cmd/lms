@@ -51,7 +51,7 @@
 
     <!-- Report Modal -->
     @include('frontend.courses.modals.report-modal')
-    !-- end modal -->
+    <!-- end modal -->
 
 @endsection
 
