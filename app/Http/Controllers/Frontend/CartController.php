@@ -7,17 +7,11 @@ use Illuminate\Http\Request;
 use App\Services\Cart\CartService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Cart\StoreCartRequest;
+use App\Http\Requests\Frontend\Cart\UpdateCartRequest;
 use App\Services\Cart\ApplyCouponService;
 
 class CartController extends Controller
 {
-
-    public function __construct(CartService $cart)
-    {
-        // $this->middleware('PreventDuplicateCartItem')->only('store');
-        $this->middleware('CheckValidaCoupon')->only('update');
-    }
-
     public function index()
     {
         return view('frontend.cart.index');
@@ -36,11 +30,11 @@ class CartController extends Controller
     }
 
     /**
-     * Update the cart items by using the coupon and chnage the value of discounted_price.
+     * Update the cart items by using the coupon and chnage the value of discounted_price for the items that the coupon can be applied on.
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateCartRequest $request)
     {
         $usedTimes = ApplyCouponService::applyCoupon($request);
 
@@ -49,7 +43,7 @@ class CartController extends Controller
             'message' => 'Coupon applied successfully',
             'usedTimes' => $usedTimes,
             'headerCartItems' => view('frontend.partials.header-cart')->with('cartItems', CartService::getCartData()->take(2))->render(),
-            'cartItems' => view('frontend.cart.includes.cart-items')->with('cartItems', CartService::getCartData())->render(),
+            'cartItems' => view('frontend.cart.includes.cart-area')->with('cartItems', CartService::getCartData())->render(),
         ], 201);
     }
     
@@ -60,7 +54,7 @@ class CartController extends Controller
             'status' => 'success',
             'message' => 'Course removed from cart successfully',
             'cartItemsNumber' => CartService::getCartData()->count(),
-            'cartItems' => view('frontend.cart.includes.cart-items')->with('cartItems', CartService::getCartData()->take(2))->render(),
+            'cartItems' => view('frontend.cart.includes.cart-area')->with('cartItems', CartService::getCartData()->take(2))->render(),
             'headerCartItems' => view('frontend.partials.header-cart')->with('cartItems', CartService::getCartData())->render(),
         ], 200);
     }
