@@ -500,7 +500,7 @@
                                                     type="button">No Questions</button>
                                             </div>
 
-                                            @if ($course->questions->count() > 0)
+                                            @if ($course->questions->count() > $questions->count())
                                                 <div class="question-btn-box pt-35px text-center">
                                                     <button
                                                         class="btn theme-btn theme-btn-transparent w-100 see-more-questions-btn"

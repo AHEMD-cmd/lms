@@ -145,6 +145,11 @@
             fetchQuestions(false)
         });
 
+        // ################ back to questions btn from replay ##################
+        $(document).on('click', '.back-to-question-btn', function() {
+            fetchQuestions(true)
+        });
+
 
         // ############### upvote questions ##################
         $(document).on("click", ".arrow-up", function() {
