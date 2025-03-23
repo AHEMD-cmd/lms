@@ -16,7 +16,6 @@ class CouponController extends Controller
     public function __construct()
     {
         $this->middleware('check.auto.coupon')->only('store', 'update');
-        $this->middleware('check.coupon.limits')->only('store', 'update');
     }
 
     public function index()

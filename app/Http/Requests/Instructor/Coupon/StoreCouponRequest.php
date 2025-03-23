@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Instructor\Coupon;
 
+use App\Rules\InstructorMonthlyCouponLimit;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCouponRequest extends FormRequest
@@ -29,7 +30,7 @@ class StoreCouponRequest extends FormRequest
             'discount_percentage' => ['required', 'integer', 'min:0', 'max:100', 'in:100,90,50'],
             'start_date' => ['required', 'date', 'after_or_equal:' . now()->startOfDay()->format('Y-m-d H:i')],
             'end_date' => ['required', 'date', 'after:start_date'],
-            'limit_number' => ['required', 'integer', 'min:1', 'max:3000'],
+            'limit_number' => ['required', 'integer', 'min:1', 'max:3000', new InstructorMonthlyCouponLimit($this->discount_percentage)],
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Instructor\Coupon;
 
+use App\Rules\InstructorMonthlyCouponLimit;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCouponRequest extends FormRequest
@@ -25,12 +26,11 @@ class UpdateCouponRequest extends FormRequest
             'code' => ['required', 'string', 'unique:coupons,code,' . $this->route('coupon')->id, 'max:100', ],
             'type' => ['required', 'string', 'in:platform,instructor,course'],
             'auto_applied' => ['nullable', 'boolean'],
-            'instructor_id' => ['required_if:type,instructor', 'nullable', 'exists:users,id,role,instructor'],
             'course_id' => ['required_if:type,course', 'nullable', 'exists:courses,id'],
+            'limit_number' => ['required', 'integer', 'min:1', 'max:3000', new InstructorMonthlyCouponLimit($this->discount_percentage)],
             'discount_percentage' => ['required', 'integer', 'min:0', 'max:100', 'in:100,90,50'],
             'start_date' => ['required', 'date', 'after_or_equal:' . $this->route('coupon')->start_date->format('Y-m-d H:i')],
             'end_date' => ['required', 'date', 'after:start_date'],
-            'limit_number' => ['required', 'integer', 'min:1', 'max:1000'],
         ];
     }
 

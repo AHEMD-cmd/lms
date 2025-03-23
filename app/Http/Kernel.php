@@ -66,7 +66,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => \App\Http\Middleware\CheckRole::class,
         'check.auto.coupon' => \App\Http\Middleware\CheckAutoAppliedCoupon::class,
-        'check.coupon.limits' => \App\Http\Middleware\CheckCouponLimits::class,
         'reset.questions' => \App\Http\Middleware\ResetQuestionsCount::class,
         'increment.questions' => \App\Http\Middleware\IncrementQuestionsCount::class,
         'reset.reviews' => \App\Http\Middleware\ResetReviewsCount::class,
