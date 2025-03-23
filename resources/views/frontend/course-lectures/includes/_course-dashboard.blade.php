@@ -490,10 +490,7 @@
                                         <div class="lecture-overview-item mt-0">
                                             <div class="question-list-item">
                                                 @if ($course->questions->count() > 0)
-                                                    @include(
-                                                        'frontend.course-lectures.includes._questions',
-                                                        ['questions' => $questions]
-                                                    )
+                                                    @include('frontend.course-lectures.includes._questions')
                                                 @endif
                                             </div>
 

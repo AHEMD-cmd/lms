@@ -52,7 +52,10 @@
                     isFilter: isFilter ? 1 : 0, // Send 1 if filtering, 0 if loading more
                 },
                 success: function(response) {
-                    $(".question-list-item").html(response);
+                    $(".question-list-item").html(response.questions);
+                    if (response.loadedFilteredQuestions == response.allFilteredQuestions) {
+                        $('.see-more-questions-btn').hide();
+                    }
                 },
                 error: function() {
                     alert("Error fetching questions");

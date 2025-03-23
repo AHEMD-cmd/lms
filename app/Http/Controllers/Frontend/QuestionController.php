@@ -42,9 +42,14 @@ class QuestionController extends Controller
             $questions->whereDoesntHave('replies');
         }
 
-        $questions = $questions->latest()->take(session('questionsCount'))->get();
+        $allFilteredQuestions = $questions->latest()->get();
+        $loadedFilteredQuestions = $questions->latest()->take(session('questionsCount'))->get();
 
-        return view('frontend.course-lectures.includes._questions', compact('questions'))->render();
+        return response([
+            'questions' => view('frontend.course-lectures.includes._questions', ['questions' => $loadedFilteredQuestions])->render(),
+            'allFilteredQuestions' => $allFilteredQuestions->count(),
+            'loadedFilteredQuestions' => $loadedFilteredQuestions->count()
+        ]);
     }
 
     public function store(StoreQuestionRequest $request)
