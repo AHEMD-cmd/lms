@@ -8,6 +8,7 @@
             min-height: 200px;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/resumablejs@1.1.0/resumable.min.js"></script>
 @endsection
 @section('content')
 
@@ -41,7 +42,7 @@
         <div class="card-body p-4">
             <h5 class="mb-4">Add Course</h5>
 
-            <form id="myForm" action="{{ route('instructor.courses.store') }}" method="post" class="row g-3"
+            <form id="courseForm" action="{{ route('instructor.courses.store') }}" method="post" class="row g-3"
                 enctype="multipart/form-data">
                 @csrf
 
@@ -78,12 +79,13 @@
 
 
                 <div class="form-group col-md-6">
-                    <label for="video" class="form-label"><span class="text-danger">*</span> Course Intro Video </label>
-                    <input type="file" name="video" class="form-control">
+                    <label for="video" class="form-label"><span class="text-danger">*</span> Course Intro Video URL </label>
+                    <input type="url" name="video" class="form-control">
                     @error('video')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+          
 
                 <div class="form-group col-md-6">
 
@@ -176,6 +178,15 @@
                     <textarea name="prerequisites" class="form-control" id="prerequisites" placeholder="Prerequisites ..."
                         rows="3">{{ old('prerequisites') }}</textarea>
                     @error('prerequisites')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label for="short_description" class="form-label">Course Short Description </label>
+                    <textarea name="short_description" class="form-control" id="short_description" placeholder="short_description ..."
+                        rows="3">{{ old('short_description') }}</textarea>
+                    @error('short_description')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -311,7 +322,6 @@
             });
             // <!--========== End of For Goals Section  ===========-->
 
-
             // <!--========== For Description Section  ===========-->
 
             ClassicEditor.create(document.querySelector('#editor'))
@@ -319,4 +329,5 @@
             // <!--========== End of For Description Section  ===========-->
         });
     </script>
+
 @endsection

@@ -8,10 +8,10 @@
                             <!-- Video files -->
                             <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
                                 type="video/mp4" />
-                            {{-- <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4"
+                            <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4"
                                 type="video/mp4" />
                             <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4"
-                                type="video/mp4" /> --}}
+                                type="video/mp4" />
 
                             <!-- Caption files -->
                             <track kind="captions" label="English" srclang="en"
@@ -218,6 +218,7 @@
                                     </div><!-- end accordion-->
                                 </div><!-- end mobile-course-menu -->
                             </div><!-- end tab-pane -->
+                            
                             {{-- ##################### end course content ##################### --}}
 
 

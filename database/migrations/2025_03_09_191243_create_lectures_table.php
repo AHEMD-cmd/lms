@@ -16,10 +16,13 @@ return new class extends Migration
             $table->foreignId('course_id')->constrained()->onDelete('cascade');
             $table->foreignId('course_section_id')->constrained('course_sections')->onDelete('cascade');
             $table->string('title')->nullable();
-            $table->string('video')->nullable();
             $table->string('url')->nullable();
             $table->text('content')->nullable(); 
             $table->string('number'); 
+            $table->json('files')->nullable(); 
+            $table->string('is_published')->default('0');
+            $table->string('is_active')->default('0')->comment('students can view lecture or not'); 
+
             $table->timestamps();
         });
     }

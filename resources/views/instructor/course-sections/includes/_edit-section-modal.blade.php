@@ -2,12 +2,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Section </h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edit Section </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
 
-                <form action="{{ route('instructor.courses.sections.update', [$course->id, $section->id]) }}" method="POST">
+                <form action="{{ route('instructor.courses.sections.update', [$course->slug, $section->id]) }}" method="POST">
                     @csrf
                     @method('PUT')
 

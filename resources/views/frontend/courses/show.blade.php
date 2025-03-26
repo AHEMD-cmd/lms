@@ -5,40 +5,40 @@
 @section('content')
 
     <!-- ================================
-                            START BREADCRUMB AREA
-                    ================================= -->
+                                    START BREADCRUMB AREA
+                            ================================= -->
     @include('frontend.courses.includes._breadcrumb')
     <!-- end breadcrumb-area -->
     <!-- ================================
-            END BREADCRUMB AREA
-            ================================= -->
+                    END BREADCRUMB AREA
+                    ================================= -->
 
     <!--======================================
-                 START COURSE DETAILS AREA
-                ======================================-->
+                         START COURSE DETAILS AREA
+                        ======================================-->
     @include('frontend.courses.includes._course-details')
     <!-- end course-details-area -->
     <!--======================================
-                                                                                                                                            END COURSE DETAILS AREA
-                                                                                                                                    ======================================-->
+                                                                                                                                                    END COURSE DETAILS AREA
+                                                                                                                                            ======================================-->
 
     <!--======================================
-        START RELATED COURSE AREA
-        ======================================-->
+                START RELATED COURSE AREA
+                ======================================-->
     @include('frontend.courses.includes._related-courses')
     <!-- end related-course-area -->
     <!--======================================
-                                                                                                                                            END RELATED COURSE AREA
-                                                                                                                                    ======================================-->
+                                                                                                                                                    END RELATED COURSE AREA
+                                                                                                                                            ======================================-->
 
     <!--======================================
-    START CTA AREA
-    ======================================-->
+            START CTA AREA
+            ======================================-->
     @include('frontend.courses.includes._cta')
     <!-- end cta-area -->
     <!--======================================
-                                                                                                                                            END CTA AREA
-                                                                                                                                    ======================================-->
+                                                                                                                                                    END CTA AREA
+                                                                                                                                            ======================================-->
 
 
     <!-- Share Modal -->
@@ -58,6 +58,16 @@
 
 
 @push('scripts')
+    <script>
+        // Initialize Plyr video player with quality options
+        var player = new Plyr('#player', {
+            quality: {
+                default: 360,
+                options: [360, 480, 720],
+                forced: true,
+            }
+        });
+    </script>
     <script>
         $(document).ready(function() {
             // ################## add course to wishlist ###################
@@ -117,7 +127,7 @@
                         loadMore: loadMore == true ? 1 : 0
                     },
                     success: function(response) {
-                        if(response.allReviewsCount == response.reviewsCount){
+                        if (response.allReviewsCount == response.reviewsCount) {
                             $('#load-more-reviews').hide();
                         }
                         $('#course-reviews-container').html(response.reviews);
@@ -204,8 +214,8 @@
                 });
             });
 
-             // When the "Report" span is clicked
-             $('.report-review').on('click', function() {
+            // When the "Report" span is clicked
+            $('.report-review').on('click', function() {
                 let reviewId = $(this).data('id');
                 $('#review_id').val(reviewId);
             });

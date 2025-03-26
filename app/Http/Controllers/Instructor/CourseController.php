@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Instructor;
 
+
 use App\Models\Course;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 use App\Services\Instructor\Course\CourseService;
 use App\Http\Requests\Instructor\Course\StoreCourseRequest;
 use App\Http\Requests\Instructor\Course\UpdateCourseRequest;
@@ -31,9 +31,10 @@ class CourseController extends Controller
         return view('instructor.courses.create', compact('categories'));
     }
 
+
     public function store(StoreCourseRequest $request)
     {
-        $this->courseService->createCourse($request, $request->validated());
+        $course = $this->courseService->createCourse($request, $request->validated());
 
         return redirect()->route('instructor.courses.index')->with('success', 'Course created successfully');
     }

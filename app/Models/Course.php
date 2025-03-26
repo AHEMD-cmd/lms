@@ -12,6 +12,10 @@ class Course extends Model
 {
     use HasFactory, Sluggable;
 
+    protected $casts = [
+        'videos' => 'array',
+    ];
+
     public function instructor()
     {
         return $this->belongsTo(User::class, 'instructor_id', 'id')->withDefault([

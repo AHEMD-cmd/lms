@@ -34,7 +34,7 @@
                                         <div class="d-flex justify-content-between align-items-center">
 
                                             <form class="delete-form"
-                                                action="{{ route('instructor.courses.sections.destroy', [$course->id, $section->id]) }}"
+                                                action="{{ route('instructor.courses.sections.destroy', [$course->slug, $section->id]) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
@@ -67,10 +67,10 @@
                                                     </div>
 
                                                     <div class="btn-group">
-                                                        <a href="{{ route('instructor.courses.sections.lectures.edit', [$course->id, $section->id, $lecture->id]) }}"
+                                                        <a href="{{ route('instructor.courses.sections.lectures.edit', [$course->slug, $section->id, $lecture->id]) }}"
                                                             class="btn btn-sm btn-primary">Edit</a> &nbsp;
                                                         <form class="delete-form"
-                                                            action="{{ route('instructor.courses.sections.lectures.destroy', [$course->id, $section->id, $lecture->id]) }}"
+                                                            action="{{ route('instructor.courses.sections.lectures.destroy', [$course->slug, $section->id, $lecture->id]) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
@@ -92,10 +92,10 @@
                                             @csrf
                                             {{-- <h6>Lecture Title </h6> --}}
                                             <input type="text" name="title" class="form-control title mt-2"
-                                                placeholder="Enter Lecture Title">
+                                                placeholder="Enter Lecture Title ">
                                             <div class="text-danger title_error"></div>
 
-                                            <textarea name="content" class="form-control mt-2 content" placeholder="Enter Lecture Content"></textarea>
+                                            <textarea name="content" class="form-control mt-2 content" placeholder="Enter lecture content in case there is no video"></textarea>
                                             <div class="text-danger content_error"></div>
 
                                             {{-- <h6 class="mt-3">Add Video Url</h6> --}}

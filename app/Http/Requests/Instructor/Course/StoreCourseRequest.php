@@ -33,10 +33,12 @@ class StoreCourseRequest extends FormRequest
             'price' => 'required|integer',
             'discount' => 'nullable|integer',
             'prerequisites' => 'required|string|max:2000',
+            'short_description' => 'required|string|max:2000',
             'bestseller' => 'nullable|boolean',
             'featured' => 'nullable|boolean',
             'highest_rated' => 'nullable|boolean',
-            'video' => 'required|file|mimes:mp4,webm|max:10240', // 10MB limit in KB       
+            'video' => 'required|url',
+            // 'video' => 'required|file|mimes:mp4,webm|max:1048576', // 1GB limit in KB
             'has_certificate' => 'required|boolean',
             'course_goals' => 'required|array',
             'course_goals.*' => 'required|string|max:255',

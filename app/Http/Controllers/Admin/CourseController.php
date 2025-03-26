@@ -13,7 +13,7 @@ class CourseController extends Controller
         $courses = Course::latest()->paginate(10);
         return view('admin.courses.index', compact('courses'));
     }
-
+    
     public function show(Course $course)
     {
         return view('admin.courses.show', compact('course'));

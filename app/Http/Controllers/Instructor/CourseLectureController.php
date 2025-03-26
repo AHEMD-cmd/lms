@@ -27,7 +27,7 @@ class CourseLectureController extends Controller
     public function update(UpdateLectureRequest $request, Course $course, CourseSection $section, Lecture $lecture)
     {
         $lecture->update($request->validated());
-        return redirect()->route('instructor.courses.sections.index', $course->id)->with('message', 'Lecture updated successfully');
+        return redirect()->route('instructor.courses.sections.index', $course->slug )->with('message', 'Lecture updated successfully');
     }
 
     public function destroy(Course $course, CourseSection $section, Lecture $lecture)

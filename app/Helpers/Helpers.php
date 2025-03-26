@@ -16,9 +16,9 @@ if (!function_exists('uploadPhoto')) {
 }
 
 if (!function_exists('uploadVideo')) {
-    function uploadVideo(UploadedFile $photo, string $path = 'videos'): string
+    function uploadVideo(UploadedFile $video, string $path = 'videos'): string
     {
-        return $photo->store($path, 's3');
+        return $video->store($path, 's3');
     }
 }
 
@@ -67,3 +67,43 @@ if (!function_exists('updateEditedPhoto')) {
         return $imageUrl;
     }
 }
+
+if (!function_exists('uploadEditedPhotoToS3')) {
+    function uploadEditedPhotoToS3(UploadedFile $photo, string $path = 'images'): string
+    {
+        $photoName = hexdec(uniqid()) . '.' . $photo->getClientOriginalExtension();
+
+        // Resize image using Intervention
+        $image = Image::make($photo)->resize(370, 246)->encode();
+
+        // Upload to S3
+        $s3Path = $path . '/' . $photoName;
+        Storage::disk('s3')->put($s3Path, (string) $image, 'public');
+
+        // Return S3 URL or path
+        return Storage::disk('s3')->url($s3Path);
+    }
+}
+
+if (!function_exists('updateEditedPhotoToS3')) {
+    function updateEditedPhotoToS3(UploadedFile $photo, string $path = 'images', $oldPhoto = null): string
+    {
+        // Delete old photo if exists
+        if ($oldPhoto && Storage::disk('s3')->exists($oldPhoto)) {
+            Storage::disk('s3')->delete($oldPhoto);
+        }
+
+        $photoName = hexdec(uniqid()) . '.' . $photo->getClientOriginalExtension();
+
+        // Resize image using Intervention
+        $image = Image::make($photo)->resize(370, 246)->encode();
+
+        // Upload to S3
+        $s3Path = $path . '/' . $photoName;
+        Storage::disk('s3')->put($s3Path, (string) $image, 'public');
+
+        // Return S3 URL or path
+        return Storage::disk('s3')->url($s3Path);
+    }
+}
+

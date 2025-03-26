@@ -58,13 +58,15 @@
                     </p>
                 </div><!-- end d-flex -->
                 <div class="bread-btn-box pt-3">
-                    <button class="btn theme-btn theme-btn-sm theme-btn-transparent lh-28 mr-2 mb-2 wishlist"
-                        data-id="{{ $course->id }}">
-                        <i
-                            class="la la-heart{{ auth()->user()->wishList->contains($course->id) ? '' : '-o' }} mr-1"></i>
-                        <span class="swapping-btn" data-text-swap="Wishlisted"
-                            data-text-original="Wishlist">Wishlist</span>
-                    </button>
+                    @auth
+                        <button class="btn theme-btn theme-btn-sm theme-btn-transparent lh-28 mr-2 mb-2 wishlist"
+                            data-id="{{ $course->id }}">
+                            <i
+                                class="la la-heart{{ auth()->user()->wishList->contains($course->id) ? '' : '-o' }} mr-1"></i>
+                            <span class="swapping-btn" data-text-swap="Wishlisted"
+                                data-text-original="Wishlist">Wishlist</span>
+                        </button>
+                    @endauth
                     <button class="btn theme-btn theme-btn-sm theme-btn-transparent lh-28 mr-2 mb-2" data-toggle="modal"
                         data-target="#shareModal">
                         <i class="la la-share mr-1"></i>Share

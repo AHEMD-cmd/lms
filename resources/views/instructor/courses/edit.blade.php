@@ -40,7 +40,7 @@
         <div class="card-body p-4">
             <h5 class="mb-4">Edit Course: {{ $course->title }}</h5>
 
-            <form id="myForm" action="{{ route('instructor.courses.update', $course->id) }}" method="post"
+            <form id="myForm" action="{{ route('instructor.courses.update', $course->slug) }}" method="post"
                 class="row g-3" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -79,8 +79,8 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="video" class="form-label"><span class="text-danger">*</span> Course Intro Video</label>
-                    <input type="file" name="video" class="form-control @error('video') is-invalid @enderror">
+                    <label for="video" class="form-label"><span class="text-danger">*</span> Course Intro Video URL</label>
+                    <input type="url" name="video" value="{{ old('video', $course->video) }}" class="form-control @error('video') is-invalid @enderror">
                     @error('video')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -88,18 +88,23 @@
 
                 <div class="form-group col-md-6 d-flex align-items-center">
                     <div class="me-3">
-                        @if ($course->video_path)
-                            <video width="200" controls id="course-video" class="rounded">
-                                <source src="{{ $course->video_path }}" type="video/mp4">
-                            </video>
+                        @if ($course->video)
+                            {{-- <video width="200" controls id="course-video" class="rounded">
+                                <source src="{{ $course->video }}" type="video/mp4">
+                            </video> --}}
+
+                            <iframe width="400" height="150"  src="{{ $course->video }}" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
                         @endif
                     </div>
-                    <div>
+                    {{-- <div>
                         <p class="mb-1">Current Video</p>
                         <small class="text-muted">Note: The video will be replaced if you upload a new one.</small>
-                    </div>
+                    </div> --}}
                 </div>
-                
+
                 <div class="form-group col-md-6">
                     <label for="category_id" class="form-label">Course Category <span class="text-danger">*</span></label>
                     <select name="category_id" id="category_id"
@@ -188,10 +193,19 @@
                 </div>
 
                 <div class="form-group col-md-12">
-                    <label for="prerequisites" class="form-label">Course Prerequisites</label>
+                    <label for="prerequisites" class="form-label">Course Prerequisites </label>
                     <textarea name="prerequisites" class="form-control @error('prerequisites') is-invalid @enderror" id="prerequisites"
                         placeholder="Prerequisites ..." rows="3">{{ old('prerequisites', $course->prerequisites) }}</textarea>
                     @error('prerequisites')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label for="short_description" class="form-label">Course Short Description </label>
+                    <textarea name="short_description" class="form-control" id="short_description" placeholder="short description ..."
+                        rows="3">{{ old('short_description', $course->short_description) }}</textarea>
+                    @error('short_description')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>

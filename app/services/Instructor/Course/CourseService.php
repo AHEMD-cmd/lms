@@ -8,20 +8,22 @@ use Illuminate\Support\Arr;
 
 class CourseService
 {
-    #################### create course ####################
+    /**
+     * Create a new course with optional image and video
+     */
     public function createCourse($request, array $data)
     {
+        // Handle image upload synchronously (assuming images are smaller)
         if ($request->file('image')) {
-            $data['image'] = uploadEditedPhoto($request->file('image'), 'courses');
-        }
-
-        if ($request->file('video')) {
-            $data['video'] = uploadVideo($request->file('video'), 'courses-video');
+            $data['image'] = uploadEditedPhotoToS3($request->file('image'), 'courses');
         }
 
         $course = Course::create(Arr::except($data, ['course_goals']));
 
-        $this->createCourseGoals($data['course_goals'], $course->id);
+        // Handle course goals (assuming this method exists)
+        $this->createCourseGoals($data['course_goals'] ?? [], $course->id);
+
+        return $course;
     }
 
     private function createCourseGoals(array $data, $courseId)
@@ -35,20 +37,22 @@ class CourseService
     }
     #################### end create course ####################
 
-    #################### update course ####################
+    /**
+     * Update an existing course
+     */
     public function updateCourse($request, $course, array $data)
     {
+        // Handle image update
         if ($request->file('image')) {
-            $data['image'] = updateEditedPhoto($request->file('image'), 'courses', $course->image);
-        }
-
-        if ($request->file('video')) {
-            $data['video'] = updateVideo($request->file('video'), 'courses-video', $course->video);
+            $data['image'] = updateEditedPhotoToS3($request->file('image'), 'courses', $course->image);
         }
 
         $course->update(Arr::except($data, ['course_goals']));
 
-        $this->updateCourseGoals($data['course_goals'], $course);
+        // Update course goals (assuming this method exists)
+        $this->updateCourseGoals($data['course_goals'] ?? [], $course);
+
+        return $course;
     }
 
     private function updateCourseGoals(array $data, $course)

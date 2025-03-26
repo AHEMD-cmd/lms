@@ -18,7 +18,7 @@
             </div>
             <div class="ms-auto">
                 <div class="btn-group">
-                    <a href="{{ route('instructor.courses.sections.index', $course->id) }}"
+                    <a href="{{ route('instructor.courses.sections.index', $course->slug) }}"
                         class="btn btn-primary px-5">Back </a>
                 </div>
             </div>
@@ -29,7 +29,7 @@
             <div class="card-body p-4">
                 <h5 class="mb-4">Edit Lecture</h5>
                 <form id="myForm"
-                    action="{{ route('instructor.courses.sections.lectures.update', [$course->id, $section->id, $lecture->id]) }}"
+                    action="{{ route('instructor.courses.sections.lectures.update', [$course->slug, $section->id, $lecture->id]) }}"
                     method="post" class="row g-3" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')

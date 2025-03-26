@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Instructor\CouponController;
 use App\Http\Controllers\Instructor\CourseController;
+use App\Http\Controllers\Instructor\UploadController;
 use App\Http\Controllers\Instructor\ProfileController;
 use App\Http\Controllers\Instructor\DashboardController;
 use App\Http\Controllers\Instructor\CourseLectureController;
@@ -36,4 +37,7 @@ Route::middleware(['auth', 'role:instructor'])
         ############################# Instructor Coupon Routes #############################
         Route::resource('coupons', CouponController::class);
         Route::patch('coupons/{coupon}/update-status', [CouponController::class, 'updateStatus'])->name('coupons.update-status');
+
+        ############################# Course main video upload Routes #############################
+        Route::post('/courses/presigned-url', [CourseController::class, 'getPresignedUrl'])->name('courses.presigned-url');
     });

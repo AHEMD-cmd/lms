@@ -23,7 +23,7 @@ class CourseController extends Controller
             ->with('instructor')
             ->limit(3)
             ->get();
+
         return view('frontend.courses.show', compact('course', 'relatedCourses', 'reviews'));
     }
 }
-

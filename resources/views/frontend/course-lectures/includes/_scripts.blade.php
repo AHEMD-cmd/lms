@@ -14,7 +14,64 @@
 <script src="{{ asset('assets/frontend') }}/js/jquery.MultiFile.min.js"></script>
 <script src="{{ asset('assets/frontend') }}/js/main.js"></script>
 <script>
-    var player = new Plyr('#player');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Define our video sources with quality options
+        const source = {
+            type: 'video',
+            title: 'View From A Blue Moon',
+            sources: [{
+                    src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4',
+                    type: 'video/mp4',
+                    size: 1080,
+                },
+                {
+                    src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4',
+                    type: 'video/mp4',
+                    size: 720,
+                },
+                {
+                    src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4',
+                    type: 'video/mp4',
+                    size: 576,
+                }
+            ],
+            tracks: [{
+                    kind: 'captions',
+                    label: 'English',
+                    srclang: 'en',
+                    src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt',
+                    default: true,
+                },
+                {
+                    kind: 'captions',
+                    label: 'French',
+                    srclang: 'fr',
+                    src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt',
+                }
+            ]
+        };
+
+        // Get the video element
+        const video = document.querySelector('#player');
+
+        // Empty the video element - we'll set sources through JavaScript
+        video.innerHTML = '';
+
+        // Initialize Plyr
+        const player = new Plyr(video, {
+            captions: {
+                active: true,
+                update: true
+            },
+            quality: {
+                default: 720,
+                options: [1080, 720, 576]
+            }
+        });
+
+        // Set the source after the player is initialized
+        player.source = source;
+    });
 </script>
 
 
@@ -62,13 +119,6 @@
                 }
             });
         }
-
-        $('input[name="search"]').on('input', () => fetchQuestions(true));
-        $('.questions-filter select').on('change', () => fetchQuestions(true));
-        $('#questionsIAsked, #questionsWithNoResponses').on('change', () => fetchQuestions(true));
-
-
-
 
         // ###################### store question ######################
         $(".question-form").submit(function(e) {
@@ -140,17 +190,6 @@
             });
         });
 
-        // ################ see more questions ##################
-        $(document).on('click', '.see-more-questions-btn', function() {
-            fetchQuestions(false)
-        });
-
-        // ################ back to questions btn from replay ##################
-        $(document).on('click', '.back-to-question-btn', function() {
-            fetchQuestions(true)
-        });
-
-
         // ############### upvote questions ##################
         $(document).on("click", ".arrow-up", function() {
             let questionId = $(this).data("id");
@@ -172,5 +211,25 @@
                 },
             });
         });
+
+
+        // ####################### event listeners ##############################
+        $('input[name="search"]').on('input', () => fetchQuestions(true));
+        $('.questions-filter select').on('change', () => fetchQuestions(true));
+        $('#questionsIAsked, #questionsWithNoResponses').on('change', () => fetchQuestions(true));
+
+        // ################ see more questions ##################
+        $(document).on('click', '.see-more-questions-btn', function() {
+            fetchQuestions(false)
+        });
+
+        // ################ back to questions btn from replay ##################
+        $(document).on('click', '.back-to-question-btn', function() {
+            fetchQuestions(true)
+        });
+
+        // ####################### end event listeners ##############################
+
+
     });
 </script>

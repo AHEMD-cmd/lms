@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "aws/aws-sdk-php": "^3.342",
         "cviebrock/eloquent-sluggable": "^10.0",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2",
@@ -14,6 +15,7 @@
         "laravel/socialite": "^5.18",
         "laravel/tinker": "^2.8",
         "league/flysystem-aws-s3-v3": "^3.0",
+        "php-ffmpeg/php-ffmpeg": "^1.3",
         "staudenmeir/laravel-adjacency-list": "^1.13"
     },
     "require-dev": {
