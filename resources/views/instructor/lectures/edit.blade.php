@@ -2,6 +2,16 @@
 
 @section('title', 'Edit Lecture')
 
+@section('css')
+    <style>
+        .ck-editor__editable {
+            min-height: 300px !important;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+    </style>
+@endsection
+
 @section('content')
 
     <div class="page-content">
@@ -35,21 +45,32 @@
                     @method('PUT')
 
                     <div class="form-group col-md-6">
-                        <label for="input1" class="form-label">Lecture Title</label>
-                        <input type="text" name="title" class="form-control" id="input1"
+                        <label for="title" class="form-label">Lecture Title</label>
+                        <input type="text" name="title" class="form-control" id="title"
                             value="{{ $lecture->title }}">
+                            @error('title')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="input1" class="form-label">Video Url </label>
-                        <input type="text" name="url" class="form-control" id="input1"
+                        <label for="url" class="form-label">Video Url </label>
+                        <input type="text" name="url" class="form-control" id="url"
                             value="{{ $lecture->url }}">
+                            @error('url')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                     </div>
 
                     <div class="form-group col-md-12">
-                        <label for="input1" class="form-label">Lecture Content </label>
-                        <textarea name="content" class="form-control">{{ $lecture->content }}</textarea>
+                        <label for="editor" class="form-label">Lecture Content </label>
+                        <textarea name="content" id="editor" class="form-control" rows="3">{{ $lecture->content }}</textarea>
+                        @error('content')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
+
+                    <input type="file" multiple name="files[]" class="form-control title mt-2">
 
                     <div class="col-md-12">
                         <div class="d-md-flex d-grid align-items-center gap-3">
@@ -61,4 +82,13 @@
             </div>
         </div>
     </div>
+@endsection
+
+
+@section('scripts')
+    <script>
+        // <!--========== content textarea ===========-->
+        ClassicEditor.create(document.querySelector('#editor'));
+        // <!--========== End of content textarea  ===========-->
+    </script>
 @endsection

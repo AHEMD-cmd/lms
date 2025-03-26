@@ -5,6 +5,8 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ReplyController;
 use App\Http\Controllers\Frontend\CourseController;
+use App\Http\Controllers\Frontend\ReportController;
+use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\QuestionController;
 use App\Http\Controllers\Frontend\WishListController;
@@ -12,8 +14,7 @@ use App\Http\Controllers\Frontend\InstructorController;
 use App\Http\Controllers\Frontend\SocialAuthController;
 use App\Http\Controllers\Frontend\CourseLectureController;
 use App\Http\Controllers\Frontend\QuestionUpvoteController;
-use App\Http\Controllers\Frontend\ReportController;
-use App\Http\Controllers\Frontend\ReviewController;
+use App\Http\Controllers\Frontend\LectureProgressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,5 +74,7 @@ Route::middleware('auth')->group(function () {
     
     ############################### Course OR Review Reports Routes ###########################
     Route::resource('courses.reports', ReportController::class)->only('store');
+
     
+
 }); 

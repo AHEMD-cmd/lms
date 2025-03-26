@@ -23,8 +23,10 @@ class UpdateLectureRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'content' => ['required', 'string', 'max:2000'],
-            'url' => ['required', 'string', 'max:255'],
+            'content' => ['required_if:url,null', 'string', 'nullable', 'max:2000'],
+            'url' => ['required_if:content,null', 'nullable',  'max:255', 'url'],
+            'files' => ['nullable', 'array'],
+            'files.*' => ['nullable', 'file', 'max:5120'], // 5MB = 5120KB
         ];
     }
 }

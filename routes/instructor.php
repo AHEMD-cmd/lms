@@ -6,8 +6,11 @@ use App\Http\Controllers\Instructor\CourseController;
 use App\Http\Controllers\Instructor\UploadController;
 use App\Http\Controllers\Instructor\ProfileController;
 use App\Http\Controllers\Instructor\DashboardController;
+use App\Http\Controllers\Instructor\CouponStatusController;
 use App\Http\Controllers\Instructor\CourseLectureController;
 use App\Http\Controllers\Instructor\CourseSectionController;
+use App\Http\Controllers\Instructor\LectureActiveController;
+use App\Http\Controllers\Instructor\LecturePublishedController;
 
 
 
@@ -33,11 +36,10 @@ Route::middleware(['auth', 'role:instructor'])
 
         ############### Instructor Course Lectures Routes ###############
         Route::resource('courses.sections.lectures', CourseLectureController::class);
+        Route::patch('courses/{course}/sections/{section}/lectures/{lecture}/update-active-status', LectureActiveController::class)->name('courses.sections.lectures.update-active-status');
+        Route::patch('courses/{course}/sections/{section}/lectures/{lecture}/update-published-status', LecturePublishedController::class)->name('courses.sections.lectures.update-published-status');
 
         ############################# Instructor Coupon Routes #############################
         Route::resource('coupons', CouponController::class);
-        Route::patch('coupons/{coupon}/update-status', [CouponController::class, 'updateStatus'])->name('coupons.update-status');
-
-        ############################# Course main video upload Routes #############################
-        Route::post('/courses/presigned-url', [CourseController::class, 'getPresignedUrl'])->name('courses.presigned-url');
+        Route::patch('coupons/{coupon}/update-status', CouponStatusController::class)->name('coupons.update-status');
     });

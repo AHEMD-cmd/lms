@@ -92,6 +92,7 @@
 @section('scripts')
     <script type="text/javascript">
         $(document).ready(function() {
+            // ######################## update coupon status #####################
             $('.status-toggle').on('change', function() {
                 let checkbox = $(this);
                 let couponId = checkbox.data('coupon-id');

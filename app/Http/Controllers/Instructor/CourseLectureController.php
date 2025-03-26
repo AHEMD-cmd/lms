@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Instructor;
 
 use App\Models\Course;
 use App\Models\Lecture;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\CourseSection;
 use App\Http\Controllers\Controller;
@@ -15,8 +16,24 @@ class CourseLectureController extends Controller
 
     public function store(StoreLectureRequest $request, Course $course, CourseSection $section)
     {
-        $section->lectures()->create(array_merge($request->validated(), ['course_id' => $course->id]));
-        return back()->with('message', 'Lecture created successfully');
+        $dataWithoutFiles = Arr::except($request->validated(), ['files']);
+
+        $lecture = $section->lectures()->create(array_merge($dataWithoutFiles, ['course_id' => $course->id]));
+
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $path = $file->store('lectures', 'public');
+                $lecture->files()->create(['file' => $path]);
+            }
+        }
+
+        return response()->json([
+            'message' => 'Lecture created successfully',
+            'lectures' => view('instructor.course-sections.includes._lectures', [
+                'section' => $section->load('lectures'),
+                'course' => $course
+            ])->render(),
+        ], 201);
     }
 
     public function edit(Course $course, CourseSection $section, Lecture $lecture)
@@ -26,8 +43,18 @@ class CourseLectureController extends Controller
 
     public function update(UpdateLectureRequest $request, Course $course, CourseSection $section, Lecture $lecture)
     {
-        $lecture->update($request->validated());
-        return redirect()->route('instructor.courses.sections.index', $course->slug )->with('message', 'Lecture updated successfully');
+        $dataWithoutFiles = Arr::except($request->validated(), ['files']);
+
+        $lecture->update($dataWithoutFiles);
+
+        if ($request->hasFile('files')) {
+            $lecture->files()->delete();
+            foreach ($request->file('files') as $file) {
+                $path = $file->store('lectures', 'public');
+                $lecture->files()->create(['file' => $path]);
+            }
+        }
+        return redirect()->route('instructor.courses.sections.index', $course->slug)->with('message', 'Lecture updated successfully');
     }
 
     public function destroy(Course $course, CourseSection $section, Lecture $lecture)
