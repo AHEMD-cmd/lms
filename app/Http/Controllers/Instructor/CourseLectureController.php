@@ -23,7 +23,11 @@ class CourseLectureController extends Controller
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
                 $path = $file->store('lectures', 'public');
-                $lecture->files()->create(['file' => $path]);
+                $fileName = $file->getClientOriginalName(); // Get the original file nam
+                $lecture->files()->create([
+                    'file' => $path,
+                    'name' => $fileName,
+                ]);
             }
         }
 
@@ -50,8 +54,12 @@ class CourseLectureController extends Controller
         if ($request->hasFile('files')) {
             $lecture->files()->delete();
             foreach ($request->file('files') as $file) {
+                $fileName = $file->getClientOriginalName(); // Get the original file nam
                 $path = $file->store('lectures', 'public');
-                $lecture->files()->create(['file' => $path]);
+                $lecture->files()->create([
+                    'file' => $path,
+                    'name' => $fileName,
+                ]);
             }
         }
         return redirect()->route('instructor.courses.sections.index', $course->slug)->with('message', 'Lecture updated successfully');

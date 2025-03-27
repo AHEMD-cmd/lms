@@ -35,7 +35,7 @@ class Course extends Model
 
     public function sections()
     {
-        return $this->hasMany(CourseSection::class)->with('lectures');
+        return $this->hasMany(CourseSection::class)->with('lectures.files');
     }
 
     public function lectures()

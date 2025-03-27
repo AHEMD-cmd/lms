@@ -13,4 +13,11 @@ class LectureFile extends Model
     {
         return $this->belongsTo(Lecture::class);
     }
+
+    protected $appends = ['full_path'];
+
+    public function getFilePathAttribute()
+    {
+        return public_path('lectrues/' . $this->file);
+    }
 }

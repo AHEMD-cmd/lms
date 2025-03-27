@@ -14,7 +14,7 @@ use App\Http\Controllers\Frontend\InstructorController;
 use App\Http\Controllers\Frontend\SocialAuthController;
 use App\Http\Controllers\Frontend\CourseLectureController;
 use App\Http\Controllers\Frontend\QuestionUpvoteController;
-use App\Http\Controllers\Frontend\LectureProgressController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -74,7 +74,4 @@ Route::middleware('auth')->group(function () {
     
     ############################### Course OR Review Reports Routes ###########################
     Route::resource('courses.reports', ReportController::class)->only('store');
-
-    
-
 }); 

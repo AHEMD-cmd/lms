@@ -19,9 +19,8 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('url')->nullable();
             $table->text('content')->nullable(); 
+            $table->integer('duration')->nullable(); 
             $table->string('is_published')->default('1');
-            $table->string('is_active')->default('0')->comment('students can view lecture or not'); 
-
             $table->timestamps();
         });
     }

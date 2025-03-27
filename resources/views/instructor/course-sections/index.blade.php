@@ -85,17 +85,17 @@
                                                 placeholder="Add URL">
                                             <div class="text-danger url_error"></div>
 
-
-
                                             <input type="file" multiple name="files[]"
                                                 class="form-control title mt-4 mb-4">
                                             <div class="text-danger files_error"></div>
 
-
-
                                             <textarea name="content" class="form-control mt-4 content" placeholder="Enter lecture content in case there is no video"
                                                 rows="10" id="editor"></textarea>
                                             <div class="text-danger content_error"></div>
+
+                                            <input type="number" name="duration" class="form-control url mt-4"
+                                            placeholder="Add Duration in minutes">
+                                            <div class="text-danger duration_error"></div>
 
 
                                             <button class="btn btn-primary mt-3">Save Lecture</button>
@@ -233,56 +233,56 @@
         // <!--========== End of content textarea  ===========-->
 
         // ######################## update lecture active status #####################
-        $(document).ready(function() {
-            $('.active-status').on('change', function() {
-                let checkbox = $(this);
-                let courseSlug = checkbox.data('course-slug');
-                let sectionId = checkbox.data('section-id');
-                let lectureId = checkbox.data('lecture-id');
+        // $(document).ready(function() {
+        //     $('.active-status').on('change', function() {
+        //         let checkbox = $(this);
+        //         let courseSlug = checkbox.data('course-slug');
+        //         let sectionId = checkbox.data('section-id');
+        //         let lectureId = checkbox.data('lecture-id');
 
-                // Send AJAX request
-                $.ajax({
-                    url: "{{ route('instructor.courses.sections.lectures.update-active-status', ['course' => ':courseSlug', 'section' => ':sectionId', 'lecture' => ':lectureId']) }}"
-                        .replace(':courseSlug', courseSlug).replace(':sectionId', sectionId)
-                        .replace(':lectureId', lectureId),
-                    type: 'PATCH', // Use PUT for updates
-                    data: {
-                        _token: '{{ csrf_token() }}' // CSRF token for Laravel
-                    },
-                    success: function(response) {
-                        Swal.fire({
-                            toast: true,
-                            position: 'top-end',
-                            icon: 'success',
-                            title: response.message || 'Status updated successfully!',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            customClass: {
-                                popup: 'black-toast'
-                            }
-                        });
-                    },
-                    error: function(xhr) {
-                        // Revert checkbox state on error
-                        checkbox.prop('checked', !checkbox.is(':checked'));
+        //         // Send AJAX request
+        //         $.ajax({
+        //             url: "{{ route('instructor.courses.sections.lectures.update-active-status', ['course' => ':courseSlug', 'section' => ':sectionId', 'lecture' => ':lectureId']) }}"
+        //                 .replace(':courseSlug', courseSlug).replace(':sectionId', sectionId)
+        //                 .replace(':lectureId', lectureId),
+        //             type: 'PATCH', // Use PUT for updates
+        //             data: {
+        //                 _token: '{{ csrf_token() }}' // CSRF token for Laravel
+        //             },
+        //             success: function(response) {
+        //                 Swal.fire({
+        //                     toast: true,
+        //                     position: 'top-end',
+        //                     icon: 'success',
+        //                     title: response.message || 'Status updated successfully!',
+        //                     showConfirmButton: false,
+        //                     timer: 3000,
+        //                     customClass: {
+        //                         popup: 'black-toast'
+        //                     }
+        //                 });
+        //             },
+        //             error: function(xhr) {
+        //                 // Revert checkbox state on error
+        //                 checkbox.prop('checked', !checkbox.is(':checked'));
 
-                        let errorMessage = xhr.responseJSON?.message ||
-                            'Failed to update status. Please try again.';
-                        Swal.fire({
-                            toast: true,
-                            position: 'top-end',
-                            icon: 'error',
-                            title: errorMessage,
-                            showConfirmButton: false,
-                            timer: 5000,
-                            customClass: {
-                                popup: 'black-toast'
-                            }
-                        });
-                    }
-                });
-            });
-        });
+        //                 let errorMessage = xhr.responseJSON?.message ||
+        //                     'Failed to update status. Please try again.';
+        //                 Swal.fire({
+        //                     toast: true,
+        //                     position: 'top-end',
+        //                     icon: 'error',
+        //                     title: errorMessage,
+        //                     showConfirmButton: false,
+        //                     timer: 5000,
+        //                     customClass: {
+        //                         popup: 'black-toast'
+        //                     }
+        //                 });
+        //             }
+        //         });
+        //     });
+        // });
 
         // ######################## update lecture active status #####################
         $(document).ready(function() {

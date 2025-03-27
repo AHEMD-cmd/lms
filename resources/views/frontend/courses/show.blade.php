@@ -60,13 +60,7 @@
 @push('scripts')
     <script>
         // Initialize Plyr video player with quality options
-        var player = new Plyr('#player', {
-            quality: {
-                default: 360,
-                options: [360, 480, 720],
-                forced: true,
-            }
-        });
+        var player = new Plyr('#player');
     </script>
     <script>
         $(document).ready(function() {

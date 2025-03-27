@@ -9,10 +9,6 @@ class Lecture extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        'files' => 'array',
-    ];
-
     public function course()
     {
         return $this->belongsTo(Course::class);
@@ -31,13 +27,20 @@ class Lecture extends Model
             ->first();
     }
 
-    public function progress()
-    {
-        return $this->hasMany(LectureUserProgress::class);
-    }
-
     public function files()
     {
         return $this->hasMany(LectureFile::class);
+    }
+
+    public function getDurationFormattedAttribute()
+    {
+        $hours = floor($this->duration / 60);
+        $minutes = $this->duration % 60;
+
+        if ($hours > 0) {
+            return $hours . ' hr ' . ($minutes > 0 ? $minutes . ' min' : '');
+        }
+
+        return $minutes . ' min';
     }
 }

@@ -7,13 +7,13 @@
 
         <div class="btn-group">
             {{-- acrive and inactive --}}
-            <div class="form-check form-switch">
+            {{-- <div class="form-check form-switch">
                 <input class="form-check-input active-status" type="checkbox"
                     {{ $lecture->is_active ? 'checked' : '' }} data-course-slug="{{ $course->slug }}" data-section-id="{{ $section->id }}" data-lecture-id="{{ $lecture->id }}">
                 <label class="form-check-label" for="lecture-status-{{ $lecture->id }}">
                     active
                 </label>
-            </div>
+            </div> --}}
             {{-- publish or unpublish --}}
             <div class="form-check form-switch ms-2">
                 <input class="form-check-input published-status" type="checkbox"

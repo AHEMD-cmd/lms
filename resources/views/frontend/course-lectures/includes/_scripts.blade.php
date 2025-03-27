@@ -81,12 +81,25 @@
         $(document).on('click', '.section-lecture', function(e) {
             let $this = $(this);
             let lectureId = $this.data('id');
-
+            
             // hidden input in the form of question and form of replay
             $('.lecture-id').val(lectureId);
-
+            
             // Update the value of the second option in the select dropdown inside .questions-filter
             $('.questions-filter select option:nth-child(2)').val(lectureId);
+            
+            
+            // ###################### video the video or the content ######################
+            let lectureVideo = $this.data('video');
+            let lectureContent = $this.data('content');
+            
+            if (lectureVideo) {
+                // set the value of the video ib the iframe
+                console.log( $('#lecture-viewer').attr('src', lectureVideo));
+            } else if (lectureContent) {
+                // set the value of the content ib the iframe
+                $('#content-viewer').html(lectureContent);
+            }
         });
 
 

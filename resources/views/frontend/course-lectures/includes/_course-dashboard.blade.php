@@ -4,69 +4,15 @@
             <div class="course-dashboard-column">
                 <div class="lecture-viewer-container">
                     <div class="lecture-video-item">
-                        <video controls crossorigin playsinline id="player">
-                            <!-- Video files -->
-                            <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
-                                type="video/mp4" />
-                            <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4"
-                                type="video/mp4" />
-                            <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4"
-                                type="video/mp4" />
-
-                            <!-- Caption files -->
-                            <track kind="captions" label="English" srclang="en"
-                                src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt" default />
-                            <track kind="captions" label="Français" srclang="fr"
-                                src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt" />
-
-                            <!-- Fallback for browsers that don't support the <video> element -->
-                            <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
-                                download>Download</a>
-                        </video>
+                        <iframe src="" frameborder="0" class="w-100" height="500" id="lecture-viewer"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
                     </div>
                     <div class="lecture-viewer-text-wrap">
                         <div class="lecture-viewer-text-content custom-scrollbar-styled">
-                            <div class="lecture-viewer-text-body">
-                                <h2 class="fs-24 font-weight-semi-bold pb-4">Download your Footage for your Quick
-                                    Start</h2>
-                                <div class="lecture-viewer-content-detail">
-                                    <ul class="generic-list-item pb-4">
-                                        <li>Hi</li>
-                                        <li>Welcome to Motion Graphics in After Effects. </li>
-                                        <li>In the next lectures you will start creating your first animation and
-                                            animate imported footage.</li>
-                                        <li>But I must explain to you how all this mistaken idea of denouncing
-                                            pleasure and praising pain was born and I will give you a complete
-                                            account of the system, and expound the actual teachings of the great
-                                            explorer of the truth, the master-builder of human happiness. No one
-                                            rejects, dislikes,</li>
-                                        <li>At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                                            blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
-                                            et quas molestias excepturi sint occaecati cupiditate non provident,
-                                            similique sunt in culpa qui officia deserunt mollitia animi, id est
-                                            laborum et dolorum fuga. </li>
-                                        <li>Occaecati cupiditate non provident, similique sunt in culpa qui officia
-                                            deserunt mollitia animi, id est laborum et dolorum fuga. </li>
-                                        <li>Et harum quidem rerum facilis est et expedita distinctio. Nam libero
-                                            tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo
-                                            minus id quod maxime placeat facere possimus,</li>
-                                        <li>On the other hand, we denounce with righteous indignation and dislike
-                                            men who are so beguiled and demoralized by the charms of pleasure of the
-                                            moment, so blinded by desire, that they cannot foresee the pain and
-                                            trouble that are bound to ensue; and equal blame belongs to those who
-                                            fail in their duty through weakness of will, which is the same as saying
-                                            through shrinking from toil and pain. These cases are perfectly simple
-                                            and easy to distinguish. </li>
-                                        <li><strong class="font-weight-semi-bold">Download your footage Now, Click
-                                                on the Link Below.</strong></li>
-                                    </ul>
-                                    <div class="btn-box">
-                                        <h3 class="fs-18 font-weight-semi-bold pb-3">Resources for this lecture
-                                        </h3>
-                                        <a href="#" class="btn theme-btn theme-btn-transparent"><i
-                                                class="la la-file-zip-o mr-1"></i>Quick-start.zip</a>
-                                    </div>
-                                </div>
+                            <div class="lecture-viewer-text-body" id="content-viewer">
+                                {{-- text content --}}
                             </div>
                         </div>
                     </div>
@@ -138,10 +84,8 @@
                                         id="mobileCourseAccordionCourseExample">
                                         @foreach ($course->sections as $section)
                                             <div class="card">
-                                                <div class="card-header"
-                                                    id="mobileCourseHeadingOne{{ $section->id }}">
-                                                    <button class="btn btn-link" type="button"
-                                                        data-toggle="collapse"
+                                                <div class="card-header" id="mobileCourseHeadingOne{{ $section->id }}">
+                                                    <button class="btn btn-link" type="button" data-toggle="collapse"
                                                         data-target="#mobileCourseCollapseOne{{ $section->id }}"
                                                         aria-expanded="true"
                                                         aria-controls="mobileCourseCollapseOne{{ $section->id }}">
@@ -162,8 +106,10 @@
                                                     <div class="card-body p-0">
                                                         <ul class="curriculum-sidebar-list">
                                                             @foreach ($section->lectures as $lecture)
-                                                                <li class="course-item-link active-resource section-lecture"
-                                                                    data-id="{{ $lecture->id }}">
+                                                                <li class="course-item-link {{ !$lecture->url ? 'active-resource' : '' }} section-lecture"
+                                                                    data-id="{{ $lecture->id }}"
+                                                                    data-video="{{ $lecture->url }}"
+                                                                    data-content="{!! $lecture->content !!}">
                                                                     <div class="course-item-content-wrap">
                                                                         <div class="custom-control custom-checkbox">
                                                                             <input type="checkbox"
@@ -178,31 +124,43 @@
                                                                             <h4 class="fs-15">{{ $loop->iteration }}.
                                                                                 {{ $lecture->title }}</h4>
                                                                             <div class="courser-item-meta-wrap">
-                                                                                <p class="course-item-meta"><i
-                                                                                        class="la la-file"></i>2min
-                                                                                    <i class="la la-play-circle"></i>
-                                                                                </p>
-                                                                                <div class="generic-action-wrap">
-                                                                                    <div class="dropdown">
-                                                                                        <a class="btn theme-btn theme-btn-sm theme-btn-transparent mt-1 fs-14 font-weight-medium"
-                                                                                            href="#"
-                                                                                            data-toggle="dropdown"
-                                                                                            aria-haspopup="true"
-                                                                                            aria-expanded="false">
-                                                                                            <i
-                                                                                                class="la la-folder-open mr-1"></i>
-                                                                                            Resources<i
-                                                                                                class="la la-angle-down ml-1"></i>
-                                                                                        </a>
-                                                                                        <div
-                                                                                            class="dropdown-menu dropdown-menu-right">
-                                                                                            <a class="dropdown-item"
-                                                                                                href="javascript:void(0)">
-                                                                                                Section-Footage.zip
+                                                                                @if ($lecture->url)
+                                                                                    <p class="course-item-meta">
+                                                                                        <i class="la la-play-circle"></i>{{ $lecture->duration }}
+                                                                                    </p>
+                                                                                @else
+                                                                                    <p class="course-item-meta">
+                                                                                        <i class="la la-file"></i>{{ $lecture->duration_formatted }}
+                                                                                    </p>
+                                                                                 @endif
+                                                                                @if ($lecture->files && $lecture->files->count() > 0)
+                                                                                    <div class="generic-action-wrap">
+                                                                                        <div class="dropdown">
+                                                                                            <a class="btn theme-btn theme-btn-sm theme-btn-transparent mt-1 fs-14 font-weight-medium"
+                                                                                                href="#"
+                                                                                                data-toggle="dropdown"
+                                                                                                aria-haspopup="true"
+                                                                                                aria-expanded="false">
+                                                                                                <i
+                                                                                                    class="la la-folder-open mr-1"></i>
+                                                                                                Resources
+                                                                                                <i
+                                                                                                    class="la la-angle-down ml-1"></i>
                                                                                             </a>
+                                                                                            @foreach ($lecture->files as $file)
+                                                                                                <div
+                                                                                                    class="dropdown-menu dropdown-menu-right">
+                                                                                                    <a class="dropdown-item"
+                                                                                                        href="{{ $file->file_path }}"
+                                                                                                        download="{{ $file->name }}">
+                                                                                                        {{ $file->name }}
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            @endforeach
                                                                                         </div>
                                                                                     </div>
-                                                                                </div><!-- end generic-action-wrap -->
+                                                                                    <!-- end generic-action-wrap -->
+                                                                                @endif
                                                                             </div>
                                                                         </div><!-- end course-item-content -->
                                                                     </div><!-- end course-item-content-wrap -->
@@ -218,7 +176,7 @@
                                     </div><!-- end accordion-->
                                 </div><!-- end mobile-course-menu -->
                             </div><!-- end tab-pane -->
-                            
+
                             {{-- ##################### end course content ##################### --}}
 
 
@@ -804,8 +762,10 @@
                                         <div class="card-body p-0">
                                             <ul class="curriculum-sidebar-list">
                                                 @foreach ($section->lectures as $lecture)
-                                                    <li class="course-item-link active-resource section-lecture"
-                                                        data-id="{{ $lecture->id }}">
+                                                    <li class="course-item-link {{ !$lecture->url ? 'active-resource' : '' }} section-lecture"
+                                                        data-id="{{ $lecture->id }}"
+                                                        data-video="{{ $lecture->url }}"
+                                                        data-content="{!! $lecture->content !!}">
                                                         <div class="course-item-content-wrap">
                                                             <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input"
@@ -818,29 +778,43 @@
                                                                 <h4 class="fs-15">{{ $loop->iteration }}.
                                                                     {{ $lecture->title }}</h4>
                                                                 <div class="courser-item-meta-wrap">
-                                                                    <p class="course-item-meta"><i
-                                                                            class="la la-file"></i>2min</p>
-                                                                    {{-- <p class="course-item-meta"><i
-                                                                            class="la la-play-circle"></i>2min</p> --}}
-                                                                    <div class="generic-action-wrap">
-                                                                        <div class="dropdown">
-                                                                            <a class="btn theme-btn theme-btn-sm theme-btn-transparent mt-1 fs-14 font-weight-medium"
-                                                                                href="#" data-toggle="dropdown"
-                                                                                aria-haspopup="true"
-                                                                                aria-expanded="false">
-                                                                                <i class="la la-folder-open mr-1"></i>
-                                                                                Resources<i
-                                                                                    class="la la-angle-down ml-1"></i>
-                                                                            </a>
-                                                                            <div
-                                                                                class="dropdown-menu dropdown-menu-right">
-                                                                                <a class="dropdown-item"
-                                                                                    href="javascript:void(0)">
-                                                                                    Section-Footage.zip
+                                                                    
+                                                                    @if ($lecture->url)
+                                                                        <p class="course-item-meta">
+                                                                            <i class="la la-play-circle"></i>{{ $lecture->duration_formatted }}
+                                                                        </p>
+                                                                    @else
+                                                                        <p class="course-item-meta">
+                                                                            <i class="la la-file"></i>{{ $lecture->duration_formatted }}
+                                                                        </p>
+                                                                    @endif
+                                                                    @if ($lecture->files && $lecture->files->count() > 0)
+                                                                        <div class="generic-action-wrap">
+                                                                            <div class="dropdown">
+                                                                                <a class="btn theme-btn theme-btn-sm theme-btn-transparent mt-1 fs-14 font-weight-medium"
+                                                                                    href="javascript:void(0)"
+                                                                                    data-toggle="dropdown"
+                                                                                    aria-haspopup="true"
+                                                                                    aria-expanded="false">
+                                                                                    <i
+                                                                                        class="la la-folder-open mr-1"></i>
+                                                                                    Resources<i
+                                                                                        class="la la-angle-down ml-1"></i>
                                                                                 </a>
+                                                                                @foreach ($lecture->files as $file)
+                                                                                    <div
+                                                                                        class="dropdown-menu dropdown-menu-right">
+                                                                                        <a class="dropdown-item"
+                                                                                            href="{{ $file->file_path }}"
+                                                                                            download="{{ $file->name }}">
+                                                                                            {{ $file->name }}
+                                                                                        </a>
+                                                                                    </div>
+                                                                                @endforeach
+
                                                                             </div>
-                                                                        </div>
-                                                                    </div><!-- end generic-action-wrap -->
+                                                                        </div><!-- end generic-action-wrap -->
+                                                                    @endif
                                                                 </div>
                                                             </div><!-- end course-item-content -->
                                                         </div><!-- end course-item-content-wrap -->

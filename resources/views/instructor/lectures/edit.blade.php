@@ -48,18 +48,18 @@
                         <label for="title" class="form-label">Lecture Title</label>
                         <input type="text" name="title" class="form-control" id="title"
                             value="{{ $lecture->title }}">
-                            @error('title')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                        @error('title')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <div class="form-group col-md-6">
                         <label for="url" class="form-label">Video Url </label>
                         <input type="text" name="url" class="form-control" id="url"
                             value="{{ $lecture->url }}">
-                            @error('url')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                        @error('url')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <div class="form-group col-md-12">
@@ -71,6 +71,15 @@
                     </div>
 
                     <input type="file" multiple name="files[]" class="form-control title mt-2">
+                    @error('files')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+
+                    <input type="number" name="duration" class="form-control url mt-4" placeholder="Add Duration in minutes">
+                    <div class="text-danger duration_error"></div>
+                    @error('duration')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
 
                     <div class="col-md-12">
                         <div class="d-md-flex d-grid align-items-center gap-3">

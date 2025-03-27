@@ -27,6 +27,7 @@ class StoreLectureRequest extends FormRequest
             'url' => ['required_if:content,null', 'nullable',  'max:255', 'url'],
             'files' => ['nullable','array'],
             'files.*' => ['nullable', 'file', 'max:5120'], // 5MB = 5120KB
+            'duration' => ['required','integer','min:1'],
         ];
     }
 
