@@ -94,8 +94,8 @@
                                                         <span class="fs-15"> Section {{ $loop->iteration }}:
                                                             {{ $section->title }}</span>
                                                         <span class="course-duration">
-                                                            <span>1/{{ $section->lectures->count() }}</span>
-                                                            <span>21min</span>
+                                                            <span>{{$section->completed_lectures->count()}}/{{ $section->lectures->count() }}</span>
+                                                            <span>{{$section->duration_formatted}}</span>
                                                         </span>
                                                     </button>
                                                 </div><!-- end card-header -->
@@ -108,14 +108,15 @@
                                                             @foreach ($section->lectures as $lecture)
                                                                 <li class="course-item-link {{ !$lecture->url ? 'active-resource' : '' }} section-lecture"
                                                                     data-id="{{ $lecture->id }}"
+                                                                    data-section-id="{{ $section->id }}"
                                                                     data-video="{{ $lecture->url }}"
                                                                     data-content="{!! $lecture->content !!}">
                                                                     <div class="course-item-content-wrap">
                                                                         <div class="custom-control custom-checkbox">
                                                                             <input type="checkbox"
-                                                                                class="custom-control-input"
+                                                                                class="custom-control-input lecture-checkbox"
                                                                                 id="mobileCourseCheckbox{{ $lecture->id }}"
-                                                                                required>
+                                                                                required {{ $lecture->is_completed ? 'checked' : '' }}>
                                                                             <label
                                                                                 class="custom-control-label custom--control-label"
                                                                                 for="mobileCourseCheckbox{{ $lecture->id }}"></label>
@@ -750,8 +751,8 @@
                                             <span class="fs-15"> Section {{ $loop->iteration }}:
                                                 {{ $section->title }}</span>
                                             <span class="course-duration">
-                                                <span>1/{{ $section->lectures->count() }}</span>
-                                                <span>21min</span>
+                                                <span>{{$section->completed_lectures->count()}}/{{ $section->lectures->count() }}</span>
+                                                <span>{{$section->duration_formatted}}</span>
                                             </span>
                                         </button>
                                     </div><!-- end card-header -->
@@ -764,12 +765,13 @@
                                                 @foreach ($section->lectures as $lecture)
                                                     <li class="course-item-link {{ !$lecture->url ? 'active-resource' : '' }} section-lecture"
                                                         data-id="{{ $lecture->id }}"
+                                                        data-section-id="{{ $section->id }}"
                                                         data-video="{{ $lecture->url }}"
                                                         data-content="{!! $lecture->content !!}">
                                                         <div class="course-item-content-wrap">
                                                             <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input"
-                                                                    id="courseCheckbox{{ $lecture->id }}" required>
+                                                                <input type="checkbox" class="custom-control-input lecture-checkbox"
+                                                                    id="courseCheckbox{{ $lecture->id }}" required {{ $lecture->is_completed ? 'checked' : '' }}>
                                                                 <label
                                                                     class="custom-control-label custom--control-label"
                                                                     for="courseCheckbox{{ $lecture->id }}"></label>

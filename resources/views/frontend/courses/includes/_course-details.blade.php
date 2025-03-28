@@ -68,7 +68,7 @@
                                     lectures</span>
                                 <span class="curriculum-total__hours"><strong
                                         class="text-black font-weight-semi-bold">Total hours:</strong>
-                                    {{ $course->duration }}</span>
+                                    {{ $course->duration_formatted }}</span>
                             </div>
                         </div>
 
@@ -78,40 +78,46 @@
                             <div id="accordion" class="generic-accordion">
 
                                 @foreach ($course->sections as $section)
-                                    <div class="card">
-                                        <div class="card-header" id="heading{{ $section->id }}">
-                                            <button
-                                                class="btn btn-link d-flex align-items-center justify-content-between"
-                                                data-toggle="collapse" data-target="#collapse{{ $section->id }}"
-                                                aria-expanded="true" aria-controls="collapse{{ $section->id }}">
-                                                <i class="la la-plus"></i>
-                                                <i class="la la-minus"></i>
-                                                {{ $section->title }}
-                                                <span class="fs-15 text-gray font-weight-medium">
-                                                    {{ count($section->lectures) }} lectures</span>
-                                            </button>
-                                        </div><!-- end card-header -->
-                                        <div id="collapse{{ $section->id }}" class="collapse "
-                                            aria-labelledby="heading{{ $section->id }}" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul class="generic-list-item">
-                                                    @foreach ($section->lectures as $lecture)
-                                                        <li>
-                                                            <div
-                                                                class="d-flex align-items-center justify-content-between">
-                                                                <span>
-                                                                    <i class="la la-play-circle mr-1"></i>
-                                                                    {{ $lecture->title }}
-                                                                </span>
-                                                                <span>{{ $lecture->duration }}</span>
-                                                            </div>
-                                                        </li>
-                                                    @endforeach
+                                    @if ($section->lectures->count() > 0) 
+                                        <div class="card">
+                                            <div class="card-header" id="heading{{ $section->id }}">
+                                                <button
+                                                    class="btn btn-link d-flex align-items-center justify-content-between"
+                                                    data-toggle="collapse" data-target="#collapse{{ $section->id }}"
+                                                    aria-expanded="true" aria-controls="collapse{{ $section->id }}">
+                                                    <i class="la la-plus"></i>
+                                                    <i class="la la-minus"></i>
+                                                    {{ $section->title }}
+                                                    <span class="fs-15 text-gray font-weight-medium">
+                                                        {{ count($section->lectures) }} lectures</span>
+                                                </button>
+                                            </div><!-- end card-header -->
+                                            <div id="collapse{{ $section->id }}" class="collapse "
+                                                aria-labelledby="heading{{ $section->id }}" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <ul class="generic-list-item">
+                                                        @foreach ($section->lectures as $lecture)
+                                                            <li>
+                                                                <div
+                                                                    class="d-flex align-items-center justify-content-between">
+                                                                    <span>
+                                                                        @if ($lecture->url)
+                                                                            <i class="la la-play-circle mr-1"></i>
+                                                                        @else
+                                                                            <i class="la la-file mr-1"></i>
+                                                                        @endif
+                                                                        {{ $lecture->title }}
+                                                                    </span>
+                                                                    <span>{{ $lecture->duration }}</span>
+                                                                </div>
+                                                            </li>
+                                                        @endforeach
 
-                                                </ul>
-                                            </div><!-- end card-body -->
-                                        </div><!-- end collapse -->
-                                    </div><!-- end card -->
+                                                    </ul>
+                                                </div><!-- end card-body -->
+                                            </div><!-- end collapse -->
+                                        </div><!-- end card -->
+                                    @endif
                                 @endforeach
 
 
@@ -147,30 +153,17 @@
                                     <span class="d-block lh-18 pt-2 pb-3">Joined
                                         {{ $course->instructor->created_at->diffForHumans() }}</span>
                                     <p class="text-black lh-18 pb-3">{{ $course->instructor->email }}</p>
-                                    <p class="pb-3">Lorem Ipsum is simply dummy text of the printing and typesetting
-                                        industry. Lorem Ipsum has been the industry’s standard dummy text ever since the
-                                        1500s, when an unknown printer took a galley of type and scrambled it to make a
-                                        type specimen book. It has survived not only five centuries, but also the leap
-                                        into electronic typesetting, remaining essentially unchanged.</p>
-                                    <div class="collapse" id="collapseMoreTwo">
-                                        <p class="pb-3">After learning the hard way, Tim was determined to become the
-                                            best teacher he could, and to make his training as painless as possible, so
-                                            that you, or anyone else with the desire to become a software developer,
-                                            could become one.</p>
-                                        <p class="pb-3">If you want to become a financial analyst, a finance manager,
-                                            an FP&A analyst, an investment banker, a business executive, an
-                                            entrepreneur, a business intelligence analyst, a data analyst, or a data
-                                            scientist, <strong class="text-black font-weight-semi-bold">Tim Buchalka's
-                                                courses are the perfect course to start</strong>.</p>
-                                    </div>
-                                    <a class="collapse-btn collapse--btn fs-15" data-toggle="collapse"
+
+                                    {!! $course->instructor->instructor_description !!}
+
+                                    {{-- <a class="collapse-btn collapse--btn fs-15" data-toggle="collapse"
                                         href="#collapseMoreTwo" role="button" aria-expanded="false"
                                         aria-controls="collapseMoreTwo">
                                         <span class="collapse-btn-hide">Show more<i
                                                 class="la la-angle-down ml-1 fs-14"></i></span>
                                         <span class="collapse-btn-show">Show less<i
                                                 class="la la-angle-up ml-1 fs-14"></i></span>
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </div>
                         </div><!-- end instructor-wrap -->

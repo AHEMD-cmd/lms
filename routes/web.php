@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\InstructorController;
 use App\Http\Controllers\Frontend\SocialAuthController;
 use App\Http\Controllers\Frontend\CourseLectureController;
 use App\Http\Controllers\Frontend\QuestionUpvoteController;
+use App\Http\Controllers\Frontend\LectureCompletedController;
 
 
 /*
@@ -56,9 +57,11 @@ Route::middleware('auth')->group(function () {
     Route::get('wish-list', [WishListController::class, 'index'])->name('wish.list.index');
     Route::post('wish-list/{course}', [WishListController::class, 'store'])->name('wish.list.store');
     Route::delete('wish-list/{course}', [WishListController::class, 'destroy'])->name('wish.list.destroy');
-
+    
     ############################### Course Lectures Routes ###########################
     Route::resource('courses.lectures', CourseLectureController::class)->only(['index']);
+    Route::patch('lecture-completed/update', LectureCompletedController::class)->name('lecture.completed.update');
+
 
     ############################### Course Questions Routes ###########################
     Route::resource('questions', QuestionController::class)->only(['index', 'store', 'show', 'update', 'destroy']);

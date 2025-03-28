@@ -82,16 +82,6 @@ class Course extends Model
         });
     }
 
-
-    public function getVideoPathAttribute()
-    {
-        if (!$this->video) {
-            return null;
-        }
-
-        return Storage::disk('s3')->url($this->video);
-    }
-
     public function getDiscountPercentageAttribute()
     {
         return $this->discount ? round((($this->price - $this->discount) / $this->price) * 100, 0) : null;
@@ -140,5 +130,17 @@ class Course extends Model
     {
         $total = $this->reviews()->count();
         return $total ? (int) ($this->reviews()->where('rate', '1')->count() / $total * 100) : 0;
+    }
+
+    public function getDurationFormattedAttribute()
+    {
+        $hours = floor($this->lectures()->sum('duration') / 60);
+        $minutes = $this->lectures()->sum('duration') % 60;
+
+        if ($hours > 0) {
+            return $hours . ' hr ' . ($minutes > 0 ? $minutes . ' min' : '');
+        }
+
+        return $minutes . ' min';
     }
 }

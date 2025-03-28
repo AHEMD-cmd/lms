@@ -17,13 +17,11 @@ return new class extends Migration
             $table->foreignId('instructor_id')->nullable()->constrained('users')->onDelete('set null');
             $table->string('image')->nullable();
             $table->text('title')->nullable();
-            $table->text('name')->nullable();
             $table->string('slug')->nullable();
 
             $table->longText('description')->nullable();
             $table->string('video')->nullable();
             $table->string('level')->nullable();
-            $table->string('duration')->nullable();
             $table->string('resources')->nullable();
             $table->boolean('has_certificate')->nullable();
 

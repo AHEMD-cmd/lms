@@ -43,4 +43,14 @@ class Lecture extends Model
 
         return $minutes . ' min';
     }
+
+    public function progress()
+    {
+        return $this->hasMany(LectureProgress::class);
+    }
+
+    public function getIsCompletedAttribute()
+    {
+        return $this->progress()->where(['user_id' => auth()->id(), 'is_completed' => true])->exists();
+    }
 }

@@ -41,7 +41,7 @@
 @else
     <li class="explore-courses" style="{{ $wishlistedCourses->count() > 0 ? 'display: none;' : '' }}">
         <div style="text-align: center;">your wishlist is empty</div>
-        <span class="btn theme-btn w-100">Explore Courses <i
-                class="la la-arrow-right icon ml-1"></i></span>
+        <a href="/" class="btn theme-btn w-100">Explore Courses <i
+                class="la la-arrow-right icon ml-1"></i></a>
     </li>
 @endif

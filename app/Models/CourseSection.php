@@ -19,5 +19,27 @@ class CourseSection extends Model
         return $this->hasMany(Course::class);
     }
 
+    public function progress()
+    {
+        return $this->hasMany(LectureProgress::class, 'section_id');
+    }
 
+    public function getCompletedLecturesAttribute()
+    {
+        return $this->hasMany(LectureProgress::class, 'section_id')
+            ->where('user_id', auth()->id())
+            ->where('is_completed', true);
+    }
+
+    public function getDurationFormattedAttribute()
+    {
+        $hours = floor($this->lectures()->sum('duration') / 60);
+        $minutes = $this->lectures()->sum('duration') % 60;
+
+        if ($hours > 0) {
+            return $hours . ' hr ' . ($minutes > 0 ? $minutes . ' min' : '');
+        }
+
+        return $minutes . ' min';
+    }
 }

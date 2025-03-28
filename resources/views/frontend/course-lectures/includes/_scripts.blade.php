@@ -81,21 +81,21 @@
         $(document).on('click', '.section-lecture', function(e) {
             let $this = $(this);
             let lectureId = $this.data('id');
-            
+
             // hidden input in the form of question and form of replay
             $('.lecture-id').val(lectureId);
-            
+
             // Update the value of the second option in the select dropdown inside .questions-filter
             $('.questions-filter select option:nth-child(2)').val(lectureId);
-            
-            
+
+
             // ###################### video the video or the content ######################
             let lectureVideo = $this.data('video');
             let lectureContent = $this.data('content');
-            
+
             if (lectureVideo) {
                 // set the value of the video ib the iframe
-                console.log( $('#lecture-viewer').attr('src', lectureVideo));
+                console.log($('#lecture-viewer').attr('src', lectureVideo));
             } else if (lectureContent) {
                 // set the value of the content ib the iframe
                 $('#content-viewer').html(lectureContent);
@@ -243,7 +243,49 @@
 
         // ####################### end event listeners ##############################
 
+        // ####################### lecture completed update ##############################
+        // Prevent click on checkbox or label from bubbling to parent
+        $(document).on('click', '.lecture-checkbox, .custom-control-label, .dropdown-item', function(e) {
+            e.stopPropagation(); // Stop click from reaching .section-lecture
+        });
+        $('.lecture-checkbox').on('click', function() {
+            event.stopPropagation();
+            const checkbox = $(this);
+            const lectureId = $(this).closest('.section-lecture').data('id');
+            const sectionId = $(this).closest('.section-lecture').data('section-id');
+            const isChecked = $(this).is(':checked');
+            const sectionHeader = checkbox.closest('.card').find('.card-header');
+            const countElement = sectionHeader.find('.course-duration span:first-child');
 
+            $.ajax({
+                url: "{{ route('lecture.completed.update') }}",
+                method: 'PATCH',
+                data: {
+                    lecture_id: lectureId,
+                    section_id: sectionId,
+                    course_id: {{ $course->id }},
+                    is_completed: isChecked ? 1 : 0
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                },
+                success: function(response) {
+                    if (response.success) {
+                        console.log('Lecture status updated successfully');
+                        const currentCount = parseInt(countElement.text().split('/')[0]);
+                        const totalCount = parseInt(countElement.text().split('/')[1]);
+                        const newCount = isChecked ? currentCount + 1 : currentCount - 1;
+                        countElement.text(`${newCount}/${totalCount}`);
+                    }
+                },
+                error: function(xhr) {
+                    // Revert checkbox on error
+                    checkbox.prop('checked', !isChecked);
+                    console.error('Error updating lecture status:', xhr.responseText);
+                    // Optionally show error message to user
+                    alert('Failed to update lecture status. Please try again.');
+                }
+            });
+        });
     });
 </script>
-
