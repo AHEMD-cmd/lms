@@ -8,9 +8,9 @@
                 <div class="view-more-carousel-2 owl-action-styled">
 
                     @foreach ($relatedCourses->take(6) as $instructorCourse)
-                    @if ($loop->iteration == 2)
+                        @if ($loop->iteration == 2)
                             @break
-                    @endif
+                        @endif
                         <div class="card card-item">
                             <div class="card-image">
                                 <a href="{{ route('courses.show', $course->slug) }}" class="d-block">
@@ -38,15 +38,22 @@
                                 </p>
                                 <div class="rating-wrap d-flex align-items-center py-2">
                                     <div class="review-stars">
-                                        <span class="rating-number">4.4</span>
-                                        <span class="la la-star"></span>
-                                        <span class="la la-star"></span>
-                                        <span class="la la-star"></span>
-                                        <span class="la la-star"></span>
-                                        <span class="la la-star-o"></span>
+                                        <span class="rating-number">{{ $course->averageRating() }}</span>
+                                        @for ($i = 1; $i <= $course->averageRating(); $i++)
+                                            <span class="la la-star"></span>
+                                        @endfor
+                                        @if ($course->doesRateHaveFraction())
+                                            <span class="la la-star-half-alt"></span>
+                                        @endif
                                     </div>
-                                    <span class="rating-total pl-1">(20,230)</span>
+                                    <span class="rating-total pl-1">({{ $course->reviews()->count() }} ratings)</span>
+
                                 </div><!-- end rating-wrap -->
+
+
+
+
+
                                 <div class="d-flex justify-content-between align-items-center">
                                     @if (!$instructorCourse->discount)
                                         <p class="card-price text-black font-weight-bold">
