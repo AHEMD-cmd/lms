@@ -21,7 +21,7 @@ class CourseController extends Controller
         $relatedCourses = Course::where('id', '!=', $course->id)
             ->where('category_id', $course->category_id)
             ->with('instructor')
-            ->limit(3)
+            ->limit(6)
             ->get();
 
         return view('frontend.courses.show', compact('course', 'relatedCourses', 'reviews'));

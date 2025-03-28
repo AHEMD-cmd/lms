@@ -255,8 +255,8 @@ Author Email:   contact@techydevs.com
         /*==== View more carousel 2 =====*/
         if ($(viewMoreCarouselTwo).length) {
             $(viewMoreCarouselTwo).owlCarousel({
-                loop: true,
-                items: 3,
+                loop: false,
+                items: 6,
                 nav: false,
                 dots: true,
                 smartSpeed: 500,

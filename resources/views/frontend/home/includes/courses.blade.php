@@ -87,7 +87,6 @@
                                         </div><!-- end card-body -->
                                     </div><!-- end card -->
                                 </div><!-- end col-lg-4 -->
-
                             @empty
                                 <div class="col-12">
                                     <div class="card card-item card-preview">
