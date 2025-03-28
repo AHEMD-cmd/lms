@@ -154,15 +154,6 @@
                 </div>
 
 
-                <div class="form-group col-md-6">
-                    <label for="duration" class="form-label">Duration </label>
-                    <input type="text" name="duration" class="form-control" id="duration"
-                        value="{{ old('duration') }}">
-                    @error('duration')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
 
                 <div class="form-group col-md-6">
                     <label for="resources" class="form-label">Resources </label>

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('course_id')->unsigned();
             $table->unsignedBigInteger('user_id')->unsigned();
-            $table->text('comment');
+            $table->text('comment')->nullable();
             $table->string('rate');
             $table->boolean('status')->default(1);
 

@@ -40,6 +40,8 @@ class ReviewController extends Controller
     {
         auth()->user()->reviews()->create($request->validated());
 
-        return back()->with('message', 'Review created successfully!');
+        return response([
+            'status' => 'success'
+        ], 201);
     }
 }

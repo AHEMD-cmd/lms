@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Review;
 
+use App\Rules\UniqueReviewPerCourse;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreReviewRequest extends FormRequest
@@ -22,9 +23,9 @@ class StoreReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'course_id' => ['required', 'exists:courses,id'], 
-            'comment' => ['required', 'string', 'max:1000'], 
-            'rate' => ['required', 'integer', 'min:1', 'max:5'], 
+            'course_id' => ['required', 'exists:courses,id', new UniqueReviewPerCourse()],
+            'comment' => ['nullable', 'string', 'max:1000'],
+            'rate' => ['required', 'integer', 'min:1', 'max:5'],
         ];
     }
 }

@@ -300,50 +300,7 @@
                                 id="load-more-reviews">Load more reviews</button>
                         </div>
                     </div><!-- end course-overview-card -->
-                    @auth
-                        @if (!in_array($course->id, auth()->user()->reviews()->pluck('course_id')->toArray()))
-                            <div class="course-overview-card pt-4">
-                                <h3 class="fs-24 font-weight-semi-bold pb-4">Add a Review</h3>
-
-                                <form method="post" class="row"
-                                    action="{{ route('courses.reviews.store', $course->slug) }}">
-                                    @csrf
-                                    <!-- Rating Section -->
-                                    <div class="input-box col-lg-12 leave-rating-wrap pb-4">
-                                        <label class="label-text d-block mb-2">Rate the Course</label>
-                                        <div
-                                            class="leave-rating leave--rating d-flex flex-row-reverse justify-content-center">
-                                            <input type="radio" name='rate' id="star5" value="5" />
-                                            <label for="star5"></label>
-                                            <input type="radio" name='rate' id="star4" value="4" />
-                                            <label for="star4"></label>
-                                            <input type="radio" name='rate' id="star3" value="3" />
-                                            <label for="star3"></label>
-                                            <input type="radio" name='rate' id="star2" value="2" />
-                                            <label for="star2"></label>
-                                            <input type="radio" name='rate' id="star1" value="1" />
-                                            <label for="star1"></label>
-                                        </div>
-                                    </div>
-
-                                    <input name='course_id' type="hidden" value="{{ $course->id }}" />
-                                    <!-- Comment Section -->
-                                    <div class="input-box col-lg-12">
-                                        <label class="label-text">Message</label>
-                                        <div class="form-group">
-                                            <textarea class="form-control form--control pl-3" name="comment" placeholder="Write Message" rows="5"></textarea>
-                                        </div>
-                                    </div>
-
-                                    <!-- Submit Button -->
-                                    <div class="btn-box col-lg-12 text-center">
-                                        <button class="btn theme-btn" type="submit">Submit Review</button>
-                                    </div>
-                                </form>
-                            </div>
-                        @endif
-                    @endauth
-
+                    
                 </div><!-- end course-details-content-wrap -->
             </div><!-- end col-lg-8 -->
 
@@ -415,9 +372,7 @@
                                     <ul class="generic-list-item pb-3">
                                         <li><i class="la la-play-circle-o mr-2 text-color"></i>{{ $course->duration }}
                                             on-demand video</li>
-                                        <li><i class="la la-file mr-2 text-color"></i>{{ $course->resources }}
-                                            articles</li>
-                                        <li><i class="la la-file-text mr-2 text-color"></i>12 downloadable resources
+                                        <li><i class="la la-file-text mr-2 text-color"></i>{{ $course->total_files_count }} downloadable resources
                                         </li>
                                         <li><i class="la la-key mr-2 text-color"></i>Full lifetime access</li>
                                         <li><i class="la la-television mr-2 text-color"></i>Access on mobile and TV
@@ -447,11 +402,8 @@
                             <ul class="generic-list-item generic-list-item-flash">
                                 <li class="d-flex align-items-center justify-content-between"><span><i
                                             class="la la-clock mr-2 text-color"></i>Duration</span>
-                                    {{ $course->duration }} hours</li>
+                                    {{ $course->duration_formatted }} hours</li>
 
-                                <li class="d-flex align-items-center justify-content-between"><span><i
-                                            class="la la-file-text-o mr-2 text-color"></i>Resources</span>
-                                    {{ $course->resources }}</li>
                                 <li class="d-flex align-items-center justify-content-between"><span><i
                                             class="la la-bolt mr-2 text-color"></i>Quizzes</span> 26</li>
                                 <li class="d-flex align-items-center justify-content-between"><span><i

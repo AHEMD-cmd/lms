@@ -287,5 +287,42 @@
                 }
             });
         });
+
+
+        // {{-- ########### show textarea when rating is selected ########### --}}
+        $(document).ready(function() {
+            $('input[name="rate"]').on('change', function() {
+                console.log('Rating changed');
+                $('.course-review').removeClass('d-none').hide().fadeIn(300);
+                $('.submit-review').removeClass('d-none').hide().fadeIn(300);
+            });
+        });
+
+        // ###################### store review ######################
+        $("#review-form").submit(function(e) {
+            e.preventDefault(); // Prevent default form submission
+
+            let formData = $(this).serialize(); // Serialize form data
+            let courseSlug = $(this).find('#course-id').data('course-slug');
+
+            $.ajax({
+                url: '{{ route('courses.reviews.store', ':courseSlug') }}'.replace(':courseSlug',courseSlug),
+                type: "POST",
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                },
+                success: function(response) {
+                    $(".close").click(); // Simulate click on the back button
+                    $("#leave-reating").hide();  
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", xhr.responseText);
+                    alert("Something went wrong. Please try again.");
+                }
+            });
+        });
+
+
     });
 </script>

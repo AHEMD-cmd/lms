@@ -143,4 +143,11 @@ class Course extends Model
 
         return $minutes . ' min';
     }
+
+    public function getTotalFilesCountAttribute()
+    {
+        return $this->lectures->map(function ($lecture) {
+            return $lecture->files->count();
+        })->sum();
+    }
 }

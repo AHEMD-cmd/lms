@@ -11,8 +11,7 @@
                             </svg>
                         </button>
                         <button class="theme-picker-btn light-mode-btn" title="Light mode">
-                            <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round"
-                                stroke-linejoin="round">
+                            <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="5"></circle>
                                 <line x1="12" y1="1" x2="12" y2="3"></line>
                                 <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -38,8 +37,7 @@
                             </svg>
                         </button>
                         <button class="theme-picker-btn light-mode-btn" title="Light mode">
-                            <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round"
-                                stroke-linejoin="round">
+                            <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="5"></circle>
                                 <line x1="12" y1="1" x2="12" y2="3"></line>
                                 <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -53,10 +51,12 @@
                         </button>
                     </div>
                     <div class="nav-right-button d-flex align-items-center">
-                        <a href="#"
-                            class="btn theme-btn theme-btn-sm theme-btn-transparent lh-26 text-white mr-2"
-                            data-toggle="modal" data-target="#ratingModal"><i class="la la-star mr-1"></i> leave
-                            a rating</a>
+                        @if (auth()->user()->reviews->where('course_id', $course->id)->count() == 0)
+                            <a href="#"
+                                class="btn theme-btn theme-btn-sm theme-btn-transparent lh-26 text-white mr-2"
+                                id="leave-reating" data-toggle="modal" data-target="#ratingModal">
+                                <i class="la la-star mr-1"></i> leave a rating</a>
+                        @endif
                         <a href="#"
                             class="btn theme-btn theme-btn-sm theme-btn-transparent lh-26 text-white mr-2"
                             data-toggle="modal" data-target="#shareModal"><i class="la la-share mr-1"></i>

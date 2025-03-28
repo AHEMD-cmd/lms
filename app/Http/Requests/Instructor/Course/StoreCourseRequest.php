@@ -28,7 +28,6 @@ class StoreCourseRequest extends FormRequest
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
             'title' => 'required|string|max:255',
             'level' => 'required|string|max:255|in:Begginer,Middle,Advance',
-            'duration' => 'required|string|max:255',
             'resources' => 'required|string',
             'price' => 'required|integer',
             'discount' => 'nullable|integer',
