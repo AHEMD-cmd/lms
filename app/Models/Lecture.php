@@ -53,4 +53,9 @@ class Lecture extends Model
     {
         return $this->progress()->where(['user_id' => auth()->id(), 'is_completed' => true])->exists();
     }
+
+    public function quiz()
+    {
+        return $this->hasOne(Quiz::class);
+    }
 }

@@ -150,4 +150,9 @@ class Course extends Model
             return $lecture->files->count();
         })->sum();
     }
+
+    public function getQuizzesCountAttribute()
+    {
+        return $this->lectures()->whereHas('quiz')->count();
+    }
 }

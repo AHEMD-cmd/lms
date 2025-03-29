@@ -1,6 +1,6 @@
 @extends('layouts.dashboard.instructor.master')
 
-@section('title', 'Courses')
+@section('title', 'Course Sections')
 
 @section('css')
     <style>
@@ -130,6 +130,8 @@
 
 @section('scripts')
     <script>
+
+console.log('Hello World');
         // ############## show lecture form ################
         function addLectureDiv(courseSlug, sectionId, containerId) {
             $(`#${containerId}`).show();

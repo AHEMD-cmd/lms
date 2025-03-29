@@ -31,10 +31,10 @@
                         <tr>
                             <th>Sl</th>
                             <th>Image </th>
-                            <th>Name</th>
+                            <th>Title</th>
                             <th>Category</th>
                             <th>Price</th>
-                            <th>Discount</th>
+                            <th>Discount_price</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -45,10 +45,10 @@
                                 <td>{{ $index + 1 }}</td>
                                 <td> <img src="{{ $course->image }}" alt=""
                                         style="width: 70px; height:40px;"> </td>
-                                <td>{{ $course->name }}</td>
+                                <td>{{ $course->title }}</td>
                                 <td>{{ $course->category->name }}</td>
                                 <td>{{ $course->price }}</td>
-                                <td>{{ $course->discount }}</td>
+                                <td>{{ $course->discount ?? 'not found' }}</td>
                                 <td>
                                     <a href="{{ route('instructor.courses.edit', $course->slug) }}" class="btn btn-info"
                                         title="Edit"><i class="lni lni-eraser"></i> </a>
@@ -60,6 +60,7 @@
                                                 class="lni lni-trash"></i> </button>
                                     </form>
                                     <a href="{{ route('instructor.courses.sections.index',$course->slug) }}" class="btn btn-warning" title="Lecture"><i class="lni lni-list"></i> </a>                    
+                                    <a href="{{ route('instructor.courses.quizzes.index',$course->slug) }}" class="btn btn-warning" title="Quiz"><i class="lni lni-question-circle"></i> </a>                    
                                 </td>
                             </tr>
                         @endforeach

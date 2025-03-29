@@ -1,4 +1,4 @@
-<script src="{{ asset('assets/dashboard') }}/js/bootstrap.bundle.min.js"></script>
+ <script src="{{ asset('assets/dashboard') }}/js/bootstrap.bundle.min.js"></script>
 <!--plugins-->
 <script src="{{ asset('assets/dashboard') }}/js/jquery.min.js"></script>
 <script src="{{ asset('assets/dashboard') }}/plugins/simplebar/js/simplebar.min.js"></script>

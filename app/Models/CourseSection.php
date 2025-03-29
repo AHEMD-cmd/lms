@@ -42,4 +42,9 @@ class CourseSection extends Model
 
         return $minutes . ' min';
     }
+
+    public function lecturesWithoutQuiz()
+    {
+        return $this->lectures()->whereDoesntHave('quiz')->get();
+    }
 }

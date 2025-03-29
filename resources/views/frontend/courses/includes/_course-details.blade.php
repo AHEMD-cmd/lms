@@ -300,7 +300,7 @@
                                 id="load-more-reviews">Load more reviews</button>
                         </div>
                     </div><!-- end course-overview-card -->
-                    
+
                 </div><!-- end course-details-content-wrap -->
             </div><!-- end col-lg-8 -->
 
@@ -405,7 +405,7 @@
                                     {{ $course->duration_formatted }} hours</li>
 
                                 <li class="d-flex align-items-center justify-content-between"><span><i
-                                            class="la la-bolt mr-2 text-color"></i>Quizzes</span> 26</li>
+                                            class="la la-bolt mr-2 text-color"></i>Quizzes</span> {{ $course->quizzes_count }}</li>
                                 <li class="d-flex align-items-center justify-content-between"><span><i
                                             class="la la-eye mr-2 text-color"></i>Preview Lessons</span> 4</li>
                                 <li class="d-flex align-items-center justify-content-between"><span><i
