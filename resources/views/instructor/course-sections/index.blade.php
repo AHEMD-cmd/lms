@@ -32,7 +32,7 @@
             </div>
 
             {{-- /// Add Section and Lecture  --}}
-            @foreach ($course->sections as $key => $section)
+            @foreach ($sections as $key => $section)
                 <div class="container">
                     <div class="main-body">
                         <div class="row">
@@ -115,6 +115,10 @@
 
                 @include('instructor.course-sections.includes._edit-section-modal')
             @endforeach
+
+            {{$sections->links()}}
+
+
 
             {{-- /// End Add Section and Lecture  --}}
         </div>
@@ -234,59 +238,7 @@ console.log('Hello World');
         ClassicEditor.create(document.querySelector('#editor'));
         // <!--========== End of content textarea  ===========-->
 
-        // ######################## update lecture active status #####################
-        // $(document).ready(function() {
-        //     $('.active-status').on('change', function() {
-        //         let checkbox = $(this);
-        //         let courseSlug = checkbox.data('course-slug');
-        //         let sectionId = checkbox.data('section-id');
-        //         let lectureId = checkbox.data('lecture-id');
-
-        //         // Send AJAX request
-        //         $.ajax({
-        //             url: "{{ route('instructor.courses.sections.lectures.update-active-status', ['course' => ':courseSlug', 'section' => ':sectionId', 'lecture' => ':lectureId']) }}"
-        //                 .replace(':courseSlug', courseSlug).replace(':sectionId', sectionId)
-        //                 .replace(':lectureId', lectureId),
-        //             type: 'PATCH', // Use PUT for updates
-        //             data: {
-        //                 _token: '{{ csrf_token() }}' // CSRF token for Laravel
-        //             },
-        //             success: function(response) {
-        //                 Swal.fire({
-        //                     toast: true,
-        //                     position: 'top-end',
-        //                     icon: 'success',
-        //                     title: response.message || 'Status updated successfully!',
-        //                     showConfirmButton: false,
-        //                     timer: 3000,
-        //                     customClass: {
-        //                         popup: 'black-toast'
-        //                     }
-        //                 });
-        //             },
-        //             error: function(xhr) {
-        //                 // Revert checkbox state on error
-        //                 checkbox.prop('checked', !checkbox.is(':checked'));
-
-        //                 let errorMessage = xhr.responseJSON?.message ||
-        //                     'Failed to update status. Please try again.';
-        //                 Swal.fire({
-        //                     toast: true,
-        //                     position: 'top-end',
-        //                     icon: 'error',
-        //                     title: errorMessage,
-        //                     showConfirmButton: false,
-        //                     timer: 5000,
-        //                     customClass: {
-        //                         popup: 'black-toast'
-        //                     }
-        //                 });
-        //             }
-        //         });
-        //     });
-        // });
-
-        // ######################## update lecture active status #####################
+        // ######################## update lecture published status #####################
         $(document).ready(function() {
             $('.published-status').on('change', function() {
                 let checkbox = $(this);

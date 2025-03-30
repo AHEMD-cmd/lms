@@ -14,7 +14,8 @@ class QuizController extends Controller
     public function index(Course $course)
     {
         $course->load('sections');
-        return view('instructor.course-quizzes.index', compact('course'));
+        $sections = $course->sections()->paginate(10);
+        return view('instructor.course-quizzes.index', compact('course', 'sections'));
     }
 
     public function store(StoreQuizRequest $request)

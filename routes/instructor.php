@@ -32,14 +32,12 @@ Route::middleware(['auth', 'role:instructor'])
 
         ############### Instructor Course Routes ###############
         Route::resource('courses', CourseController::class);
-        Route::get('/get-video-url/{courseId}', [CourseController::class, 'getVideoUrl'])->name('get-video-url');
 
         ############### Instructor Course Sections Routes ###############
         Route::resource('courses.sections', CourseSectionController::class);
 
         ############### Instructor Course Lectures Routes ###############
         Route::resource('courses.sections.lectures', CourseLectureController::class);
-        Route::patch('courses/{course}/sections/{section}/lectures/{lecture}/update-active-status', LectureActiveController::class)->name('courses.sections.lectures.update-active-status');
         Route::patch('courses/{course}/sections/{section}/lectures/{lecture}/update-published-status', LecturePublishedController::class)->name('courses.sections.lectures.update-published-status');
 
         ############################# Instructor Coupon Routes #############################
@@ -49,7 +47,6 @@ Route::middleware(['auth', 'role:instructor'])
         ############################# Instructor quizzes Routes #######################################
         Route::resource('courses.quizzes', QuizController::class);
         Route::patch('courses/{course}/quizzes/{quiz}/update-published-status', QuizPublishedController::class)->name('courses.quizzes.update-published-status');
-
 
         ############################# Instructor quizzes questions Routes #############################
         Route::resource('quizzes.questions', QuizQuestionController::class);

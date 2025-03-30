@@ -32,7 +32,7 @@
             </div>
 
             {{-- /// Add Section and Lecture  --}}
-            @foreach ($course->sections as $key => $section)
+            @foreach ($sections as $key => $section)
                 @if ($section->lectures->count() > 0)
                     <div class="container">
                         <div class="main-body">
@@ -59,40 +59,6 @@
                                             </div>
                                         </div>
 
-                                        {{-- add new lecture --}}
-                                        {{-- <div class="container mb-3 " style="display: none;"
-                                        id="addLectureContainer{{ $key }}">
-                                        <form method="POST" class="lecture-form" enctype="multipart/form-data">
-                                            @csrf
-
-                                            <input type="text" name="title" class="form-control title mt-2"
-                                                placeholder="Enter Lecture Title ">
-                                            <div class="text-danger title_error"></div>
-
-
-                                            <input type="url" name="url" class="form-control url mt-4"
-                                                placeholder="Add URL">
-                                            <div class="text-danger url_error"></div>
-
-                                            <input type="file" multiple name="files[]"
-                                                class="form-control title mt-4 mb-4">
-                                            <div class="text-danger files_error"></div>
-
-                                            <textarea name="content" class="form-control mt-4 content" placeholder="Enter lecture content in case there is no video"
-                                                rows="10" id="editor"></textarea>
-                                            <div class="text-danger content_error"></div>
-
-                                            <input type="number" name="duration" class="form-control url mt-4"
-                                                placeholder="Add Duration in minutes">
-                                            <div class="text-danger duration_error"></div>
-
-
-                                            <button class="btn btn-primary mt-3">Save Lecture</button>
-                                            <button class="btn btn-secondary mt-3" type="button"
-                                                onclick="hideLectureContainer('addLectureContainer{{ $key }}')">Cancel</button>
-                                        </form>
-                                    </div> --}}
-
                                     </div>
 
                                 </div>
@@ -105,6 +71,8 @@
 
                 @include('instructor.course-quizzes.includes._add-quiz-modal')
             @endforeach
+
+            {{$sections->links()}}
 
             {{-- /// End Add Section and Lecture  --}}
         </div>

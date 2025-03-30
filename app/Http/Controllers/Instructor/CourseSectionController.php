@@ -13,8 +13,8 @@ class CourseSectionController extends Controller
 {
     public function index(Course $course)
     {
-        $course->load('sections');
-        return view('instructor.course-sections.index', compact('course'));
+        $sections = $course->sections()->paginate(10);
+        return view('instructor.course-sections.index', compact('course', 'sections'));
     }
 
     public function store(StoreSectionRequest $request, Course $course)
