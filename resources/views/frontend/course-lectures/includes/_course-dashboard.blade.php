@@ -83,95 +83,97 @@
                                     <div class="accordion generic-accordion generic--accordion"
                                         id="mobileCourseAccordionCourseExample">
                                         @foreach ($course->sections as $section)
-                                            <div class="card">
-                                                <div class="card-header" id="mobileCourseHeadingOne{{ $section->id }}">
-                                                    <button class="btn btn-link" type="button" data-toggle="collapse"
-                                                        data-target="#mobileCourseCollapseOne{{ $section->id }}"
-                                                        aria-expanded="true"
-                                                        aria-controls="mobileCourseCollapseOne{{ $section->id }}">
-                                                        <i class="la la-angle-down"></i>
-                                                        <i class="la la-angle-up"></i>
-                                                        <span class="fs-15"> Section {{ $loop->iteration }}:
-                                                            {{ $section->title }}</span>
-                                                        <span class="course-duration">
-                                                            <span>{{$section->completed_lectures->count()}}/{{ $section->lectures->count() }}</span>
-                                                            <span>{{$section->duration_formatted}}</span>
-                                                        </span>
-                                                    </button>
-                                                </div><!-- end card-header -->
-                                                <div id="mobileCourseCollapseOne{{ $section->id }}"
-                                                    class="collapse {{ $loop->iteration == 1 ? 'show' : '' }}"
-                                                    aria-labelledby="mobileCourseHeadingOne{{ $section->id }}"
-                                                    data-parent="#mobileCourseAccordionCourseExample">
-                                                    <div class="card-body p-0">
-                                                        <ul class="curriculum-sidebar-list">
-                                                            @foreach ($section->lectures as $lecture)
-                                                                <li class="course-item-link {{ !$lecture->url ? 'active-resource' : '' }} section-lecture"
-                                                                    data-id="{{ $lecture->id }}"
-                                                                    data-section-id="{{ $section->id }}"
-                                                                    data-video="{{ $lecture->url }}"
-                                                                    data-content="{!! $lecture->content !!}">
-                                                                    <div class="course-item-content-wrap">
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox"
-                                                                                class="custom-control-input lecture-checkbox"
-                                                                                id="mobileCourseCheckbox{{ $lecture->id }}"
-                                                                                required {{ $lecture->is_completed ? 'checked' : '' }}>
-                                                                            <label
-                                                                                class="custom-control-label custom--control-label"
-                                                                                for="mobileCourseCheckbox{{ $lecture->id }}"></label>
-                                                                        </div><!-- end custom-control -->
-                                                                        <div class="course-item-content">
-                                                                            <h4 class="fs-15">{{ $loop->iteration }}.
-                                                                                {{ $lecture->title }}</h4>
-                                                                            <div class="courser-item-meta-wrap">
-                                                                                @if ($lecture->url)
-                                                                                    <p class="course-item-meta">
-                                                                                        <i class="la la-play-circle"></i>{{ $lecture->duration }}
-                                                                                    </p>
-                                                                                @else
-                                                                                    <p class="course-item-meta">
-                                                                                        <i class="la la-file"></i>{{ $lecture->duration_formatted }}
-                                                                                    </p>
-                                                                                 @endif
-                                                                                @if ($lecture->files && $lecture->files->count() > 0)
-                                                                                    <div class="generic-action-wrap">
-                                                                                        <div class="dropdown">
-                                                                                            <a class="btn theme-btn theme-btn-sm theme-btn-transparent mt-1 fs-14 font-weight-medium"
-                                                                                                href="#"
-                                                                                                data-toggle="dropdown"
-                                                                                                aria-haspopup="true"
-                                                                                                aria-expanded="false">
-                                                                                                <i
-                                                                                                    class="la la-folder-open mr-1"></i>
-                                                                                                Resources
-                                                                                                <i
-                                                                                                    class="la la-angle-down ml-1"></i>
-                                                                                            </a>
-                                                                                            @foreach ($lecture->files as $file)
-                                                                                                <div
-                                                                                                    class="dropdown-menu dropdown-menu-right">
-                                                                                                    <a class="dropdown-item"
-                                                                                                        href="{{ $file->file_path }}"
-                                                                                                        download="{{ $file->name }}">
-                                                                                                        {{ $file->name }}
-                                                                                                    </a>
-                                                                                                </div>
-                                                                                            @endforeach
+                                            @if ($section->lectures->count() > 0)
+                                                <div class="card">
+                                                    <div class="card-header" id="mobileCourseHeadingOne{{ $section->id }}">
+                                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                            data-target="#mobileCourseCollapseOne{{ $section->id }}"
+                                                            aria-expanded="true"
+                                                            aria-controls="mobileCourseCollapseOne{{ $section->id }}">
+                                                            <i class="la la-angle-down"></i>
+                                                            <i class="la la-angle-up"></i>
+                                                            <span class="fs-15"> Section {{ $loop->iteration }}:
+                                                                {{ $section->title }}</span>
+                                                            <span class="course-duration">
+                                                                <span>{{$section->completed_lectures->count()}}/{{ $section->lectures->count() }}</span>
+                                                                <span>{{$section->duration_formatted}}</span>
+                                                            </span>
+                                                        </button>
+                                                    </div><!-- end card-header -->
+                                                    <div id="mobileCourseCollapseOne{{ $section->id }}"
+                                                        class="collapse {{ $loop->iteration == 1 ? 'show' : '' }}"
+                                                        aria-labelledby="mobileCourseHeadingOne{{ $section->id }}"
+                                                        data-parent="#mobileCourseAccordionCourseExample">
+                                                        <div class="card-body p-0">
+                                                            <ul class="curriculum-sidebar-list">
+                                                                @foreach ($section->lectures as $lecture)
+                                                                    <li class="course-item-link {{ !$lecture->url ? 'active-resource' : '' }} section-lecture"
+                                                                        data-id="{{ $lecture->id }}"
+                                                                        data-section-id="{{ $section->id }}"
+                                                                        data-video="{{ $lecture->url }}"
+                                                                        data-content="{!! $lecture->content !!}">
+                                                                        <div class="course-item-content-wrap">
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox"
+                                                                                    class="custom-control-input lecture-checkbox"
+                                                                                    id="mobileCourseCheckbox{{ $lecture->id }}"
+                                                                                    required {{ $lecture->is_completed ? 'checked' : '' }}>
+                                                                                <label
+                                                                                    class="custom-control-label custom--control-label"
+                                                                                    for="mobileCourseCheckbox{{ $lecture->id }}"></label>
+                                                                            </div><!-- end custom-control -->
+                                                                            <div class="course-item-content">
+                                                                                <h4 class="fs-15">{{ $loop->iteration }}.
+                                                                                    {{ $lecture->title }}</h4>
+                                                                                <div class="courser-item-meta-wrap">
+                                                                                    @if ($lecture->url)
+                                                                                        <p class="course-item-meta">
+                                                                                            <i class="la la-play-circle"></i>{{ $lecture->duration }}
+                                                                                        </p>
+                                                                                    @else
+                                                                                        <p class="course-item-meta">
+                                                                                            <i class="la la-file"></i>{{ $lecture->duration_formatted }}
+                                                                                        </p>
+                                                                                    @endif
+                                                                                    @if ($lecture->files && $lecture->files->count() > 0)
+                                                                                        <div class="generic-action-wrap">
+                                                                                            <div class="dropdown">
+                                                                                                <a class="btn theme-btn theme-btn-sm theme-btn-transparent mt-1 fs-14 font-weight-medium"
+                                                                                                    href="#"
+                                                                                                    data-toggle="dropdown"
+                                                                                                    aria-haspopup="true"
+                                                                                                    aria-expanded="false">
+                                                                                                    <i
+                                                                                                        class="la la-folder-open mr-1"></i>
+                                                                                                    Resources
+                                                                                                    <i
+                                                                                                        class="la la-angle-down ml-1"></i>
+                                                                                                </a>
+                                                                                                @foreach ($lecture->files as $file)
+                                                                                                    <div
+                                                                                                        class="dropdown-menu dropdown-menu-right">
+                                                                                                        <a class="dropdown-item"
+                                                                                                            href="{{ $file->file_path }}"
+                                                                                                            download="{{ $file->name }}">
+                                                                                                            {{ $file->name }}
+                                                                                                        </a>
+                                                                                                    </div>
+                                                                                                @endforeach
+                                                                                            </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <!-- end generic-action-wrap -->
-                                                                                @endif
-                                                                            </div>
-                                                                        </div><!-- end course-item-content -->
-                                                                    </div><!-- end course-item-content-wrap -->
-                                                                </li>
-                                                            @endforeach
+                                                                                        <!-- end generic-action-wrap -->
+                                                                                    @endif
+                                                                                </div>
+                                                                            </div><!-- end course-item-content -->
+                                                                        </div><!-- end course-item-content-wrap -->
+                                                                    </li>
+                                                                @endforeach
 
-                                                        </ul>
-                                                    </div><!-- end card-body -->
-                                                </div><!-- end collapse -->
-                                            </div><!-- end card -->
+                                                            </ul>
+                                                        </div><!-- end card-body -->
+                                                    </div><!-- end collapse -->
+                                                </div><!-- end card -->
+                                            @endif
                                         @endforeach
 
                                     </div><!-- end accordion-->
@@ -741,92 +743,94 @@
                     <div class="course-dashboard-side-content">
                         <div class="accordion generic-accordion generic--accordion" id="accordionCourseExample">
                             @foreach ($course->sections as $section)
-                                <div class="card">
-                                    <div class="card-header" id="headingOne{{ $section->id }}">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse"
-                                            data-target="#collapseOne{{ $section->id }}" aria-expanded="true"
-                                            aria-controls="collapseOne{{ $section->id }}">
-                                            <i class="la la-angle-down"></i>
-                                            <i class="la la-angle-up"></i>
-                                            <span class="fs-15"> Section {{ $loop->iteration }}:
-                                                {{ $section->title }}</span>
-                                            <span class="course-duration">
-                                                <span>{{$section->completed_lectures->count()}}/{{ $section->lectures->count() }}</span>
-                                                <span>{{$section->duration_formatted}}</span>
-                                            </span>
-                                        </button>
-                                    </div><!-- end card-header -->
-                                    <div id="collapseOne{{ $section->id }}"
-                                        class="collapse {{ $loop->iteration == 1 ? 'show' : '' }}"
-                                        aria-labelledby="headingOne{{ $section->id }}"
-                                        data-parent="#accordionCourseExample">
-                                        <div class="card-body p-0">
-                                            <ul class="curriculum-sidebar-list">
-                                                @foreach ($section->lectures as $lecture)
-                                                    <li class="course-item-link {{ !$lecture->url ? 'active-resource' : '' }} section-lecture"
-                                                        data-id="{{ $lecture->id }}"
-                                                        data-section-id="{{ $section->id }}"
-                                                        data-video="{{ $lecture->url }}"
-                                                        data-content="{!! $lecture->content !!}">
-                                                        <div class="course-item-content-wrap">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input lecture-checkbox"
-                                                                    id="courseCheckbox{{ $lecture->id }}" required {{ $lecture->is_completed ? 'checked' : '' }}>
-                                                                <label
-                                                                    class="custom-control-label custom--control-label"
-                                                                    for="courseCheckbox{{ $lecture->id }}"></label>
-                                                            </div><!-- end custom-control -->
-                                                            <div class="course-item-content">
-                                                                <h4 class="fs-15">{{ $loop->iteration }}.
-                                                                    {{ $lecture->title }}</h4>
-                                                                <div class="courser-item-meta-wrap">
-                                                                    
-                                                                    @if ($lecture->url)
-                                                                        <p class="course-item-meta">
-                                                                            <i class="la la-play-circle"></i>{{ $lecture->duration_formatted }}
-                                                                        </p>
-                                                                    @else
-                                                                        <p class="course-item-meta">
-                                                                            <i class="la la-file"></i>{{ $lecture->duration_formatted }}
-                                                                        </p>
-                                                                    @endif
-                                                                    @if ($lecture->files && $lecture->files->count() > 0)
-                                                                        <div class="generic-action-wrap">
-                                                                            <div class="dropdown">
-                                                                                <a class="btn theme-btn theme-btn-sm theme-btn-transparent mt-1 fs-14 font-weight-medium"
-                                                                                    href="javascript:void(0)"
-                                                                                    data-toggle="dropdown"
-                                                                                    aria-haspopup="true"
-                                                                                    aria-expanded="false">
-                                                                                    <i
-                                                                                        class="la la-folder-open mr-1"></i>
-                                                                                    Resources<i
-                                                                                        class="la la-angle-down ml-1"></i>
-                                                                                </a>
-                                                                                @foreach ($lecture->files as $file)
-                                                                                    <div
-                                                                                        class="dropdown-menu dropdown-menu-right">
-                                                                                        <a class="dropdown-item"
-                                                                                            href="{{ $file->file_path }}"
-                                                                                            download="{{ $file->name }}">
-                                                                                            {{ $file->name }}
-                                                                                        </a>
-                                                                                    </div>
-                                                                                @endforeach
+                                @if ($section->lectures->count() > 0)   
+                                    <div class="card">
+                                        <div class="card-header" id="headingOne{{ $section->id }}">
+                                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                data-target="#collapseOne{{ $section->id }}" aria-expanded="true"
+                                                aria-controls="collapseOne{{ $section->id }}">
+                                                <i class="la la-angle-down"></i>
+                                                <i class="la la-angle-up"></i>
+                                                <span class="fs-15"> Section {{ $loop->iteration }}:
+                                                    {{ $section->title }}</span>
+                                                <span class="course-duration">
+                                                    <span>{{$section->completed_lectures->count()}}/{{ $section->lectures->count() }}</span>
+                                                    <span>{{$section->duration_formatted}}</span>
+                                                </span>
+                                            </button>
+                                        </div><!-- end card-header -->
+                                        <div id="collapseOne{{ $section->id }}"
+                                            class="collapse {{ $loop->iteration == 1 ? 'show' : '' }}"
+                                            aria-labelledby="headingOne{{ $section->id }}"
+                                            data-parent="#accordionCourseExample">
+                                            <div class="card-body p-0">
+                                                <ul class="curriculum-sidebar-list">
+                                                    @foreach ($section->lectures as $lecture)
+                                                        <li class="course-item-link {{ !$lecture->url ? 'active-resource' : '' }} section-lecture"
+                                                            data-id="{{ $lecture->id }}"
+                                                            data-section-id="{{ $section->id }}"
+                                                            data-video="{{ $lecture->url }}"
+                                                            data-content="{!! $lecture->content !!}">
+                                                            <div class="course-item-content-wrap">
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input lecture-checkbox"
+                                                                        id="courseCheckbox{{ $lecture->id }}" required {{ $lecture->is_completed ? 'checked' : '' }}>
+                                                                    <label
+                                                                        class="custom-control-label custom--control-label"
+                                                                        for="courseCheckbox{{ $lecture->id }}"></label>
+                                                                </div><!-- end custom-control -->
+                                                                <div class="course-item-content">
+                                                                    <h4 class="fs-15">{{ $loop->iteration }}.
+                                                                        {{ $lecture->title }}</h4>
+                                                                    <div class="courser-item-meta-wrap">
+                                                                        
+                                                                        @if ($lecture->url)
+                                                                            <p class="course-item-meta">
+                                                                                <i class="la la-play-circle"></i>{{ $lecture->duration_formatted }}
+                                                                            </p>
+                                                                        @else
+                                                                            <p class="course-item-meta">
+                                                                                <i class="la la-file"></i>{{ $lecture->duration_formatted }}
+                                                                            </p>
+                                                                        @endif
+                                                                        @if ($lecture->files && $lecture->files->count() > 0)
+                                                                            <div class="generic-action-wrap">
+                                                                                <div class="dropdown">
+                                                                                    <a class="btn theme-btn theme-btn-sm theme-btn-transparent mt-1 fs-14 font-weight-medium"
+                                                                                        href="javascript:void(0)"
+                                                                                        data-toggle="dropdown"
+                                                                                        aria-haspopup="true"
+                                                                                        aria-expanded="false">
+                                                                                        <i
+                                                                                            class="la la-folder-open mr-1"></i>
+                                                                                        Resources<i
+                                                                                            class="la la-angle-down ml-1"></i>
+                                                                                    </a>
+                                                                                    @foreach ($lecture->files as $file)
+                                                                                        <div
+                                                                                            class="dropdown-menu dropdown-menu-right">
+                                                                                            <a class="dropdown-item"
+                                                                                                href="{{ $file->file_path }}"
+                                                                                                download="{{ $file->name }}">
+                                                                                                {{ $file->name }}
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    @endforeach
 
-                                                                            </div>
-                                                                        </div><!-- end generic-action-wrap -->
-                                                                    @endif
-                                                                </div>
-                                                            </div><!-- end course-item-content -->
-                                                        </div><!-- end course-item-content-wrap -->
-                                                    </li>
-                                                @endforeach
+                                                                                </div>
+                                                                            </div><!-- end generic-action-wrap -->
+                                                                        @endif
+                                                                    </div>
+                                                                </div><!-- end course-item-content -->
+                                                            </div><!-- end course-item-content-wrap -->
+                                                        </li>
+                                                    @endforeach
 
-                                            </ul>
-                                        </div><!-- end card-body -->
-                                    </div><!-- end collapse -->
-                                </div><!-- end card -->
+                                                </ul>
+                                            </div><!-- end card-body -->
+                                        </div><!-- end collapse -->
+                                    </div><!-- end card -->
+                                @endif
                             @endforeach
 
 
