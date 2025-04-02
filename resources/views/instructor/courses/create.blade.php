@@ -96,9 +96,9 @@
                     <select name="category_id" id="category_id" class="form-select mb-3"
                         aria-label="Default select example">
                         <option selected="" disabled>Open this select menu</option>
-                        @foreach ($categories as $cat)
+                        @foreach ($categories->where('depth', '<=', 2) as $cat)
                             <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>
-                                {{ $cat->name }}</option>
+                                {{ str_repeat('—', $cat->depth) }}{{ $cat->name }}</option>
                         @endforeach
                     </select>
                     @error('category_id')

@@ -41,7 +41,7 @@
                     <select name="parent_id" id="parent_id"
                         class="form-control select2 @error('parent_id') is-invalid @enderror" aria-describedby="parentHelp">
                         <option value="">-- Select parent category --</option>
-                        @foreach ($categories as $category)
+                        @foreach ($categories->where('depth', '<=', 1) as $category)
                             <option value="{{ $category->id }}" {{ old('parent_id') == $category->id ? 'selected' : '' }}>
                                 {{ str_repeat('—', $category->depth) }}{{ $category->name }}
                             </option>

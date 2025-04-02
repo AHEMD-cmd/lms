@@ -111,10 +111,10 @@
                         class="form-select mb-3 @error('category_id') is-invalid @enderror"
                         aria-label="Default select example">
                         <option value="" disabled>Select a category</option>
-                        @foreach ($categories as $cat)
+                        @foreach ($categories->where('depth', '<=', 2) as $cat)
                             <option value="{{ $cat->id }}"
                                 {{ old('category_id', $course->category_id) == $cat->id ? 'selected' : '' }}>
-                                {{ $cat->name }}</option>
+                                {{ str_repeat('—', $cat->depth) }}{{ $cat->name }}</option>
                         @endforeach
                     </select>
                     @error('category_id')

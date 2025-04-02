@@ -3,8 +3,15 @@
         <div class="col-lg-8 mr-auto">
             <div class="breadcrumb-content">
                 <ul class="generic-list-item generic-list-item-arrow d-flex flex-wrap align-items-center">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#">{{ $course->category->name }}</a></li>
+                    @if ($course->category)
+                        @if ($course->category->parent)
+                            <li><a href="{{ route('categories.show', $course->category->parent->slug) }}">{{ $course->category->parent->name }}</a></li>
+                        @endif
+                        <li><a href="{{ route('categories.show', $course->category->slug) }}">{{ $course->category->name }}</a></li>
+                        @foreach ($course->category->children as $child)
+                            <li><a href="{{ route('categories.show', $child->slug) }}">{{ $child->name }}</a></li>
+                        @endforeach
+                    @endif
 
                 </ul>
                 <div class="section-heading">
