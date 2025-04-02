@@ -21,11 +21,6 @@
                         </select>
                     </div>
 
-                    <div class="form-group mb-3">
-                        <label for="time-limit" class="form-label">Time Limit</label>
-                        <input type="number" name="time_limit" class="form-control" id="time-limit" placeholder="Time Limit in minutes" required>
-                    </div>
-
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Save changes</button>

@@ -17,7 +17,6 @@ class QuizQuestionService
 
             DB::commit();
 
-            return $quiz->load('questions.options');
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
@@ -49,7 +48,6 @@ class QuizQuestionService
 
             DB::commit();
 
-            return $quiz->load('questions.options');
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;

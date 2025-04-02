@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('lecture_id')->constrained('lectures')->onDelete('cascade');
-            $table->integer('time_limit')->comment('Time limit in minutes');
             $table->boolean('is_published')->default(true);
             $table->timestamps();
         });

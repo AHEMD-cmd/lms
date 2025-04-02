@@ -25,10 +25,11 @@ class QuizQuestionController extends Controller
 
     public function store(StoreQuizQuestionRequest $request, Quiz $quiz)
     {
-        $result = $this->quizQuestionService->createQuestion($quiz, $request->validated());
+        $this->quizQuestionService->createQuestion($quiz, $request->validated());
 
         return response()->json([
-            'quizQuestions' => view('instructor.quiz-questions.includes.questions-body', ['quiz' => $result])->render(),
+            'quizQuestions' => view('instructor.quiz-questions.includes.questions-body', ['quiz' => $quiz->load('questions.options')])->render(),
+            'quizModals' => view('instructor.quiz-questions.includes.modals', ['quiz' => $quiz->load('questions.options')])->render(),
             'success' => true,
             'message' => 'Question added successfully!',
         ]);
@@ -39,7 +40,8 @@ class QuizQuestionController extends Controller
         $result = $this->quizQuestionService->updateQuestion($quiz, $questionId, $request->validated());
 
         return response()->json([
-            'quizQuestions' => view('instructor.quiz-questions.includes.questions-body', ['quiz' => $result])->render(),
+            'quizQuestions' => view('instructor.quiz-questions.includes.questions-body', ['quiz' => $quiz->load('questions.options')])->render(),
+            'quizModals' => view('instructor.quiz-questions.includes.modals', ['quiz' => $quiz->load('questions.options')])->render(),
             'success' => true,
             'message' => 'Question updated successfully!',
         ]);

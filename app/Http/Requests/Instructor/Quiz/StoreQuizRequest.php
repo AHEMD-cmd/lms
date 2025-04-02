@@ -22,7 +22,6 @@ class StoreQuizRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'time_limit' => 'required|integer|min:1|max:10000',
             'lecture_id' => 'required|exists:lectures,id',
         ];
     }

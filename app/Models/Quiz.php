@@ -24,4 +24,12 @@ class Quiz extends Model
         return $this->hasMany(QuizAttempt::class);
     }
 
+    
+    public function getUserScoreAttribute()
+    {
+        if ($attempt = auth()->user()->attempts()->where('quiz_id', $this->id)->first()) {
+            return $attempt->score;
+        }
+        return null;
+    }
 }

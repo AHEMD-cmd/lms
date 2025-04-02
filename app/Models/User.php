@@ -98,4 +98,9 @@ class User extends Authenticatable
     {
         return 'slug';
     }
+
+    public function attempts()
+    {
+        return $this->hasMany(QuizAttempt::class);
+    }
 }

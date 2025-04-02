@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Instructor\Quiz;
+namespace App\Http\Requests\Frontend\QuizAnswer;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateQuizRequest extends FormRequest
+class StoreQuizAnswerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,10 @@ class UpdateQuizRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'lecture_id' => 'required|exists:lectures,id',
+            'option_ids' => 'required|array',
+            'option_ids.*' => 'required|exists:question_options,id',
+            'question_id' => 'required|exists:quiz_questions,id',
+            'attempt_id' => 'required|exists:quiz_attempts,id',
         ];
     }
 }

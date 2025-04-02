@@ -155,4 +155,9 @@ class Course extends Model
     {
         return $this->lectures()->whereHas('quiz')->count();
     }
+
+    public function attempts()
+    {
+        return $this->hasMany(QuizAttempt::class);
+    }
 }

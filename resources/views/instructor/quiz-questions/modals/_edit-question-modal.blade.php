@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editQuestionForm" action="{{ route('instructor.quizzes.questions.update', [$quiz->id, $question->id]) }}" method="POST">
+                <form class="edit-question-form" action="{{ route('instructor.quizzes.questions.update', [$quiz->id, $question->id]) }}" method="POST">
                     @csrf
                     @method('PUT')
 

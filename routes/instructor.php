@@ -57,6 +57,6 @@ Route::middleware(['auth', 'role:instructor'])
         ############################# Instructor quizzes attempts Routes #############################
         Route::resource('quizzes.attempts', QuizAttemptController::class);
 
-        ############################# Instructor quizzes attempts Routes #############################
+        ############################# Instructor quizzes answers Routes #############################
         Route::resource('quizzes.answers', QuizAnswerController::class);
     });

@@ -9,6 +9,11 @@ class QuizAttempt extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'started_at' => 'datetime',
+        'ended_at' => 'datetime',
+    ];
+
     public function quiz()
     {
         return $this->belongsTo(Quiz::class);
@@ -23,4 +28,17 @@ class QuizAttempt extends Model
     {
         return $this->hasMany(QuizAnswer::class, 'attempt_id');
     }
+
+    
+    public function getDurationAttribute()
+    {
+        $diff = $this->ended_at->diff($this->started_at);
+
+        if ($diff->h > 0) {
+            return $diff->format('%h hr %i min');
+        }
+
+        return $diff->format('%i min');
+    }
+
 }
