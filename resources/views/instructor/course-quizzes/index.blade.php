@@ -45,7 +45,7 @@
                                             <div class="d-flex justify-content-between align-items-center">
                                                 @if ($section->lecturesWithoutQuiz()->count() > 0)
                                                     <button type="button" class="btn btn-primary px-2 ms-auto"
-                                                        data-bs-toggle="modal" data-bs-target="#addQuizModal">
+                                                        data-bs-toggle="modal" data-bs-target="#addQuizModal{{ $section->id }}">
                                                         Add Quiz</button>
                                                 @else
                                                     <span class="text-success">No Lecture Without Quiz</span>
@@ -58,14 +58,10 @@
                                                 @include('instructor.course-quizzes.includes._lectures')
                                             </div>
                                         </div>
-
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
-
                     </div>
                 @endif
 
@@ -77,12 +73,6 @@
             {{-- /// End Add Section and Lecture  --}}
         </div>
     </div>
-
-
-
-
-    <!-- Modal -->
-    @include('instructor.course-sections.includes._create-section-modal')
 
 @endsection
 

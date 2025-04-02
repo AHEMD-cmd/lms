@@ -21,24 +21,31 @@
 
                 {{-- edit quiz --}}
                 <button type="button" class="btn btn-sm btn-primary ms-2" data-bs-toggle="modal"
-                    data-bs-target="#editQuizModal">
-                    Edit Quiz <i class="bx bx-edit"></i></button>
+                    data-bs-target="#editQuizModal{{ $lecture->id }}">
+                    Edit Quiz <i class="bx bx-edit"></i>
+                </button>
 
-                    {{-- delete --}}
-                    <form class="delete-form ms-2"
+                {{-- delete --}}
+                <form class="delete-form ms-2"
                     action="{{ route('instructor.courses.quizzes.destroy', [$course->slug, $lecture->quiz->id]) }}"
                     method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-danger" id="delete">Delete Quiz <i class="bx bx-trash"></i></button>
+                    <button type="submit" class="btn btn-sm btn-danger" id="delete">Delete Quiz <i
+                            class="bx bx-trash"></i></button>
                 </form>
 
-                <a href="{{ route('instructor.quizzes.questions.index', $lecture->quiz->id)}}" class="btn btn-sm btn-primary ms-2" >
+                <a href="{{ route('instructor.quizzes.questions.index', $lecture->quiz->id) }}"
+                    class="btn btn-sm btn-primary ms-2">
                     Questions <i class="bx bx-question-mark"></i></a>
+                    {{-- Quiz Attempts  --}}
+                <a href="{{ route('instructor.quizzes.attempts.index', $lecture->quiz->id) }}"
+                    class="btn btn-sm btn-primary ms-2">
+                    Attempts <i class="bx bx-task"></i></a>
             </div>
         @endif
     </div>
     @if ($lecture->quiz)
-        @include('instructor.course-quizzes.includes._edit-quiz-modal')
+        @include('instructor.course-quizzes.includes._edit-quiz-modal', ['lecture' => $lecture])
     @endif
 @endforeach
