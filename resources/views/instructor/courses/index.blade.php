@@ -43,7 +43,7 @@
                         @foreach ($courses as $index => $course)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td> <img src="{{ $course->image }}" alt=""
+                                <td> <img src="{{ asset($course->image) }}" alt=""
                                         style="width: 70px; height:40px;"> </td>
                                 <td>{{ $course->title }}</td>
                                 <td>{{ $course->category->name }}</td>

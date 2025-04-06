@@ -78,8 +78,11 @@ if (!function_exists('uploadEditedPhotoToS3')) {
 
         // Upload to S3
         $s3Path = $path . '/' . $photoName;
-        Storage::disk('s3')->put($s3Path, (string) $image, 'public');
-
+        Storage::disk('s3')->put($s3Path, (string) $image, [
+            'Metadata' => [],
+            'ServerSideEncryption' => 'AES256', 
+        ]);
+        
         // Return S3 URL or path
         return Storage::disk('s3')->url($s3Path);
     }
@@ -100,8 +103,11 @@ if (!function_exists('updateEditedPhotoToS3')) {
 
         // Upload to S3
         $s3Path = $path . '/' . $photoName;
-        Storage::disk('s3')->put($s3Path, (string) $image, 'public');
-
+        Storage::disk('s3')->put($s3Path, (string) $image, [
+            'Metadata' => [],
+            'ServerSideEncryption' => 'AES256', 
+        ]);
+        
         // Return S3 URL or path
         return Storage::disk('s3')->url($s3Path);
     }

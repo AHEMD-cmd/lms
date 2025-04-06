@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Instructor\Course;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
 
 class UpdateCourseRequest extends FormRequest
 {
@@ -21,8 +23,11 @@ class UpdateCourseRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Get valid language codes from the package
+        $languagesPath = base_path('vendor/umpirsky/language-list/data/en/language.php');
+        $validLanguageCodes = array_keys(file_exists($languagesPath) ? require $languagesPath : []);
+
         return [
-            'name' => 'required|string|max:255',
             'description' => 'required|string',
             'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
@@ -33,11 +38,12 @@ class UpdateCourseRequest extends FormRequest
             'discount' => 'nullable|integer',
             'prerequisites' => 'required|string|max:2000',
             'short_description' => 'required|string|max:2000',
+            'language' => ['required', 'string', Rule::in($validLanguageCodes)],
             'bestseller' => 'nullable|boolean',
             'featured' => 'nullable|boolean',
             'highest_rated' => 'nullable|boolean',
-            'video' => 'required|url', 
-            // 'video' => 'required|file|mimes:mp4,webm|max:1048576', // 1GB limit in KB
+            'video' => 'nullable|url',
+            'video_path' => 'nullable|string', 
             'has_certificate' => 'required|boolean',
             'course_goals' => 'required|array',
             'course_goals.*' => 'required|string|max:255',

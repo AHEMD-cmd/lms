@@ -70,5 +70,12 @@ class Kernel extends HttpKernel
         'increment.questions' => \App\Http\Middleware\IncrementQuestionsCount::class,
         'reset.reviews' => \App\Http\Middleware\ResetReviewsCount::class,
         'increment.reviews' => \App\Http\Middleware\IncrementReviewsCount::class,
+        'check.instructor.status' => \App\Http\Middleware\CheckInstructorStatus::class,
+        'ensure.course.owner' => \App\Http\Middleware\EnsureCourseOwner::class,
+        'ensure.section.owner' => \App\Http\Middleware\EnsureSectionOwner::class,
+        'ensure.lecture.owner' => \App\Http\Middleware\EnsureLectureOwner::class,
+        'ensure.quiz.owner' => \App\Http\Middleware\EnsureQuizBelongsToInstructor::class,
+        'ensure.question.owner' => \App\Http\Middleware\EnsureQuestionBelongsToInstructor::class,
+        'ensure.coupon.owner' => \App\Http\Middleware\EnsureCouponBelongsToInstructor::class,
     ];
 }

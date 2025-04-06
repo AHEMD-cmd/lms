@@ -1,13 +1,18 @@
+
+
 <section class="course-dashboard">
     <div class="course-dashboard-wrap">
         <div class="course-dashboard-container d-flex">
             <div class="course-dashboard-column">
                 <div class="lecture-viewer-container">
                     <div class="lecture-video-item">
-                        <iframe src="" frameborder="0" class="w-100" height="500" id="lecture-viewer"
+                        {{-- <iframe src="" frameborder="0" class="w-100" height="500" id="lecture-viewer"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
+                            allowfullscreen id="player">
+                        </iframe> --}}
+                        <video controls crossorigin playsinline id="player" class="lecture-viewer">
+                            <source src="" type="video/mp4">
+                        </video>
                     </div>
                     <div class="lecture-viewer-text-wrap">
                         <div class="lecture-viewer-text-content custom-scrollbar-styled">
@@ -107,10 +112,10 @@
                                                         <div class="card-body p-0">
                                                             <ul class="curriculum-sidebar-list">
                                                                 @foreach ($section->lectures as $lecture)
-                                                                    <li class="course-item-link {{ !$lecture->url ? 'active-resource' : '' }} section-lecture"
+                                                                    <li class="course-item-link {{ !$lecture->video_path ? 'active-resource' : '' }} section-lecture"
                                                                         data-id="{{ $lecture->id }}"
                                                                         data-section-id="{{ $section->id }}"
-                                                                        data-video="{{ $lecture->url }}"
+                                                                        data-video="{{ $lecture->video_path }}"
                                                                         data-content="{!! $lecture->content !!}">
                                                                         <div class="course-item-content-wrap">
                                                                             <div class="custom-control custom-checkbox">
@@ -766,10 +771,10 @@
                                             <div class="card-body p-0">
                                                 <ul class="curriculum-sidebar-list">
                                                     @foreach ($section->lectures as $lecture)
-                                                        <li class="course-item-link {{ !$lecture->url ? 'active-resource' : '' }} section-lecture"
+                                                        <li class="course-item-link {{ !$lecture->video_path ? 'active-resource' : '' }} section-lecture"
                                                             data-id="{{ $lecture->id }}"
                                                             data-section-id="{{ $section->id }}"
-                                                            data-video="{{ $lecture->url }}"
+                                                            data-video="{{ $lecture->video_path }}"
                                                             data-content="{!! $lecture->content !!}">
                                                             <div class="course-item-content-wrap">
                                                                 <div class="custom-control custom-checkbox">

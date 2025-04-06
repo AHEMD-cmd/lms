@@ -1,4 +1,4 @@
-<div class="col-lg-8">
+<div class="col-lg-8" id="courses-container"> 
     <div class="row">
         @foreach ($courses as $course)
             <div class="col-lg-6 responsive-column-half">
@@ -22,21 +22,25 @@
                     <div class="card-body">
                         <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">{{ $course->level }}</h6>
                         <h5 class="card-title"><a
-                                href="{{ route('categories.show', $course->slug) }}">{{ $course->name }}</a>
+                                href="{{ route('courses.show', $course->slug) }}">{{ $course->title }}</a>
                         </h5>
                         <p class="card-text"><a
                                 href="{{ route('instructors.show', $course->instructor->slug) }}">{{ $course->instructor->name }}</a>
                         </p>
                         <div class="rating-wrap d-flex align-items-center py-2">
                             <div class="review-stars">
-                                <span class="rating-number">4.4</span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star"></span>
-                                <span class="la la-star-o"></span>
+                                <span class="rating-number">{{ $course->averageRating() }}</span>
+                                @for ($i = 1; $i <= $course->averageRating(); $i++)
+                                    <span class="la la-star"></span>
+                                @endfor
+                                @if ($course->doesRateHaveFraction())
+                                    <span class="la la-star-half-alt"></span>
+                                @endif
+                                @for ($i = 1; $i <= 5 - $course->averageRating(); $i++)
+                                    <span class="la la-star-o"></span>
+                                @endfor
                             </div>
-                            <span class="rating-total pl-1">(20,230)</span>
+                            <span class="rating-total pl-1">({{ $course->reviews()->count() }} ratings)</span>
                         </div><!-- end rating-wrap -->
                         <div class="d-flex justify-content-between align-items-center">
                             @if (!$course->discount)

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('comment')->nullable();
             $table->string('rate');
             $table->boolean('status')->default(1);
-
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

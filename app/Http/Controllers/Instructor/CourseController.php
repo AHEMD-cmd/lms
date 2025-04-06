@@ -16,6 +16,7 @@ class CourseController extends Controller
 
     public function __construct(CourseService $courseService)
     {
+        $this->middleware('ensure.course.owner')->except('index', 'create', 'store');
         $this->courseService = $courseService;
     }
 
@@ -28,13 +29,18 @@ class CourseController extends Controller
     public function create()
     {
         $categories = Category::tree()->get();
-        return view('instructor.courses.create', compact('categories'));
+        // Load languages from the umpirsky package - English language names
+        $languagesPath = base_path('vendor/umpirsky/language-list/data/en/language.php');
+        $languages = file_exists($languagesPath) ? require $languagesPath : [];
+
+        asort($languages);
+        return view('instructor.courses.create', compact('categories', 'languages'));
     }
 
 
     public function store(StoreCourseRequest $request)
     {
-        $course = $this->courseService->createCourse($request, $request->validated());
+        $this->courseService->createCourse($request, $request->validated());
 
         return redirect()->route('instructor.courses.index')->with('success', 'Course created successfully');
     }
@@ -43,7 +49,12 @@ class CourseController extends Controller
     {
         $course->load('courseGoals');
         $categories = Category::tree()->get();
-        return view('instructor.courses.edit', compact('categories', 'course'));
+        // Load languages from the umpirsky package - English language names
+        $languagesPath = base_path('vendor/umpirsky/language-list/data/en/language.php');
+        $languages = file_exists($languagesPath) ? require $languagesPath : [];
+
+        asort($languages);
+        return view('instructor.courses.edit', compact('categories', 'course', 'languages'));
     }
 
     public function update(UpdateCourseRequest $request, Course $course)

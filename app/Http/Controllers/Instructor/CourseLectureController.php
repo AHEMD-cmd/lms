@@ -7,12 +7,17 @@ use App\Models\Lecture;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\CourseSection;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Instructor\Lecture\StoreLectureRequest;
 use App\Http\Requests\Instructor\Lecture\UpdateLectureRequest;
 
 class CourseLectureController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('ensure.lecture.owner')->except('index', 'create', 'store');
+    }
 
     public function store(StoreLectureRequest $request, Course $course, CourseSection $section)
     {
@@ -23,7 +28,7 @@ class CourseLectureController extends Controller
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
                 $path = $file->store('lectures', 'public');
-                $fileName = $file->getClientOriginalName(); // Get the original file nam
+                $fileName = $file->getClientOriginalName();
                 $lecture->files()->create([
                     'file' => $path,
                     'name' => $fileName,
@@ -47,14 +52,23 @@ class CourseLectureController extends Controller
 
     public function update(UpdateLectureRequest $request, Course $course, CourseSection $section, Lecture $lecture)
     {
-        $dataWithoutFiles = Arr::except($request->validated(), ['files']);
+        $validated = $request->validated();
 
-        $lecture->update($dataWithoutFiles);
+        if (isset($validated['video_path'])) {
+            // Delete old video
+            if ($lecture->video_path) {
+                Storage::disk('s3')->delete($lecture->video_path);
+            }
+            $lecture->video_path = $validated['video_path'];
+        }
 
+        $lecture->update($validated);
+
+        // File handling remains the same
         if ($request->hasFile('files')) {
             $lecture->files()->delete();
             foreach ($request->file('files') as $file) {
-                $fileName = $file->getClientOriginalName(); // Get the original file nam
+                $fileName = $file->getClientOriginalName();
                 $path = $file->store('lectures', 'public');
                 $lecture->files()->create([
                     'file' => $path,
@@ -62,12 +76,20 @@ class CourseLectureController extends Controller
                 ]);
             }
         }
-        return redirect()->route('instructor.courses.sections.index', $course->slug)->with('message', 'Lecture updated successfully');
+
+        return redirect()->route('instructor.courses.sections.index', [$course->slug, $section->id])
+            ->with('message', 'Lecture updated successfully');
     }
 
     public function destroy(Course $course, CourseSection $section, Lecture $lecture)
     {
+        // Delete video from S3
+        if ($lecture->video_path) {
+            Storage::disk('s3')->delete($lecture->video_path);
+        }
+
         $lecture->delete();
-        return back()->with('message', 'Lecture deleted successfully');
+        return redirect()->route('instructor.courses.sections.index', [$course->slug, $section->id])
+            ->with('message', 'Lecture deleted successfully');
     }
 }

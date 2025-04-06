@@ -72,8 +72,6 @@
                             </div>
                         </div>
 
-
-
                         <div class="curriculum-content">
                             <div id="accordion" class="generic-accordion">
 
@@ -409,7 +407,7 @@
                                 <li class="d-flex align-items-center justify-content-between"><span><i
                                             class="la la-eye mr-2 text-color"></i>Preview Lessons</span> 4</li>
                                 <li class="d-flex align-items-center justify-content-between"><span><i
-                                            class="la la-language mr-2 text-color"></i>Language</span> English</li>
+                                            class="la la-language mr-2 text-color"></i>Language</span> {{ $course->language }}</li>
                                 <li class="d-flex align-items-center justify-content-between"><span><i
                                             class="la la-lightbulb mr-2 text-color"></i>Skill level</span>
                                     {{ $course->level }}</li>

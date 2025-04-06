@@ -24,7 +24,8 @@ class UpdateLectureRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required_if:url,null', 'string', 'nullable', 'max:2000'],
-            'url' => ['required_if:content,null', 'nullable',  'max:255', 'url'],
+            // 'url' => ['required_if:content,null', 'nullable',  'max:255', 'url'],
+            'video_path' => ['required', 'string'],
             'files' => ['nullable', 'array'],
             'files.*' => ['nullable', 'file', 'max:5120'], // 5MB = 5120KB
             'duration' => ['required','integer','min:1'],

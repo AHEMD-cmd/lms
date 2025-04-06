@@ -15,6 +15,7 @@ class CouponController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('ensure.coupon.owner')->only('edit', 'update', 'destroy');
         $this->middleware('check.auto.coupon')->only('store', 'update');
     }
 

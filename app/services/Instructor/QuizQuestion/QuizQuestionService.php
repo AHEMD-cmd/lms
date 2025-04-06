@@ -3,6 +3,7 @@
 namespace App\Services\Instructor\QuizQuestion;
 
 use App\Models\Quiz;
+use App\Models\QuizQuestion;
 use Illuminate\Support\Facades\DB;
 
 class QuizQuestionService
@@ -31,12 +32,11 @@ class QuizQuestionService
         ]);
     }
 
-    public function updateQuestion(Quiz $quiz, $questionId, array $data)
+    public function updateQuestion(Quiz $quiz, QuizQuestion $question, array $data)
     {
         DB::beginTransaction();
 
         try {
-            $question = $quiz->questions()->findOrFail($questionId);
             $question->update([
                 'question_text' => $data['question'],
                 'is_multiple' => $data['is_multiple'] ?? false,
@@ -54,8 +54,7 @@ class QuizQuestionService
         }
     }
 
-
-    private function createQuestionOptions($question, array $data)
+    private function createQuestionOptions(QuizQuestion $question, array $data)
     {
         foreach ($data['options'] as $index => $optionText) {
             $question->options()->create([

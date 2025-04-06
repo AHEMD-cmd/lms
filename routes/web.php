@@ -16,6 +16,7 @@ use App\Http\Controllers\Frontend\QuizAnswerController;
 use App\Http\Controllers\Frontend\SocialAuthController;
 use App\Http\Controllers\Frontend\QuizAttemptController;
 use App\Http\Controllers\Frontend\QuizQuestionController;
+use App\Http\Controllers\Frontend\UserProgressController;
 use App\Http\Controllers\Frontend\CourseLectureController;
 use App\Http\Controllers\Frontend\QuestionUpvoteController;
 use App\Http\Controllers\Frontend\LectureCompletedController;
@@ -67,6 +68,7 @@ Route::middleware('auth')->group(function () {
     ############################### Course Lectures Routes ###########################
     Route::resource('courses.lectures', CourseLectureController::class)->only(['index']);
     Route::patch('lecture-completed/update', LectureCompletedController::class)->name('lecture.completed.update');
+    Route::post('save-watched-progress', [UserProgressController::class, 'store']);
 
 
     ############################### Course Questions Routes ###########################

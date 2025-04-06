@@ -11,6 +11,10 @@ use App\Http\Requests\Instructor\CourseSection\UpdateSectionRequest;
 
 class CourseSectionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('ensure.section.owner')->except('index', 'create', 'store');
+    }
     public function index(Course $course)
     {
         $course->load('sections');
@@ -22,19 +26,19 @@ class CourseSectionController extends Controller
     {
         $course->sections()->create($request->validated());
 
-        return redirect()->back()->with('message', 'Section created successfully');
+        return redirect()->route('instructor.courses.sections.index', $course->slug)->with('message', 'Section created successfully');
     }
 
     public function update(UpdateSectionRequest $request, Course $course, CourseSection $section)
     {
         $section->update($request->validated());
 
-        return redirect()->back()->with('message', 'Section updated successfully');
+        return redirect()->route('instructor.courses.sections.index', $course->slug)->with('message', 'Section updated successfully');
     }
 
     public function destroy(Course $course, CourseSection $section)
     {
         $section->delete();
-        return redirect()->back()->with('message', 'Section deleted successfully');
+        return redirect()->route('instructor.courses.sections.index', $course->slug)->with('message', 'Section deleted successfully');
     }
 }

@@ -16,7 +16,8 @@
         "laravel/tinker": "^2.8",
         "league/flysystem-aws-s3-v3": "^3.0",
         "php-ffmpeg/php-ffmpeg": "^1.3",
-        "staudenmeir/laravel-adjacency-list": "^1.13"
+        "staudenmeir/laravel-adjacency-list": "^1.13",
+        "umpirsky/language-list": "^1.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

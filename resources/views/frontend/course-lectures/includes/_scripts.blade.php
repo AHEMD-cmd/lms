@@ -14,93 +14,172 @@
 <script src="{{ asset('assets/frontend') }}/js/jquery.MultiFile.min.js"></script>
 <script src="{{ asset('assets/frontend') }}/js/main.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Define our video sources with quality options
-        const source = {
-            type: 'video',
-            title: 'View From A Blue Moon',
-            sources: [{
-                    src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4',
-                    type: 'video/mp4',
-                    size: 1080,
-                },
-                {
-                    src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4',
-                    type: 'video/mp4',
-                    size: 720,
-                },
-                {
-                    src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4',
-                    type: 'video/mp4',
-                    size: 576,
-                }
-            ],
-            tracks: [{
-                    kind: 'captions',
-                    label: 'English',
-                    srclang: 'en',
-                    src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt',
-                    default: true,
-                },
-                {
-                    kind: 'captions',
-                    label: 'French',
-                    srclang: 'fr',
-                    src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt',
-                }
-            ]
-        };
+    // Initialize Plyr
+    var player = new Plyr('#player');
+</script>
 
-        // Get the video element
-        const video = document.querySelector('#player');
+@php
+    $lastWatched = \App\Models\LastWatchedLecture::where('user_id', auth()->id())
+        ->where('course_id', $course->id)
+        ->first();
 
-        // Empty the video element - we'll set sources through JavaScript
-        video.innerHTML = '';
+    $defaultLecture = $course->lectures()->orderBy('course_section_id')->orderBy('number')->first();
 
-        // Initialize Plyr
-        const player = new Plyr(video, {
-            captions: {
-                active: true,
-                update: true
-            },
-            quality: {
-                default: 720,
-                options: [1080, 720, 576]
-            }
-        });
+    $initialLectureId = $lastWatched->lecture_id ?? $defaultLecture->id;
+    $initialTime = $lastWatched->progress_in_seconds ?? 0;
+@endphp
 
-        // Set the source after the player is initialized
-        player.source = source;
-    });
+<script>
+    const initialLectureId = {{ $initialLectureId }};
+    const initialTime = {{ $initialTime }};
 </script>
 
 
 <script>
     $(document).ready(function() {
         // ###################### send the lecture id to the hidden input in the form of question ######################
+        // $(document).on('click', '.section-lecture', function(e) {
+        //     let $this = $(this);
+        //     let lectureId = $this.data('id');
+
+        //     // Set lecture ID in hidden inputs
+        //     $('.lecture-id').val(lectureId);
+        //     $('.questions-filter select option:nth-child(2)').val(lectureId);
+
+        //     // ###################### Handle video or content display ######################
+        //     let lectureVideoPath = $this.data('video'); // This should be the S3 path
+        //     let lectureContent = $this.data('content');
+
+        //     if (lectureVideoPath) {
+        //         // Show loading state
+        //         $('#lecture-viewer').html('<div class="text-center p-4">Loading video...</div>');
+
+        //         // Make AJAX request to get temporary signed URL
+        //         $.ajax({
+        //             url: '/instructor/get-temp-video-url',
+        //             type: 'POST',
+        //             data: {
+        //                 _token: '{{ csrf_token() }}',
+        //                 video_path: lectureVideoPath
+        //             },
+        //             success: function(response) {
+        //                 if (response.url) {
+        //                     // Set the temporary URL in the iframe src
+        //                     $('.lecture-viewer').attr('src', response.url);
+        //                 } else {
+        //                     $('.lecture-viewer').html(
+        //                         '<div class="alert alert-danger">Could not load video</div>'
+        //                     );
+        //                 }
+        //             },
+        //             error: function(xhr) {
+        //                 $('#lecture-viewer').html(
+        //                     '<div class="alert alert-danger">Error loading video</div>');
+        //                 console.error('Error getting video URL:', xhr.responseText);
+        //             }
+        //         });
+        //     } else if (lectureContent) {
+        //         // Set the content in the viewer
+        //         $('#content-viewer').html(lectureContent);
+        //     }
+        // });
+
+
+        function loadLecture(lectureId, lectureVideoPath, lectureContent) {
+            $('.lecture-id').val(lectureId);
+            $('.questions-filter select option:nth-child(2)').val(lectureId);
+
+            if (lectureVideoPath) {
+                $('#lecture-viewer').html('<div class="text-center p-4">Loading video...</div>');
+
+                $.ajax({
+                    url: '/instructor/get-temp-video-url',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        video_path: lectureVideoPath
+                    },
+                    success: function(response) {
+                        if (response.url) {
+                            const video = $('#player');
+                            video.attr('src', response.url);
+
+                            setTimeout(() => {
+                                video[0].currentTime = initialTime;
+                                video[0].play();
+                            }, 1000);
+                        } else {
+                            $('#lecture-viewer').html(
+                                '<div class="alert alert-danger">Could not load video</div>');
+                        }
+                    },
+                    error: function(xhr) {
+                        $('#lecture-viewer').html(
+                            '<div class="alert alert-danger">Error loading video</div>');
+                    }
+                });
+            } else if (lectureContent) {
+                $('#content-viewer').html(lectureContent);
+            }
+        }
+
+        function saveWatchedProgress(lectureId, courseId, seconds) {
+            $.ajax({
+                url: '/save-watched-progress',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    course_id: courseId,
+                    lecture_id: lectureId,
+                    progress: seconds
+                }
+            });
+        }
+
+
         $(document).on('click', '.section-lecture', function(e) {
             let $this = $(this);
             let lectureId = $this.data('id');
+            let videoPath = $this.data('video');
+            let content = $this.data('content');
 
-            // hidden input in the form of question and form of replay
-            $('.lecture-id').val(lectureId);
-
-            // Update the value of the second option in the select dropdown inside .questions-filter
-            $('.questions-filter select option:nth-child(2)').val(lectureId);
-
-
-            // ###################### video the video or the content ######################
-            let lectureVideo = $this.data('video');
-            let lectureContent = $this.data('content');
-
-            if (lectureVideo) {
-                // set the value of the video ib the iframe
-                console.log($('#lecture-viewer').attr('src', lectureVideo));
-            } else if (lectureContent) {
-                // set the value of the content ib the iframe
-                $('#content-viewer').html(lectureContent);
-            }
+            loadLecture(lectureId, videoPath, content);
+            saveWatchedProgress(lectureId, '{{ $course->id }}', 0); 
         });
+
+        // Auto-load last watched lecture on page load
+        $(document).ready(function() {
+
+            let $initialLecture = $(`[data-id="${initialLectureId}"]`);
+            let videoPath = $initialLecture.data('video');
+            let content = $initialLecture.data('content');
+
+            loadLecture(initialLectureId, videoPath, content);
+            saveWatchedProgress(initialLectureId, '{{ $course->id }}', initialTime);
+        });
+
+        // Track progress every 15 seconds
+        setInterval(() => {
+            const video = document.getElementById('player');
+            if (!video || video.paused || video.ended) return;
+
+            let lectureId = $('.lecture-id').val();
+            let courseId = '{{ $course->id }}';
+            let seconds = Math.floor(video.currentTime);
+
+            $.ajax({
+                url: '/save-watched-progress',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    course_id: courseId,
+                    lecture_id: lectureId,
+                    progress: seconds
+                }
+            });
+        }, 15000);
+
+
 
 
         // ######################## questions filter ###################   
@@ -306,7 +385,8 @@
             let courseSlug = $(this).find('#course-id').data('course-slug');
 
             $.ajax({
-                url: '{{ route('courses.reviews.store', ':courseSlug') }}'.replace(':courseSlug',courseSlug),
+                url: '{{ route('courses.reviews.store', ':courseSlug') }}'.replace(
+                    ':courseSlug', courseSlug),
                 type: "POST",
                 data: formData,
                 headers: {
@@ -314,7 +394,7 @@
                 },
                 success: function(response) {
                     $(".close").click(); // Simulate click on the back button
-                    $("#leave-reating").hide();  
+                    $("#leave-reating").hide();
                 },
                 error: function(xhr, status, error) {
                     console.error("Error:", xhr.responseText);

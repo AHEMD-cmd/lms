@@ -18,13 +18,12 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->text('title')->nullable();
             $table->string('slug')->nullable();
-
+            $table->string('language')->nullable();
             $table->longText('description')->nullable();
             $table->string('video')->nullable();
             $table->string('level')->nullable();
             $table->string('resources')->nullable();
             $table->boolean('has_certificate')->nullable();
-
             $table->integer('price')->nullable();
             $table->integer('discount')->nullable()->comment('the price after discount');
             $table->text('prerequisites')->nullable();

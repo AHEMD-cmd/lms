@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\FilterTrait;
 
 class Course extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory, Sluggable, FilterTrait;
 
     protected $casts = [
         'videos' => 'array',
@@ -62,7 +63,7 @@ class Course extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
+                'source' => 'title'
             ]
         ];
     }

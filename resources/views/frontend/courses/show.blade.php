@@ -39,8 +39,6 @@
     <!--======================================
                                                                                                                                                     END CTA AREA
                                                                                                                                             ======================================-->
-
-
     <!-- Share Modal -->
     @include('frontend.courses.modals.share-modal')
     <!-- end modal -->

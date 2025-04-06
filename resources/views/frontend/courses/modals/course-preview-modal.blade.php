@@ -1,3 +1,4 @@
+
 <div class="modal fade modal-container" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModalTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -13,15 +14,15 @@
                 </button>
             </div><!-- end modal-header -->
             <div class="modal-body">
-                {{-- <video controls playsinline poster="{{ asset($course->image) }}" class="w-100"
+                <video controls playsinline poster="{{ asset($course->image) }}" class="w-100"
                     id="player">
                     <!-- Video files -->
-                    <source src="{{ $course->video_path }}" type="video/mp4">
-                </video> --}}
-                <iframe src="{{ $course->video }}" frameborder="0" class="w-100" height="300"
+                    <source src="{{ Storage::disk('s3')->temporaryUrl($course->video_path, now()->addMinutes(60 * 24)) }}" type="video/mp4">
+                </video>
+                {{-- <iframe src="{{ $course->video }}" frameborder="0" class="w-100" height="300"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen>
-                </iframe>
+                </iframe> --}}
             </div><!-- end modal-body -->
         </div><!-- end modal-content -->
     </div><!-- end modal-dialog -->

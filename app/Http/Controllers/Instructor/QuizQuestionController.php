@@ -14,6 +14,7 @@ class QuizQuestionController extends Controller
 
     public function __construct(QuizQuestionService $quizQuestionService)
     {
+        $this->middleware('ensure.question.owner')->except('index', 'store');
         $this->quizQuestionService = $quizQuestionService;
     }
     public function index(Quiz $quiz)
@@ -35,9 +36,9 @@ class QuizQuestionController extends Controller
         ]);
     }
 
-    public function update(StoreQuizQuestionRequest $request, Quiz $quiz, $questionId)
+    public function update(StoreQuizQuestionRequest $request, Quiz $quiz, QuizQuestion $question)
     {
-        $result = $this->quizQuestionService->updateQuestion($quiz, $questionId, $request->validated());
+        $this->quizQuestionService->updateQuestion($quiz, $question, $request->validated());
 
         return response()->json([
             'quizQuestions' => view('instructor.quiz-questions.includes.questions-body', ['quiz' => $quiz->load('questions.options')])->render(),

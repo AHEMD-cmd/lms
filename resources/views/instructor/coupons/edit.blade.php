@@ -74,7 +74,7 @@
                         <label class="form-label" for="type">Type (default is platform)</label>
                         <select class="form-control" name="type" id="type">
                             <option value="instructor" {{ old('type', $coupon->type) == 'instructor' ? 'selected' : '' }}>
-                                Instructor</option>
+                                All Courses</option>
                             <option value="course" {{ old('type', $coupon->type) == 'course' ? 'selected' : '' }}>Course
                             </option>
                         </select>
@@ -88,7 +88,7 @@
                             <option value="">Select Course</option>
                             @foreach ($courses as $course)
                                 <option value="{{ $course->id }}" {{ old('course_id', $coupon->course_id) == $course->id ? 'selected' : '' }}>
-                                    {{ $course->name }}</option>
+                                    {{ $course->title }}</option>
                             @endforeach 
                         </select>
                     </div>
