@@ -14,6 +14,7 @@
                             <h5 class="fs-16 pb-1">
                                 @isset($question)
                                     {{ $question->subject }}
+
                                 @endisset
                             </h5>
                             <p class="meta-tags fs-13">

@@ -58,6 +58,7 @@
 
                                     <td> <a href="{{ route('admin.courses.show', $course->slug) }}" class="btn btn-info"><i
                                                 class="lni lni-eye"></i> </a>
+                                        <a href="{{ route('admin.courses.reports.index', $course->slug) }}" class="btn btn-info">Reports </a>
                                     </td>
 
 

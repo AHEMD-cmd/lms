@@ -1,5 +1,3 @@
-
-
 <section class="course-dashboard">
     <div class="course-dashboard-wrap">
         <div class="course-dashboard-container d-flex">
@@ -90,8 +88,10 @@
                                         @foreach ($course->sections as $section)
                                             @if ($section->lectures->count() > 0)
                                                 <div class="card">
-                                                    <div class="card-header" id="mobileCourseHeadingOne{{ $section->id }}">
-                                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                    <div class="card-header"
+                                                        id="mobileCourseHeadingOne{{ $section->id }}">
+                                                        <button class="btn btn-link" type="button"
+                                                            data-toggle="collapse"
                                                             data-target="#mobileCourseCollapseOne{{ $section->id }}"
                                                             aria-expanded="true"
                                                             aria-controls="mobileCourseCollapseOne{{ $section->id }}">
@@ -100,8 +100,8 @@
                                                             <span class="fs-15"> Section {{ $loop->iteration }}:
                                                                 {{ $section->title }}</span>
                                                             <span class="course-duration">
-                                                                <span>{{$section->completed_lectures->count()}}/{{ $section->lectures->count() }}</span>
-                                                                <span>{{$section->duration_formatted}}</span>
+                                                                <span>{{ $section->completed_lectures->count() }}/{{ $section->lectures->count() }}</span>
+                                                                <span>{{ $section->duration_formatted }}</span>
                                                             </span>
                                                         </button>
                                                     </div><!-- end card-header -->
@@ -118,30 +118,36 @@
                                                                         data-video="{{ $lecture->video_path }}"
                                                                         data-content="{!! $lecture->content !!}">
                                                                         <div class="course-item-content-wrap">
-                                                                            <div class="custom-control custom-checkbox">
+                                                                            <div
+                                                                                class="custom-control custom-checkbox">
                                                                                 <input type="checkbox"
                                                                                     class="custom-control-input lecture-checkbox"
                                                                                     id="mobileCourseCheckbox{{ $lecture->id }}"
-                                                                                    required {{ $lecture->is_completed ? 'checked' : '' }}>
+                                                                                    required
+                                                                                    {{ $lecture->is_completed ? 'checked' : '' }}>
                                                                                 <label
                                                                                     class="custom-control-label custom--control-label"
                                                                                     for="mobileCourseCheckbox{{ $lecture->id }}"></label>
                                                                             </div><!-- end custom-control -->
                                                                             <div class="course-item-content">
-                                                                                <h4 class="fs-15">{{ $loop->iteration }}.
+                                                                                <h4 class="fs-15">
+                                                                                    {{ $loop->iteration }}.
                                                                                     {{ $lecture->title }}</h4>
                                                                                 <div class="courser-item-meta-wrap">
-                                                                                    @if ($lecture->url)
+                                                                                    @if ($lecture->video_path)
                                                                                         <p class="course-item-meta">
-                                                                                            <i class="la la-play-circle"></i>{{ $lecture->duration }}
+                                                                                            <i
+                                                                                                class="la la-play-circle"></i>{{ $lecture->duration_formatted }}
                                                                                         </p>
                                                                                     @else
                                                                                         <p class="course-item-meta">
-                                                                                            <i class="la la-file"></i>{{ $lecture->duration_formatted }}
+                                                                                            <i
+                                                                                                class="la la-file"></i>{{ $lecture->duration_formatted }}
                                                                                         </p>
                                                                                     @endif
                                                                                     @if ($lecture->files && $lecture->files->count() > 0)
-                                                                                        <div class="generic-action-wrap">
+                                                                                        <div
+                                                                                            class="generic-action-wrap">
                                                                                             <div class="dropdown">
                                                                                                 <a class="btn theme-btn theme-btn-sm theme-btn-transparent mt-1 fs-14 font-weight-medium"
                                                                                                     href="#"
@@ -209,13 +215,13 @@
                                                     <li><span>Skill level:</span>{{ $course->level }}</li>
                                                     <li><span>Students:</span>83950</li>
                                                     <li><span>Languages:</span>{{ $course->language }}</li>
-                                                    <li><span>Captions:</span>Yes</li>
+                                                    {{-- <li><span>Captions:</span>Yes</li> --}}
                                                 </ul>
                                             </div><!-- end lecture-overview-stats-item -->
                                             <div class="lecture-overview-stats-item">
                                                 <ul class="generic-list-item">
                                                     <li><span>Lectures:</span>{{ $course->lectures->count() }}</li>
-                                                    <li><span>Video length:</span>3.5 total hours</li>
+                                                    <li><span>Duration:</span>{{ $course->duration_formatted }}</li>
                                                     <li><span>Certificate:</span>{{ $course->has_certificate ? 'Yes' : 'No' }}
                                                     </li>
                                                 </ul>
@@ -237,19 +243,7 @@
                                         </div><!-- end lecture-overview-stats-wrap -->
                                     </div><!-- end lecture-overview-item -->
                                     <div class="section-block"></div>
-                                    <div class="lecture-overview-item">
-                                        <div class="lecture-overview-stats-wrap d-flex">
-                                            <div class="lecture-overview-stats-item">
-                                                <h3 class="fs-16 font-weight-semi-bold pb-2">Features</h3>
-                                            </div><!-- end lecture-overview-stats-item -->
-                                            <div class="lecture-overview-stats-item">
-                                                <p>Available on <a href="#"
-                                                        class="text-color hover-underline">IOS</a> and <a
-                                                        href="#" class="text-color hover-underline">Android</a>
-                                                </p>
-                                            </div><!-- end lecture-overview-stats-item -->
-                                        </div><!-- end lecture-overview-stats-wrap -->
-                                    </div><!-- end lecture-overview-item -->
+                                  
                                     <div class="section-block"></div>
                                     <div class="lecture-overview-item">
                                         <div class="lecture-overview-stats-wrap d-flex">
@@ -272,7 +266,7 @@
                                                 <div class="media media-card align-items-center">
                                                     <a href="teacher-detail.html"
                                                         class="media-img d-block rounded-full avatar-md">
-                                                        <img src="{{ $course->instructor->image }}"
+                                                        <img src="{{ asset($course->instructor->photo) }}"
                                                             alt="{{ $course->instructor->name }}"
                                                             class="rounded-full">
                                                     </a>
@@ -280,8 +274,7 @@
                                                         <h5><a
                                                                 href="teacher-detail.html">{{ $course->instructor->name }}</a>
                                                         </h5>
-                                                        <span class="d-block lh-18 pt-2">Java Python Android and C#
-                                                            Expert Developer</span>
+                                                        <span class="d-block lh-18 pt-2"></span>
                                                     </div>
                                                 </div>
                                                 <div class="lecture-owner-profile pt-4">
@@ -490,106 +483,27 @@
                                 aria-labelledby="announcements-tab">
                                 <div class="lecture-overview-wrap lecture-announcement-wrap">
                                     <div class="lecture-overview-item">
-                                        <div class="media media-card align-items-center">
-                                            <a href="teacher-detail.html"
-                                                class="media-img d-block rounded-full avatar-md">
-                                                <img src="images/small-avatar-1.jpg" alt="Instructor avatar"
-                                                    class="rounded-full">
-                                            </a>
-                                            <div class="media-body">
-                                                <h5 class="pb-1"><a href="teacher-detail.html">Alex Smith</a>
-                                                </h5>
-                                                <div class="announcement-meta fs-15">
-                                                    <span>Posted an announcement</span>
-                                                    <span> · 3 years ago ·</span>
-                                                    <a href="#" class="btn-text" data-toggle="modal"
-                                                        data-target="#reportModal" title="Report abuse"><i
-                                                            class="la la-flag"></i></a>
+                                        @foreach ($course->announcements as $announcement)
+                                            <div class="media media-card align-items-center">
+                                                <div class="media-body">
+                                                    <div class="announcement-meta fs-15">
+                                                        <span>Posted</span>
+                                                        <span> · {{ $announcement->created_at->diffForHumans() }} ·</span>
+                                                        <a href="#" class="btn-text" data-toggle="modal"
+                                                            data-target="#reportModal" title="Report abuse"><i
+                                                                class="la la-flag"></i></a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="lecture-owner-decription pt-4">
-                                            <h3 class="fs-19 font-weight-semi-bold pb-3">Important Q&A support</h3>
-                                            <p>Happy 2019 to everyone, thank you for being a student and all of your
-                                                support.</p>
-                                            <p><strong>Great job on enrolling and your current course progress. I
-                                                    encourage you keep in pursuit of your dreams :)</strong></p>
-                                            <p>The whole lot. In my course After Effects Complete Course packed with
-                                                all Techniques and Methods (No Tricks and gimmicks).</p>
-                                            <p class="font-italic"><strong>Unfortunately this will result in
-                                                    delayed responses by me in the Q&A section and to direct
-                                                    messages. This is only for the next week and once back I will be
-                                                    back to 100% .</strong></p>
-                                            <p>I will continue to do my best to respond to as many questions as
-                                                possible but only one person, regularly I spend 4-5 hours daily on
-                                                this and with over 440000 students as you can image that its a lot
-                                                of work.</p>
-                                            <p class="font-italic">Thank you once again for your understanding and
-                                                for all of the wonderful students who I have had an opportunity to
-                                                communicate with regularly and all of your encouragement.</p>
-                                            <p>Have an awesome day</p>
-                                            <p>Alex</p>
-                                        </div>
-                                        <div class="lecture-announcement-comment-wrap pt-4">
-                                            <div class="media media-card align-items-center">
-                                                <div class="media-img rounded-full avatar-sm flex-shrink-0">
-                                                    <img src="images/small-avatar-1.jpg" alt="Instructor avatar"
-                                                        class="rounded-full">
-                                                </div><!-- end media-img -->
-                                                <div class="media-body">
-                                                    <form action="#">
-                                                        <div class="input-group">
-                                                            <input
-                                                                class="form-control form--control form--control-gray pl-3"
-                                                                type="text" name="search"
-                                                                placeholder="Enter your comment">
-                                                            <div class="input-group-append">
-                                                                <button class="btn theme-btn" type="button"><i
-                                                                        class="la la-arrow-right"></i></button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div><!-- end media-body -->
-                                            </div><!-- end media -->
-                                            <div class="comments pt-40px">
-                                                <div
-                                                    class="media media-card mb-3 border-bottom border-bottom-gray pb-3">
-                                                    <div class="media-img rounded-full avatar-sm flex-shrink-0">
-                                                        <img src="images/small-avatar-2.jpg" alt="Instructor avatar"
-                                                            class="rounded-full">
-                                                    </div><!-- end media-img -->
-                                                    <div class="media-body">
-                                                        <div class="announcement-meta fs-15 lh-20">
-                                                            <a href="#" class="text-color">Tony Olsson</a>
-                                                            <span> · 3 years ago ·</span>
-                                                            <a href="#" class="btn-text" data-toggle="modal"
-                                                                data-target="#reportModal" title="Report abuse"><i
-                                                                    class="la la-flag"></i></a>
-                                                        </div>
-                                                        <p class="pt-1">Occaecati cupiditate non provident,
-                                                            similique sunt in culpa fuga.</p>
-                                                    </div><!-- end media-body -->
-                                                </div><!-- end media -->
-                                                <div
-                                                    class="media media-card mb-3 border-bottom border-bottom-gray pb-3">
-                                                    <div class="media-img rounded-full avatar-sm flex-shrink-0">
-                                                        <img src="images/small-avatar-3.jpg" alt="Instructor avatar"
-                                                            class="rounded-full">
-                                                    </div><!-- end media-img -->
-                                                    <div class="media-body">
-                                                        <div class="announcement-meta fs-15 lh-20">
-                                                            <a href="#" class="text-color">Eduard-Dan</a>
-                                                            <span> · 2 years ago ·</span>
-                                                            <a href="#" class="btn-text" data-toggle="modal"
-                                                                data-target="#reportModal" title="Report abuse"><i
-                                                                    class="la la-flag"></i></a>
-                                                        </div>
-                                                        <p class="pt-1">Occaecati cupiditate non provident,
-                                                            similique sunt in culpa fuga.</p>
-                                                    </div><!-- end media-body -->
-                                                </div><!-- end media -->
-                                            </div><!-- end comments -->
-                                        </div><!-- end lecture-announcement-comment-wrap -->
+                                            <div class="lecture-owner-decription pt-4">
+                                                <p>{!! $announcement->body !!}</p>
+                                            </div>
+                                            @if (!$loop->last)
+                                                <hr style="border-color: #ffc107; border-width: 2px;">
+                                            @endif
+                                            
+
+                                        @endforeach
                                     </div><!-- end lecture-overview-item -->
                                 </div>
                             </div><!-- end tab-pane -->
@@ -748,7 +662,7 @@
                     <div class="course-dashboard-side-content">
                         <div class="accordion generic-accordion generic--accordion" id="accordionCourseExample">
                             @foreach ($course->sections as $section)
-                                @if ($section->lectures->count() > 0)   
+                                @if ($section->lectures->count() > 0)
                                     <div class="card">
                                         <div class="card-header" id="headingOne{{ $section->id }}">
                                             <button class="btn btn-link" type="button" data-toggle="collapse"
@@ -759,8 +673,8 @@
                                                 <span class="fs-15"> Section {{ $loop->iteration }}:
                                                     {{ $section->title }}</span>
                                                 <span class="course-duration">
-                                                    <span>{{$section->completed_lectures->count()}}/{{ $section->lectures->count() }}</span>
-                                                    <span>{{$section->duration_formatted}}</span>
+                                                    <span>{{ $section->completed_lectures->count() }}/{{ $section->lectures->count() }}</span>
+                                                    <span>{{ $section->duration_formatted }}</span>
                                                 </span>
                                             </button>
                                         </div><!-- end card-header -->
@@ -778,8 +692,11 @@
                                                             data-content="{!! $lecture->content !!}">
                                                             <div class="course-item-content-wrap">
                                                                 <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input lecture-checkbox"
-                                                                        id="courseCheckbox{{ $lecture->id }}" required {{ $lecture->is_completed ? 'checked' : '' }}>
+                                                                    <input type="checkbox"
+                                                                        class="custom-control-input lecture-checkbox"
+                                                                        id="courseCheckbox{{ $lecture->id }}"
+                                                                        required
+                                                                        {{ $lecture->is_completed ? 'checked' : '' }}>
                                                                     <label
                                                                         class="custom-control-label custom--control-label"
                                                                         for="courseCheckbox{{ $lecture->id }}"></label>
@@ -788,14 +705,16 @@
                                                                     <h4 class="fs-15">{{ $loop->iteration }}.
                                                                         {{ $lecture->title }}</h4>
                                                                     <div class="courser-item-meta-wrap">
-                                                                        
-                                                                        @if ($lecture->url)
+
+                                                                        @if ($lecture->video_path)
                                                                             <p class="course-item-meta">
-                                                                                <i class="la la-play-circle"></i>{{ $lecture->duration_formatted }}
+                                                                                <i
+                                                                                    class="la la-play-circle"></i>{{ $lecture->duration_formatted }}
                                                                             </p>
                                                                         @else
                                                                             <p class="course-item-meta">
-                                                                                <i class="la la-file"></i>{{ $lecture->duration_formatted }}
+                                                                                <i
+                                                                                    class="la la-file"></i>{{ $lecture->duration_formatted }}
                                                                             </p>
                                                                         @endif
                                                                         @if ($lecture->files && $lecture->files->count() > 0)
@@ -822,9 +741,28 @@
                                                                                         </div>
                                                                                     @endforeach
 
+                                                                                    <div
+                                                                                        class="dropdown-menu dropdown-menu-right">
+                                                                                        <a class="dropdown-item"
+                                                                                            href="">
+                                                                                            {{ $lecture->quiz->created_at->format('Y-m-d') }}
+                                                                                        </a>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div><!-- end generic-action-wrap -->
                                                                         @endif
+                                                                        @if ($lecture->quiz)
+                                                                            <div class="dropdown">
+                                                                                <a class="btn theme-btn theme-btn-sm theme-btn-transparent mt-1 fs-14 font-weight-medium"
+                                                                                    href="{{ route('courses.lectures.quizzes.show', [$course->slug, $lecture->id, $lecture->quiz->id]) }}"
+                                                                                    target="_blank">
+                                                                                    <i
+                                                                                        class="la la-question-circle mr-1"></i>
+                                                                                    Quiz
+                                                                                </a>
+                                                                            </div>
+                                                                        @endif
+
                                                                     </div>
                                                                 </div><!-- end course-item-content -->
                                                             </div><!-- end course-item-content-wrap -->

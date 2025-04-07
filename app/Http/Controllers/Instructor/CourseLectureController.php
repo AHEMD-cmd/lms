@@ -62,7 +62,7 @@ class CourseLectureController extends Controller
             $lecture->video_path = $validated['video_path'];
         }
 
-        $lecture->update($validated);
+        $lecture->update(Arr::except($validated, ['files']));
 
         // File handling remains the same
         if ($request->hasFile('files')) {

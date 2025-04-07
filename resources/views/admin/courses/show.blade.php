@@ -52,14 +52,14 @@
                                         </tr>
                                         <tr>
                                             <td><strong>Duration :</strong> </td>
-                                            <td> {{ $course->duration }}</td>
+                                            <td> {{ $course->duration_formatted }}</td>
                                         </tr>
 
                                         <tr>
                                             <td><strong>Video :</strong> </td>
                                             <td>
                                                 <video width="300" height="200" controls>
-                                                    <source src="{{ asset($course->video_path) }}" type="video/mp4">
+                                                    <source src="{{ Storage::disk('s3')->temporaryUrl($course->video_path, now()->addSeconds(34)) }}" type="video/mp4">
                                                 </video>
 
                                             </td>
@@ -79,10 +79,6 @@
 
                                     <tbody>
                                         <tr>
-                                            <td><strong>Resources : </strong></td>
-                                            <td> {{ $course->resources }} </td>
-                                        </tr>
-                                        <tr>
                                             <td><strong>has certificate :</strong> </td>
                                             <td> {{ $course->certificate ? 'Yes' : 'No' }}</td>
                                         </tr>
@@ -92,7 +88,7 @@
                                         </tr>
                                         <tr>
                                             <td><strong> Discount Price :</strong> </td>
-                                            <td>${{ $course->discount }}</td>
+                                            <td>${{ $course->discount ?? 0 }}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Status :</strong> </td>

@@ -17,7 +17,7 @@
         </div>
         <div class="ms-auto">
             <div class="btn-group">
-                <a href="{{ route('instructor.courses.create') }}" class="btn btn-primary px-5">Add Course </a>
+                <a href="{{ route('instructor.courses.announcements.create', [$course->slug]) }}" class="btn btn-primary px-5">Add Announcement </a>
             </div>
         </div>
     </div>
@@ -30,38 +30,26 @@
                     <thead>
                         <tr>
                             <th>Sl</th>
-                            <th>Image </th>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Discount_price</th>
+                            <th>Body</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        @foreach ($courses as $index => $course)
+                        @foreach ($course->announcements as $index => $announcement)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td> <img src="{{ asset($course->image) }}" alt=""
-                                        style="width: 70px; height:40px;"> </td>
-                                <td>{{ $course->title }}</td>
-                                <td>{{ $course->category->name }}</td>
-                                <td>{{ $course->price }}</td>
-                                <td>{{ $course->discount ?? 'not found' }}</td>
+                                <td>{!! Str::limit($announcement->body, 100) !!}</td>
                                 <td>
-                                    <a href="{{ route('instructor.courses.edit', $course->slug) }}" class="btn btn-info"
+                                    <a href="{{ route('instructor.courses.announcements.edit', [$course->slug, $announcement->id]) }}" class="btn btn-info"
                                         title="Edit"><i class="lni lni-eraser"></i> </a>
-                                    <form action="{{ route('instructor.courses.destroy', $course->slug) }}" method="POST"
+                                    <form action="{{ route('instructor.courses.announcements.destroy', [$course->slug, $announcement->id]) }}" method="POST"
                                         class="d-inline-block delete-form">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger" id="delete" title="delete"><i
                                                 class="lni lni-trash"></i> </button>
-                                    </form>
-                                    <a href="{{ route('instructor.courses.sections.index',$course->slug) }}" class="btn btn-warning" title="Lecture"><i class="lni lni-list"></i> </a>                    
-                                    <a href="{{ route('instructor.courses.quizzes.index',$course->slug) }}" class="btn btn-warning" title="Quiz"><i class="lni lni-question-circle"></i> </a>                    
-                                    <a href="{{ route('instructor.courses.announcements.index',$course->slug) }}" class="btn btn-primary" title="Announcement"><i class="lni lni-bullhorn"></i> </a>                    
+                                    </form>                  
                                 </td>
                             </tr>
                         @endforeach

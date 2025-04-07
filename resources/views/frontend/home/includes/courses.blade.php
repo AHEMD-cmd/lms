@@ -54,14 +54,19 @@
                                             </p>
                                             <div class="rating-wrap d-flex align-items-center py-2">
                                                 <div class="review-stars">
-                                                    <span class="rating-number">4.4</span>
-                                                    <span class="la la-star"></span>
-                                                    <span class="la la-star"></span>
-                                                    <span class="la la-star"></span>
-                                                    <span class="la la-star"></span>
-                                                    <span class="la la-star-o"></span>
+                                                    <span class="rating-number">{{ $course->averageRating() }}</span>
+                                                    @for ($i = 1; $i <= $course->averageRating(); $i++)
+                                                        <span class="la la-star"></span>
+                                                    @endfor
+                                                    @if ($course->doesRateHaveFraction())
+                                                        <span class="la la-star-half-alt"></span>
+                                                    @endif
+                                                    @for ($i = 1; $i <= 5 - $course->averageRating(); $i++)
+                                                        <span class="la la-star-o"></span>
+                                                    @endfor
                                                 </div>
-                                                <span class="rating-total pl-1">(20,230)</span>
+                                                <span class="rating-total pl-1">({{ $course->reviews()->count() }}
+                                                    ratings)</span>
                                             </div><!-- end rating-wrap -->
                                             <div class="d-flex justify-content-between align-items-center">
                                                 @if ($course->discount)
@@ -80,7 +85,8 @@
 
                                                     <div class="icon-element icon-element-sm shadow-sm cursor-pointer wishlist"
                                                         data-id="{{ $course->id }}" title="Add to Wishlist">
-                                                        <i class="la la-heart{{ auth()->user()->wishList->contains($course->id) ? '' : '-o' }}"></i>
+                                                        <i
+                                                            class="la la-heart{{ auth()->user()->wishList->contains($course->id) ? '' : '-o' }}"></i>
                                                     </div>
                                                 @endauth
                                             </div>

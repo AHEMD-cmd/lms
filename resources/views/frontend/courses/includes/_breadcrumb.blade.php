@@ -36,8 +36,9 @@
                                 <span class="la la-star-half-alt"></span>
                             @endif
 
-
-
+                            @for ($i = 1; $i <= 5 - $course->averageRating(); $i++)
+                                <span class="la la-star-o"></span>
+                            @endfor
 
                         </div>
                         <span class="rating-total pl-1">({{ $course->reviews()->count() }} ratings)</span>

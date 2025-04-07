@@ -8,6 +8,7 @@ use App\Http\Controllers\Instructor\ProfileController;
 use App\Http\Controllers\Instructor\DashboardController;
 use App\Http\Controllers\Instructor\QuizAnswerController;
 use App\Http\Controllers\Instructor\QuizAttemptController;
+use App\Http\Controllers\Instructor\AnnouncementController;
 use App\Http\Controllers\Instructor\CouponStatusController;
 use App\Http\Controllers\Instructor\LectureVideoController;
 use App\Http\Controllers\Instructor\QuizQuestionController;
@@ -48,7 +49,9 @@ Route::middleware(['auth', 'role:instructor', 'check.instructor.status'])
         ############### Instructor Course Lectures Routes ###############
         Route::resource('courses.sections.lectures', CourseLectureController::class);
         Route::patch('courses/{course}/sections/{section}/lectures/{lecture}/update-published-status', LecturePublishedController::class)->name('courses.sections.lectures.update-published-status');
-        Route::post('get-temp-video-url', GetTempVideoUrlController::class)->name('get-temp-video-url');
+
+        ############### Instructor Announcements Routes ###############
+        Route::resource('courses.announcements', AnnouncementController::class);
 
         ############################# Instructor Coupon Routes #############################
         Route::resource('coupons', CouponController::class);

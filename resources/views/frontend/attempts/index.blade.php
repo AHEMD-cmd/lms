@@ -50,7 +50,7 @@
             <li>
                 <div class="d-flex align-items-center">
                     <a href="course-details.html">
-                        <img src="{{ $course->image }}" alt="{{ $course->title }} thumbnail" class="w-50px">
+                        <img src="{{ asset($course->image) }}" alt="{{ $course->title }} thumbnail" class="w-50px">
                     </a>
                     <p>
                         <a href="{{ route('courses.lectures.index', $course->slug) }}" class="fs-22 font-weight-semi-bold">{{ $course->title }}</a><span class="d-block pt-1">View Course</span>

@@ -38,52 +38,6 @@
 <script>
     $(document).ready(function() {
         // ###################### send the lecture id to the hidden input in the form of question ######################
-        // $(document).on('click', '.section-lecture', function(e) {
-        //     let $this = $(this);
-        //     let lectureId = $this.data('id');
-
-        //     // Set lecture ID in hidden inputs
-        //     $('.lecture-id').val(lectureId);
-        //     $('.questions-filter select option:nth-child(2)').val(lectureId);
-
-        //     // ###################### Handle video or content display ######################
-        //     let lectureVideoPath = $this.data('video'); // This should be the S3 path
-        //     let lectureContent = $this.data('content');
-
-        //     if (lectureVideoPath) {
-        //         // Show loading state
-        //         $('#lecture-viewer').html('<div class="text-center p-4">Loading video...</div>');
-
-        //         // Make AJAX request to get temporary signed URL
-        //         $.ajax({
-        //             url: '/instructor/get-temp-video-url',
-        //             type: 'POST',
-        //             data: {
-        //                 _token: '{{ csrf_token() }}',
-        //                 video_path: lectureVideoPath
-        //             },
-        //             success: function(response) {
-        //                 if (response.url) {
-        //                     // Set the temporary URL in the iframe src
-        //                     $('.lecture-viewer').attr('src', response.url);
-        //                 } else {
-        //                     $('.lecture-viewer').html(
-        //                         '<div class="alert alert-danger">Could not load video</div>'
-        //                     );
-        //                 }
-        //             },
-        //             error: function(xhr) {
-        //                 $('#lecture-viewer').html(
-        //                     '<div class="alert alert-danger">Error loading video</div>');
-        //                 console.error('Error getting video URL:', xhr.responseText);
-        //             }
-        //         });
-        //     } else if (lectureContent) {
-        //         // Set the content in the viewer
-        //         $('#content-viewer').html(lectureContent);
-        //     }
-        // });
-
 
         function loadLecture(lectureId, lectureVideoPath, lectureContent) {
             $('.lecture-id').val(lectureId);
@@ -93,7 +47,7 @@
                 $('#lecture-viewer').html('<div class="text-center p-4">Loading video...</div>');
 
                 $.ajax({
-                    url: '/instructor/get-temp-video-url',
+                    url: '/get-temp-video-url',
                     type: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -144,21 +98,24 @@
             let content = $this.data('content');
 
             loadLecture(lectureId, videoPath, content);
-            saveWatchedProgress(lectureId, '{{ $course->id }}', 0); 
+            saveWatchedProgress(lectureId, '{{ $course->id }}', 0);
         });
 
         // Auto-load last watched lecture on page load
         $(document).ready(function() {
 
             let $initialLecture = $(`[data-id="${initialLectureId}"]`);
+            $initialLecture.addClass('active');
             let videoPath = $initialLecture.data('video');
             let content = $initialLecture.data('content');
+
 
             loadLecture(initialLectureId, videoPath, content);
             saveWatchedProgress(initialLectureId, '{{ $course->id }}', initialTime);
         });
 
         // Track progress every 15 seconds
+        // Track progress every 15 seconds and check for completion
         setInterval(() => {
             const video = document.getElementById('player');
             if (!video || video.paused || video.ended) return;
@@ -166,7 +123,57 @@
             let lectureId = $('.lecture-id').val();
             let courseId = '{{ $course->id }}';
             let seconds = Math.floor(video.currentTime);
+            let duration = Math.floor(video.duration);
 
+            // Check if we're within the last 20 seconds of the video
+            const threshold = 20; // seconds from end
+            const nearEnd = (duration - seconds) <= threshold;
+
+            // Get the lecture checkbox element
+            const lectureCheckbox = $(`.section-lecture[data-id="${lectureId}"]`).find(
+                '.lecture-checkbox');
+
+            // If we're near the end and the lecture isn't already marked as completed
+            if (nearEnd && !lectureCheckbox.is(':checked')) {
+                // Mark as completed
+                lectureCheckbox.prop('checked', true);
+
+                // Trigger the AJAX call to update completion status
+                const sectionId = $(`.section-lecture[data-id="${lectureId}"]`).data('section-id');
+                const sectionHeader = lectureCheckbox.closest('.card').find('.card-header');
+                const countElement = sectionHeader.find('.course-duration span:first-child');
+
+                $.ajax({
+                    url: "{{ route('lecture.completed.update') }}",
+                    method: 'PATCH',
+                    data: {
+                        lecture_id: lectureId,
+                        section_id: sectionId,
+                        course_id: courseId,
+                        is_completed: 1
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            console.log('Lecture marked as completed (auto)');
+                            const currentCount = parseInt(countElement.text().split('/')[
+                                0]);
+                            const totalCount = parseInt(countElement.text().split('/')[1]);
+                            const newCount = currentCount + 1;
+                            countElement.text(`${newCount}/${totalCount}`);
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error('Error updating lecture status:', xhr.responseText);
+                        // Revert checkbox on error
+                        lectureCheckbox.prop('checked', false);
+                    }
+                });
+            }
+
+            // Always save progress (your existing code)
             $.ajax({
                 url: '/save-watched-progress',
                 method: 'POST',
@@ -178,8 +185,6 @@
                 }
             });
         }, 15000);
-
-
 
 
         // ######################## questions filter ###################   

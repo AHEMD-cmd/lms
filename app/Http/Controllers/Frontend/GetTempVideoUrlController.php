@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Instructor;
+namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,7 +23,7 @@ class GetTempVideoUrlController extends Controller
             // Generate a temporary signed URL that expires in 30 seconds
             $tempUrl = Storage::disk('s3')->temporaryUrl(
                 $videoPath,
-                now()->addSeconds(3),
+                now()->addMinutes(60),
                 [
                     'ResponseContentType' => 'video/mp4',
                     'ResponseContentDisposition' => 'inline'

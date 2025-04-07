@@ -20,6 +20,7 @@ use App\Http\Controllers\Frontend\UserProgressController;
 use App\Http\Controllers\Frontend\CourseLectureController;
 use App\Http\Controllers\Frontend\QuestionUpvoteController;
 use App\Http\Controllers\Frontend\LectureCompletedController;
+use App\Http\Controllers\Frontend\GetTempVideoUrlController;
 use App\Http\Controllers\Frontend\AttemptNextQuestionController;
 use App\Http\Controllers\Frontend\AttemptPreviousQuestionController;
 
@@ -69,6 +70,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('courses.lectures', CourseLectureController::class)->only(['index']);
     Route::patch('lecture-completed/update', LectureCompletedController::class)->name('lecture.completed.update');
     Route::post('save-watched-progress', [UserProgressController::class, 'store']);
+    Route::post('get-temp-video-url', GetTempVideoUrlController::class)->name('get-temp-video-url');
 
 
     ############################### Course Questions Routes ###########################
