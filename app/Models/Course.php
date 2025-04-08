@@ -145,6 +145,13 @@ class Course extends Model
         return $minutes . ' min';
     }
 
+    public function getDurationAttribute()
+    {
+        $hours = floor($this->lectures()->sum('duration') / 60);
+
+        return $hours;
+    }
+
     public function getTotalFilesCountAttribute()
     {
         return $this->lectures->map(function ($lecture) {

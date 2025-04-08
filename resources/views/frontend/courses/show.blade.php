@@ -7,7 +7,7 @@
     <!-- ================================
                                     START BREADCRUMB AREA
                             ================================= -->
-    @include('frontend.courses.includes._breadcrumb')
+    @include('frontend.courses.show-includes-modals.includes._breadcrumb')
     <!-- end breadcrumb-area -->
     <!-- ================================
                     END BREADCRUMB AREA
@@ -16,7 +16,7 @@
     <!--======================================
                          START COURSE DETAILS AREA
                         ======================================-->
-    @include('frontend.courses.includes._course-details')
+    @include('frontend.courses.show-includes-modals.includes._course-details')
     <!-- end course-details-area -->
     <!--======================================
                                                                                                                                                     END COURSE DETAILS AREA
@@ -25,7 +25,7 @@
     <!--======================================
                 START RELATED COURSE AREA
                 ======================================-->
-    @include('frontend.courses.includes._related-courses')
+    @include('frontend.courses.show-includes-modals.includes._related-courses')
     <!-- end related-course-area -->
     <!--======================================
                                                                                                                                                     END RELATED COURSE AREA
@@ -34,21 +34,21 @@
     <!--======================================
             START CTA AREA
             ======================================-->
-    @include('frontend.courses.includes._cta')
+    @include('frontend.courses.show-includes-modals.includes._cta')
     <!-- end cta-area -->
     <!--======================================
                                                                                                                                                     END CTA AREA
                                                                                                                                             ======================================-->
     <!-- Share Modal -->
-    @include('frontend.courses.modals.share-modal')
+    @include('frontend.courses.show-includes-modals.modals.share-modal')
     <!-- end modal -->
 
     <!-- Course Preview Modal -->
-    @include('frontend.courses.modals.course-preview-modal')
+    @include('frontend.courses.show-includes-modals.modals.course-preview-modal')
     <!-- end modal -->
 
     <!-- Report Modal -->
-    @include('frontend.courses.modals.report-modal')
+    @include('frontend.courses.show-includes-modals.modals.report-modal')
     <!-- end modal -->
 
 @endsection

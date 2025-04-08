@@ -5,12 +5,36 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Filters\Frontend\CourseFilter;
+use App\Services\Course\CourseService;
 
 class CourseController extends Controller
 {
-    public function __construct()
+    protected $courses;
+
+    public function __construct(CourseService $courses)
     {
         $this->middleware('reset.reviews')->only('show');
+        $this->courses = $courses;
+    }
+
+    public function index(Request $request, CourseFilter $filter)
+    {
+        // Get filtered courses with pagination
+        $courses = $this->courses->getFilteredCourses($filter, 1);
+
+        // Get sidebar statistics
+        $languages = $this->courses->getLanguagesStats();
+        $levels    = $this->courses->getLevelsStats();
+        $ratings   = $this->courses->getRatingsStats();
+        $durations = $this->courses->getDurationsStats();
+        $cost      = $this->courses->getCostStats();
+
+        if ($request->ajax()) {
+            return view('frontend.courses.index-includes.courses', compact('courses'))->render();
+        }
+
+        return view('frontend.courses.index', compact('courses', 'languages', 'levels', 'ratings', 'cost', 'durations'));
     }
 
     public function show(Course $course)

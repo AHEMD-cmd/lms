@@ -4,8 +4,7 @@ namespace App\Filters\Frontend;
 
 use App\Helpers\QueryFilter;
 
-class CourseFilter extends QueryFilter
-{
+class CourseFilter extends QueryFilter {
     public function search($search = null)
     {
         if (!empty($search)) {
@@ -13,7 +12,7 @@ class CourseFilter extends QueryFilter
         }
         return $this->builder;
     }
-
+    
     public function rating($rating = null)
     {
         if (!empty($rating)) {
@@ -23,7 +22,7 @@ class CourseFilter extends QueryFilter
         }
         return $this->builder;
     }
-
+    
     public function language($languages = [])
     {
         if (!empty($languages)) {
@@ -31,7 +30,7 @@ class CourseFilter extends QueryFilter
         }
         return $this->builder;
     }
-
+    
     public function level($levels = [])
     {
         if (!empty($levels)) {
@@ -50,7 +49,7 @@ class CourseFilter extends QueryFilter
         }
         return $this->builder;
     }
-
+    
     public function cost($cost = null)
     {
         if (!empty($cost)) {
@@ -61,6 +60,43 @@ class CourseFilter extends QueryFilter
                     $query->where('price', 0)->orWhereNull('price');
                 });
             }
+        }
+        return $this->builder;
+    }
+    
+    public function duration($durations = [])
+    {
+        if (!empty($durations)) {
+            return $this->builder->where(function ($query) use ($durations) {
+                foreach ($durations as $duration) {
+                    switch ($duration) {
+                        case '0-2':
+                            $query->orWhereHas('lectures', function ($q) {
+                                $q->havingRaw('FLOOR(SUM(duration) / 60) BETWEEN 0 AND 2')
+                                  ->groupBy('course_id');
+                            });
+                            break;
+                        case '3-6':
+                            $query->orWhereHas('lectures', function ($q) {
+                                $q->havingRaw('FLOOR(SUM(duration) / 60) BETWEEN 3 AND 6')
+                                  ->groupBy('course_id');
+                            });
+                            break;
+                        case '7-14':
+                            $query->orWhereHas('lectures', function ($q) {
+                                $q->havingRaw('FLOOR(SUM(duration) / 60) BETWEEN 7 AND 14')
+                                  ->groupBy('course_id');
+                            });
+                            break;
+                        case '16+':
+                            $query->orWhereHas('lectures', function ($q) {
+                                $q->havingRaw('FLOOR(SUM(duration) / 60) >= 16')
+                                  ->groupBy('course_id');
+                            });
+                            break;
+                    }
+                }
+            });
         }
         return $this->builder;
     }

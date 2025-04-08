@@ -2,53 +2,37 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use App\Filters\Frontend\CourseFilter;
+use App\Services\Course\CourseStatisticsService;
 
 class CategoryController extends Controller
 {
+    protected $statsService;
+
+    public function __construct(CourseStatisticsService $statsService)
+    {
+        $this->statsService = $statsService;
+    }
+
     public function show(Request $request, Category $category, CourseFilter $filter)
     {
-        // Start with the courses relationship query
-        $coursesQuery = $category->courses();
+        // Use the category's courses as the base query
+        $baseQuery = $category->courses();
 
-        // Apply filters using CourseFilter
-        $courses = $coursesQuery->filter($filter)->paginate(1);
+        // Filter the courses and paginate
+        $courses = $baseQuery->filter($filter)->paginate(1);
 
-        // Fetch sidebar data
-        $languages = $category->courses()
-            ->select('language', DB::raw('count(*) as count'))
-            ->groupBy('language')
-            ->get();
+        // Use the service to retrieve sidebar statistics
+        // (Pass separate instances or clones of the base query to avoid interference)
+        $languages = $this->statsService->getLanguagesStats($category->courses());
+        $levels    = $this->statsService->getLevelsStats($category->courses());
+        $ratings   = $this->statsService->getRatingsStats($category->courses());
+        $cost      = $this->statsService->getCostStats($category->courses());
 
-        $levels = $category->courses()
-            ->select('level', DB::raw('count(*) as count'))
-            ->groupBy('level')
-            ->get();
-
-        $ratings = $category->courses()
-            ->get()
-            ->filter(function ($course) {
-                return $course->averageRating() > 0;
-            })
-            ->groupBy(function ($course) {
-                $avg = $course->averageRating();
-                return number_format(round($avg * 2) / 2, 1);
-            })
-            ->mapWithKeys(function ($group, $key) {
-                return [$key => count($group)];
-            })
-            ->all();
-
-        $cost = $category->courses()
-            ->select(DB::raw('IF(price > 0, "Paid", "Free") as cost_type'), DB::raw('count(*) as count'))
-            ->groupBy('cost_type')
-            ->get();
-
-        // Handle AJAX requests
+        // Handle AJAX request separately
         if ($request->ajax()) {
             return view('frontend.categories.includes.courses', compact('courses'))->render();
         }

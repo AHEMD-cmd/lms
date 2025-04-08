@@ -114,7 +114,7 @@
                                     </li>
                                 </ul>
                             </div><!-- end menu-category -->
-                            <form method="post">
+                            <form method="get" action="{{ route('courses.index') }}">
                                 <div class="form-group mb-0">
                                     <input class="form-control form--control pl-3" type="text" name="search"
                                         placeholder="Search for anything">
