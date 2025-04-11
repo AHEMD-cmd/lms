@@ -289,7 +289,7 @@
                                 </div>
                             </div>
                             <div id="course-reviews-container">
-                                @include('frontend.courses.includes._reviews')
+                                @include('frontend.courses.show-includes-modals.includes._reviews')
                             </div>
                         </div><!-- end review-wrap -->
                         <div class="see-more-review-btn text-center"

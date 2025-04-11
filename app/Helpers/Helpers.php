@@ -23,10 +23,10 @@ if (!function_exists('uploadVideo')) {
 }
 
 if (!function_exists('uploadEditedPhoto')) {
-    function uploadEditedPhoto(UploadedFile $photo, string $path = 'images'): string
+    function uploadEditedPhoto(UploadedFile $photo, string $path = 'images', array $dimensions = [370, 246]): string
     {
         $photoName = hexdec(uniqid()) . '.' . $photo->getClientOriginalExtension();
-        $image = Image::make($photo)->resize(370, 246)->save('uploads/' . $path . '/' . $photoName);
+        $image = Image::make($photo)->resize($dimensions[0], $dimensions[1])->save('uploads/' . $path . '/' . $photoName);
         $imageUrl = 'uploads/' . $path . '/' . $photoName;
         return $imageUrl;
     }
@@ -56,13 +56,13 @@ if (!function_exists('updateVideo')) {
 }
 
 if (!function_exists('updateEditedPhoto')) {
-    function updateEditedPhoto(UploadedFile $photo, string $path = 'images', $oldPhoto = 'photo'): string
+    function updateEditedPhoto(UploadedFile $photo, string $path = 'images', $oldPhoto = 'photo', array $dimensions = [370, 246]): string
     {
         if ($oldPhoto && File::exists(public_path($oldPhoto))) {
             File::delete(public_path($oldPhoto));
         }
         $photoName = hexdec(uniqid()) . '.' . $photo->getClientOriginalExtension();
-        $image = Image::make($photo)->resize(370, 246)->save('uploads/' . $path . '/' . $photoName);
+        $image = Image::make($photo)->resize($dimensions[0], $dimensions[1])->save('uploads/' . $path . '/' . $photoName);
         $imageUrl = 'uploads/' . $path . '/' . $photoName;
         return $imageUrl;
     }

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -47,5 +48,8 @@ Route::middleware(['auth', 'role:admin'])
         
         ############################# Admin Reports Routes #############################
         Route::resource('courses.reports', ReportController::class)->only(['index', 'show', 'destroy']);
+
+        ############################# Admin Sliders Routes #############################
+        Route::resource('sliders', SliderController::class);
 
     });
