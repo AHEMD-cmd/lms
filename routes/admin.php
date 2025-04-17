@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -51,5 +52,8 @@ Route::middleware(['auth', 'role:admin'])
 
         ############################# Admin Sliders Routes #############################
         Route::resource('sliders', SliderController::class);
+
+        ############################# Admin Features Routes #############################
+        Route::resource('features', FeatureController::class);
 
     });

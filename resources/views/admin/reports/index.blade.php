@@ -54,7 +54,7 @@
 
                                     <a href="#" class="btn btn-danger px-5" onclick="event.preventDefault();
                                             document.getElementById('delete-form-{{ $report->id }}').submit();">
-                                        Delete
+                                        <i class="bx bx-trash"></i>
                                     </a>
                                     <form id="delete-form-{{ $report->id }}" action="{{ route('admin.courses.reports.destroy', [$course->slug, $report->id]) }}" method="POST" style="display: none;">
                                         @csrf

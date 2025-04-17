@@ -77,5 +77,7 @@ class Kernel extends HttpKernel
         'ensure.quiz.owner' => \App\Http\Middleware\EnsureQuizBelongsToInstructor::class,
         'ensure.question.owner' => \App\Http\Middleware\EnsureQuestionBelongsToInstructor::class,
         'ensure.coupon.owner' => \App\Http\Middleware\EnsureCouponBelongsToInstructor::class,
+        'checkout.access' => \App\Http\Middleware\CheckoutAccessMiddleware::class,
+
     ];
 }

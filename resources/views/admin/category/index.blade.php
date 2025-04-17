@@ -44,12 +44,11 @@
                                         style="width: 70px; height:40px;"> </td>
                                 <td>{{ $category->name }}</td>
                                 <td>
-                                    <a href="{{ route('admin.categories.edit', $category->slug) }}" class="btn btn-info px-5">Edit
-                                    </a>
+                                    <a href="{{ route('admin.categories.edit', $category->slug) }}" class="btn btn-info px-5"><i class="bx bx-edit"></i></a>
 
                                     <a href="#" class="btn btn-danger px-5" onclick="event.preventDefault();
                                             document.getElementById('delete-form-{{ $category->id }}').submit();">
-                                        Delete
+                                        <i class="bx bx-trash"></i>
                                     </a>
                                     <form id="delete-form-{{ $category->id }}" action="{{ route('admin.categories.destroy', $category->slug) }}" method="POST" style="display: none;">
                                         @csrf

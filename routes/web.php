@@ -18,10 +18,12 @@ use App\Http\Controllers\Frontend\QuizAttemptController;
 use App\Http\Controllers\Frontend\QuizQuestionController;
 use App\Http\Controllers\Frontend\UserProgressController;
 use App\Http\Controllers\Frontend\CourseLectureController;
+use App\Http\Controllers\Frontend\StripeWebhookController;
 use App\Http\Controllers\Frontend\QuestionUpvoteController;
-use App\Http\Controllers\Frontend\LectureCompletedController;
 use App\Http\Controllers\Frontend\GetTempVideoUrlController;
+use App\Http\Controllers\Frontend\LectureCompletedController;
 use App\Http\Controllers\Frontend\AttemptNextQuestionController;
+use App\Http\Controllers\Frontend\PaymentMethodCheckoutController;
 use App\Http\Controllers\Frontend\AttemptPreviousQuestionController;
 
 
@@ -65,13 +67,12 @@ Route::middleware('auth')->group(function () {
     Route::get('wish-list', [WishListController::class, 'index'])->name('wish.list.index');
     Route::post('wish-list/{course}', [WishListController::class, 'store'])->name('wish.list.store');
     Route::delete('wish-list/{course}', [WishListController::class, 'destroy'])->name('wish.list.destroy');
-    
+
     ############################### Course Lectures Routes ###########################
     Route::resource('courses.lectures', CourseLectureController::class)->only(['index']);
     Route::patch('lecture-completed/update', LectureCompletedController::class)->name('lecture.completed.update');
     Route::post('save-watched-progress', [UserProgressController::class, 'store']);
     Route::post('get-temp-video-url', GetTempVideoUrlController::class)->name('get-temp-video-url');
-
 
     ############################### Course Questions Routes ###########################
     Route::resource('questions', QuestionController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
@@ -84,13 +85,13 @@ Route::middleware('auth')->group(function () {
 
     ############################### Question Upvote Routes ###########################
     Route::resource('questions.upvotes', QuestionUpvoteController::class)->only(['store']);
-    
+
     ############################### Course OR Review Reports Routes ###########################
     Route::resource('courses.reports', ReportController::class)->only('store');
 
     ############################### Course Quizzes Routes ####################################
     Route::resource('courses.lectures.quizzes', QuizController::class)->only(['show']);
-    
+
     ############################### Quizzes Questions Routes ####################################
     Route::resource('quizzes.questions', QuizQuestionController::class)->only(['show']);
 
@@ -103,4 +104,13 @@ Route::middleware('auth')->group(function () {
     ############################### Attempts Questions Routes ####################################
     Route::resource('quizzes.attempts.next-questions', AttemptNextQuestionController::class)->only(['show']);
     Route::resource('quizzes.attempts.previous-questions', AttemptPreviousQuestionController::class)->only(['show']);
-}); 
+
+    // Direct Integration - Payment Method
+    Route::controller(PaymentMethodCheckoutController::class)->group(function () {
+        Route::get('/direct/paymentMethod', 'index')->middleware('auth')->name('direct.paymentMethod')->middleware('checkout.access');
+        Route::post('/direct/paymentMethod/post', 'post')->middleware('auth')->name('direct.paymentMethod.post');
+    });
+});
+
+
+Route::any('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook'])->name('stripe.webhook');

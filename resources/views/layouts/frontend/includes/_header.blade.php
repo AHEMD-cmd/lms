@@ -231,12 +231,12 @@
 
                             <div class="shop-cart pr-3 mr-3 ">
                                 <ul class="header-cart">
-                                   @include('frontend.partials.header-cart')
+                                    @include('frontend.partials.header-cart')
                                 </ul>
                             </div><!-- end shop-cart -->
 
                             @auth
-                                <a href="{{route('wish.list.index')}}">
+                                <a href="{{ route('wish.list.index') }}">
                                     <div class="shop-cart wishlist-cart pr-3 mr-3 ">
                                         <ul>
                                             <li>
@@ -255,10 +255,165 @@
                                 </a>
                             @endauth
 
-                            <div class="nav-right-button">
-                                <a href="admission.html" class="btn theme-btn d-none d-lg-inline-block"><i
-                                        class="la la-user-plus mr-1"></i> Admission</a>
-                            </div><!-- end nav-right-button -->
+                            @auth      
+                                {{-- user info --}}
+                                <div class="shop-cart user-profile-cart">
+                                    <ul>
+                                        <li>
+                                            <div class="shop-cart-btn">
+                                                <div class="avatar-xs">
+                                                    <img class="rounded-full img-fluid" src="{{ auth()->user()->photo }}"
+                                                        alt="Avatar image">
+                                                </div>
+                                                <span class="dot-status bg-1"></span>
+                                            </div>
+                                            <ul class="cart-dropdown-menu after-none p-0 notification-dropdown-menu">
+                                                <li class="menu-heading-block d-flex align-items-center">
+                                                    <a href="teacher-detail.html" class="avatar-sm flex-shrink-0 d-block">
+                                                        <img class="rounded-full img-fluid"
+                                                            src="{{auth()->user()->photo}}" alt="{{auth()->user()->name}}">
+                                                    </a>
+                                                    <div class="ml-2">
+                                                        <h4><a href="teacher-detail.html" class="text-black">{{
+                                                                auth()->user()->name }}</a></h4>
+                                                        <span class="d-block fs-14 lh-20">{{
+                                                                auth()->user()->email }}</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div
+                                                        class="theme-picker d-flex align-items-center justify-content-center lh-40">
+                                                        <button
+                                                            class="theme-picker-btn dark-mode-btn w-100 font-weight-semi-bold justify-content-center"
+                                                            title="Dark mode">
+                                                            <svg class="mr-1" viewBox="0 0 24 24" stroke-width="1.5"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z">
+                                                                </path>
+                                                            </svg>
+                                                            Dark Mode
+                                                        </button>
+                                                        <button
+                                                            class="theme-picker-btn light-mode-btn w-100 font-weight-semi-bold justify-content-center"
+                                                            title="Light mode">
+                                                            <svg class="mr-1" viewBox="0 0 24 24" stroke-width="1.5"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <circle cx="12" cy="12" r="5"></circle>
+                                                                <line x1="12" y1="1" x2="12"
+                                                                    y2="3"></line>
+                                                                <line x1="12" y1="21" x2="12"
+                                                                    y2="23"></line>
+                                                                <line x1="4.22" y1="4.22" x2="5.64"
+                                                                    y2="5.64"></line>
+                                                                <line x1="18.36" y1="18.36" x2="19.78"
+                                                                    y2="19.78"></line>
+                                                                <line x1="1" y1="12" x2="3"
+                                                                    y2="12"></line>
+                                                                <line x1="21" y1="12" x2="23"
+                                                                    y2="12"></line>
+                                                                <line x1="4.22" y1="19.78" x2="5.64"
+                                                                    y2="18.36"></line>
+                                                                <line x1="18.36" y1="5.64" x2="19.78"
+                                                                    y2="4.22"></line>
+                                                            </svg>
+                                                            Light Mode
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <ul class="generic-list-item">
+                                                        <li>
+                                                            <a href="my-courses.html">
+                                                                <i class="la la-file-video-o mr-1"></i> My courses
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="shopping-cart.html">
+                                                                <i class="la la-shopping-basket mr-1"></i> My cart
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="my-courses.html">
+                                                                <i class="la la-heart-o mr-1"></i> My wishlist
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <div class="section-block"></div>
+                                                        </li>
+                                                        <li>
+                                                            <a href="dashboard.html">
+                                                                <i class="la la-bell mr-1"></i> Notifications
+                                                                <span class="badge bg-info text-white ml-2 p-1">9+</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="dashboard-message.html">
+                                                                <i class="la la-envelope mr-1"></i> Messages
+                                                                <span class="badge bg-info text-white ml-2 p-1">12+</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <div class="section-block"></div>
+                                                        </li>
+                                                        <li>
+                                                            <a href="dashboard-settings.html">
+                                                                <i class="la la-gear mr-1"></i> Settings
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="dashboard-purchase-history.html">
+                                                                <i class="la la-history mr-1"></i> Purchase history
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <div class="section-block"></div>
+                                                        </li>
+                                                        <li>
+                                                            <a href="student-detail.html">
+                                                                <i class="la la-user mr-1"></i> Public profile
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="dashboard-settings.html">
+                                                                <i class="la la-edit mr-1"></i> Edit profile
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <div class="section-block"></div>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#">
+                                                                <i class="la la-question mr-1"></i> Help
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="index.html">
+                                                                <i class="la la-power-off mr-1"></i> Logout
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <div class="section-block"></div>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="position-relative">
+                                                                <span class="fs-17 font-weight-semi-bold d-block">Aduca for
+                                                                    Business</span>
+                                                                <span class="lh-20 d-block fs-14 text-gray">Bring learning
+                                                                    to your company</span>
+                                                                <span
+                                                                    class="position-absolute top-0 right-0 mt-3 mr-3 fs-18 text-gray">
+                                                                    <i class="la la-external-link"></i>
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div><!-- user info -->
+                            @endauth
+                            
                         </div><!-- end menu-wrapper -->
                     </div><!-- end col-lg-10 -->
                 </div><!-- end row -->

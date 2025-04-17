@@ -89,14 +89,14 @@
                         </li>
                         <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
                             <span class="text-black">Coupon discounts:</span>
-                            <span>-${{ $cartItems->sum('price') - $cartItems->sum('discounted_price') }}</span>
+                            <span>{{$cartItems->sum('price') - $cartItems->sum('discounted_price') == 0 ? '' : '-'}}  ${{ $cartItems->sum('price') - $cartItems->sum('discounted_price') }}</span>
                         </li>
                         <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
                             <span class="text-black">Total:</span>
                             <span>${{ $cartItems->sum('discounted_price') }}</span>
                         </li>
                     </ul>
-                    <a href="checkout.html" class="btn theme-btn w-100">Checkout <i
+                    <a href="{{ route('direct.paymentMethod') }}" class="btn theme-btn w-100">Checkout <i
                             class="la la-arrow-right icon ml-1"></i></a>
                 </div>
             </div>

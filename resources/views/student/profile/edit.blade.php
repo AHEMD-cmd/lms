@@ -18,7 +18,7 @@
 
                 <div class="media media-card align-items-center">
                     <div class="media-img media-img-lg mr-4 bg-gray">
-                        <img class="mr-3" src="{{ asset(Auth::user()->photo) }}" alt="avatar image">
+                        <img class="mr-3" src="{{ Auth::user()->photo }}" alt="avatar image">
                     </div>
 
                     <div class="media-body">

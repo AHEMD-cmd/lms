@@ -8,10 +8,11 @@ use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, Sluggable;
+    use HasApiTokens, HasFactory, Notifiable, Sluggable, Billable;
 
 
     protected $hidden = [
@@ -29,6 +30,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    /**
+     * Get the courses of the auth instructor
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function courses()
     {
         return $this->hasMany(Course::class, 'instructor_id', 'id');
@@ -102,5 +108,103 @@ class User extends Authenticatable
     public function attempts()
     {
         return $this->hasMany(QuizAttempt::class);
+    }
+
+    public function getPhotoAttribute()
+    {
+        return str_starts_with($this->attributes['photo'], 'http')
+            ? $this->attributes['photo']
+            : asset($this->attributes['photo']);
+    }
+
+    public function studentCourses()
+    {
+        return $this->belongsToMany(Course::class, 'course_users', 'user_id', 'course_id')
+            ->withPivot([
+                'is_archived',
+                'archived_at',
+                'is_favorite',
+                'favorited_at'
+            ])
+            ->withTimestamps();
+    }
+
+    public function collections()
+    {
+        return $this->hasMany(Collection::class);
+    }
+
+    public function favoriteCourses()
+    {
+        return $this->studentCourses()->wherePivot('is_favorite', true);
+    }
+
+    public function archivedCourses()
+    {
+        return $this->studentCourses()->wherePivot('is_archived', true);
+    }
+
+    public function isFavoritedCourse(Course $course): bool
+    {
+        return $this->studentCourses()
+            ->where('course_id', $course->id)
+            ->wherePivot('is_favorite', true)
+            ->exists();
+    }
+
+    public function toggleFavoriteCourse(Course $course)
+    {
+        $course = $this->studentCourses()->where('course_id', $course->id)->first();
+
+        if ($course) {
+            $isFavorite = !$course->pivot->is_favorite;
+            $this->studentCourses()->updateExistingPivot($course->id, [
+                'is_favorite' => $isFavorite,
+                'favorited_at' => $isFavorite ? now() : null
+            ]);
+
+            return $isFavorite;
+        }
+
+        $this->studentCourses()->attach($course->id, [
+            'is_favorite' => true,
+            'favorited_at' => now()
+        ]);
+
+        return true;
+    }
+
+    public function toggleArchiveCourse(Course $course)
+    {
+        $course = $this->courses()->where('course_id', $course->id)->first();
+
+        if ($course) {
+            $isArchived = !$course->pivot->is_archived;
+            $this->courses()->updateExistingPivot($course->id, [
+                'is_archived' => $isArchived,
+                'archived_at' => $isArchived ? now() : null
+            ]);
+
+            return $isArchived;
+        }
+
+        $this->courses()->attach($course->id, [
+            'is_archived' => true,
+            'archived_at' => now()
+        ]);
+
+        return true;
+    }
+
+    public function toggleCourseInCollection(Course $course, Collection $collection)
+    {
+        // Verify user owns the collection
+        if ($this->collections()->where('id', $collection->id)->exists()) {
+            $collection->courses()->toggle($course->id);
+
+            return true;
+        }
+
+        return false;
     }
 }

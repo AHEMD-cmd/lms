@@ -13,5 +13,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'instructor/courses/presigned-url',
+        'stripe/*',
     ];
 }

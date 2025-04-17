@@ -70,6 +70,23 @@
 
         <li>
             <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class='bx bx-image'></i>
+                </div>
+                <div class="menu-title">Manage Features</div>
+            </a>
+            <ul>
+                <li> <a href="{{ route('admin.features.index') }}"><i class='bx bx-radio-circle'></i>All
+                        Feature</a>
+                </li>
+                <li> <a href="{{ route('admin.features.create') }}"><i class='bx bx-radio-circle'></i>Create
+                        Feature</a>
+                </li>
+
+            </ul>
+        </li>
+
+        <li>
+            <a class="has-arrow" href="javascript:;">
                 <div class="parent-icon"><i class='bx bx-book'></i>
                 </div>
                 <div class="menu-title">Manage Course</div>
