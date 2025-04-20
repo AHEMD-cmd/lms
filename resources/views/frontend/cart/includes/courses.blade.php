@@ -54,7 +54,7 @@
                                             data-id="{{ $course->id }}" title="Add to Wishlist">
                                             <i class="la la-heart{{ auth()->user()->wishList->contains($course->id) ? '' : '-o' }}"></i>
                                         </div>
-                                @endauth
+                                    @endauth
                                 </div>
                             </div><!-- end card-body -->
                         </div><!-- end card -->

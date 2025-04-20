@@ -39,15 +39,6 @@
                 END COURSE AREA
             ======================================-->
 
-    <!-- ================================
-               START FUNFACT AREA
-            ================================= -->
-    @include('frontend.home.includes.funfact')
-    <!-- end funfact-area -->
-    <!-- ================================
-               START FUNFACT AREA
-            ================================= -->
-
     <!--======================================
                 START CTA AREA
             ======================================-->
@@ -60,7 +51,7 @@
     <!--================================
                  START TESTIMONIAL AREA
             =================================-->
-    @include('frontend.home.includes.testimonial')
+    {{-- @include('frontend.home.includes.testimonial') --}}
     <!-- end testimonial-area -->
     <!--================================
                 END TESTIMONIAL AREA
@@ -81,7 +72,7 @@
     <!--======================================
                 START REGISTER AREA
             ======================================-->
-    @include('frontend.home.includes.register-area')
+    {{-- @include('frontend.home.includes.register-area') --}}
     
     <!-- end register-area -->
     <!--======================================
@@ -93,7 +84,7 @@
     <!-- ================================
                START CLIENT-LOGO AREA
             ================================= -->
-    @include('frontend.home.includes.client-logo')
+    {{-- @include('frontend.home.includes.client-logo') --}}
     <!-- end client-logo-area -->
     <!-- ================================
                START CLIENT-LOGO AREA
@@ -102,7 +93,7 @@
     <!-- ================================
                START BLOG AREA
             ================================= -->
-    @include('frontend.home.includes.blog-area')
+    {{-- @include('frontend.home.includes.blog-area') --}}
     <!-- end blog-area -->
     <!-- ================================
                START BLOG AREA
@@ -111,7 +102,7 @@
     <!--======================================
                 START GET STARTED AREA
             ======================================-->
-    @include('frontend.home.includes.get-started')
+    {{-- @include('frontend.home.includes.get-started') --}}
     <!-- end get-started-area -->
     <!-- ================================
                START GET STARTED AREA
@@ -120,7 +111,7 @@
     <!--======================================
                 START SUBSCRIBER AREA
             ======================================-->
-    @include('frontend.home.includes.subscriber-area')
+    {{-- @include('frontend.home.includes.subscriber-area') --}}
     <!-- end subscriber-area -->
     <!--======================================
                 END SUBSCRIBER AREA

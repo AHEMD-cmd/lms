@@ -19,6 +19,13 @@
                 <div class="menu-title">Dashboard</div>
             </a>
         </li>
+        <li>
+            <a href="{{ route('admin.settings.edit') }}">
+                <div class="parent-icon"><i class='bx bx-cog'></i>
+                </div>
+                <div class="menu-title">Settings</div>
+            </a>
+        </li>
 
         <li>
             <a href="javascript:;" class="has-arrow">

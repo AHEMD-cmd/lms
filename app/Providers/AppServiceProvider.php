@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Cart;
 use App\Models\Coupon;
 use App\Models\Course;
+use App\Models\Setting;
 use App\Models\Category;
 use App\Observers\CouponObserver;
 use App\Services\Cart\CartService;
@@ -40,11 +41,13 @@ class AppServiceProvider extends ServiceProvider
         $coursesCount = Course::all()->count();
         $categories = Category::with('courses.courseGoals')->withCount('courses')->get();
         $categoriesTree = Category::tree()->get()->toTree();
+        $settings = Setting::first();
 
         
         view()->share('coursesCount', $coursesCount);
         view()->share('categories', $categories);
         view()->share('categoriesTree', $categoriesTree);
+        view()->share('settings', $settings);
 
 
         View::composer('*', function ($view) {
@@ -56,5 +59,7 @@ class AppServiceProvider extends ServiceProvider
             $cartItems = CartService::getCartData();
             $view->with('cartItems', $cartItems);
         });
+
+
     }
 }
