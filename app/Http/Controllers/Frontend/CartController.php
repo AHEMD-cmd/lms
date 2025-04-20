@@ -3,18 +3,29 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Cart;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Services\Cart\CartService;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Services\Cart\ApplyCouponService;
 use App\Http\Requests\Frontend\Cart\StoreCartRequest;
 use App\Http\Requests\Frontend\Cart\UpdateCartRequest;
-use App\Services\Cart\ApplyCouponService;
 
 class CartController extends Controller
 {
     public function index()
     {
-        return view('frontend.cart.index');
+        // Recommended courses (in same categories as course_users)
+        $userCategoryIds = Auth::user()->studentCourses()
+            ->distinct()
+            ->pluck('category_id');
+
+        $recommendedCourses = Course::whereIn('category_id', $userCategoryIds)
+            ->whereNotIn('id', Auth::user()->studentCourses()->pluck('courses.id'))
+            ->take(3)
+            ->get();
+        return view('frontend.cart.index', compact('recommendedCourses'));
     }
 
     public function store(StoreCartRequest $request)
@@ -46,7 +57,7 @@ class CartController extends Controller
             'cartItems' => view('frontend.cart.includes.cart-area')->with('cartItems', CartService::getCartData())->render(),
         ], 201);
     }
-    
+
     public function destroy(Request $request, Cart $cart)
     {
         $cart->delete();

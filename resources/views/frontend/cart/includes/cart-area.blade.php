@@ -1,4 +1,4 @@
-<section class="cart-area mt-4">
+<section class="cart-area my-4">
     <div class="container">
         <div class="table-responsive">
             <table class="table generic-table">
