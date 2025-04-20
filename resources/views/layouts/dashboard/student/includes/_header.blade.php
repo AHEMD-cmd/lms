@@ -1,3 +1,4 @@
+<!-- start header-menu-area -->
 <header class="header-menu-area">
     <div class="header-menu-content dashboard-menu-content pr-30px pl-30px bg-white shadow-sm">
         <div class="container-fluid">

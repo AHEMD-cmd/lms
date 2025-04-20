@@ -10,7 +10,7 @@ class CourseLectureController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('reset.questions')->only('index');
+        $this->middleware(['reset.questions', 'ensure.course.student'])->only('index');
     }
     public function index(Course $course)
     {

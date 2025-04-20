@@ -117,8 +117,10 @@ Route::middleware('auth')->group(function () {
 
     ################################### User Courses Routes ###############################
     Route::resource('users.courses', UserCourseController::class)->only(['index']);
-    Route::post('/courses/{course}/favorite', [UserFavoriteCourseController::class, 'update'])->name('courses.favorite');
-    Route::post('/courses/{course}/archive', [UserArchiveCourseController::class, 'update'])->name('courses.archive');
+    Route::middleware('ensure.course.student')->group(function () {
+        Route::post('/courses/{course}/favorite', [UserFavoriteCourseController::class, 'update'])->name('courses.favorite');
+        Route::post('/courses/{course}/archive', [UserArchiveCourseController::class, 'update'])->name('courses.archive');
+    });
 
 
     ############################### User Collections Routes ###############################
@@ -126,8 +128,5 @@ Route::middleware('auth')->group(function () {
 
     ############################### User Course Collections Routes ###########################
     Route::post('collections-toggle/{collection}', [CourseCollectionController::class, 'update'])->name('collections-toggle');
-
-
     Route::get('/user/courses/filter', [UserCourseController::class, 'filter'])->name('user.courses.filter');
 });
-

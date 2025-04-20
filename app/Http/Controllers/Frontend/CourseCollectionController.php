@@ -10,6 +10,11 @@ use App\Http\Requests\Frontend\CourseCollection\UpdateCourseCollectionRequest;
 
 class CourseCollectionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('ensure.course.student')->only('update');
+    }
+
     public function update(UpdateCourseCollectionRequest $request, Collection $collection)
     {
         $attached = $collection->courses()->toggle($request->course_id);

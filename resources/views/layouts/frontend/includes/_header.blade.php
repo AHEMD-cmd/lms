@@ -121,113 +121,43 @@
                                     <span class="la la-search search-icon"></span>
                                 </div>
                             </form>
-                            <nav class="main-menu">
-                                <ul>
-                                    {{-- <li>
-                                        <a href="#">Home <i class="la la-angle-down fs-12"></i></a>
-                                        <ul class="dropdown-menu-item">
-                                            <li><a href="index.html">Home One</a></li>
-                                            <li><a href="home-2.html">Home Two</a></li>
-                                            <li><a href="home-3.html">Home Three</a></li>
-                                            <li><a href="home-4.html">Home four</a></li>
-                                        </ul>
-                                    </li> --}}
-                                    <li>
-                                        <a href="#">courses <i class="la la-angle-down fs-12"></i></a>
-                                        <ul class="dropdown-menu-item">
-                                            <li><a href="course-grid.html">course grid</a></li>
-                                            <li><a href="course-list.html">course list</a></li>
-                                            <li><a href="course-grid-left-sidebar.html">grid left sidebar</a></li>
-                                            <li><a href="course-grid-right-sidebar.html">grid right sidebar</a>
-                                            </li>
-                                            <li><a href="course-list-left-sidebar.html">list left sidebar <span
-                                                        class="ribbon ribbon-blue-bg">New</span></a></li>
-                                            <li><a href="course-list-right-sidebar.html">list right sidebar <span
-                                                        class="ribbon ribbon-blue-bg">New</span></a></li>
-                                            <li><a href="course-details.html">course details</a></li>
-                                            <li><a href="lesson-details.html">lesson details</a></li>
-                                            <li><a href="my-courses.html">My courses</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#">Student <i class="la la-angle-down fs-12"></i></a>
-                                        <ul class="dropdown-menu-item">
-                                            <li><a href="student-detail.html">student detail</a></li>
-                                            <li><a href="student-quiz.html">take quiz</a></li>
-                                            <li><a href="student-quiz-results.html">quiz results</a></li>
-                                            <li><a href="student-quiz-result-details.html">quiz details</a></li>
-                                            <li><a href="student-quiz-result-details-2.html">quiz details 2</a>
-                                            </li>
-                                            <li><a href="student-path.html">path details</a></li>
-                                            <li><a href="student-path-assessment.html">Skill Assessment</a></li>
-                                            <li><a href="student-path-assessment-result.html">Skill result</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="mega-menu-has">
-                                        <a href="#">pages <i class="la la-angle-down fs-12"></i></a>
-                                        <div class="dropdown-menu-item mega-menu">
-                                            <ul class="row no-gutters">
-                                                <li class="col-lg-3">
-                                                    <a href="dashboard.html">dashboard <span
-                                                            class="ribbon">Hot</span></a>
-                                                    <a href="about.html">about</a>
-                                                    <a href="teachers.html">Teachers</a>
-                                                    <a href="teacher-detail.html">Teacher detail</a>
-                                                    <a href="categories.html">categories</a>
-                                                    <a href="terms-and-conditions.html">Terms & conditions</a>
-                                                    <a href="privacy-policy.html">privacy policy</a>
-                                                    <a href="invite.html">invite friend</a>
-                                                </li>
-                                                <li class="col-lg-3">
-                                                    <a href="careers.html">careers</a>
-                                                    <a href="career-details.html">career details</a>
-                                                    <a href="become-a-teacher.html">become an instructor</a>
-                                                    <a href="faq.html">FAQs</a>
-                                                    <a href="admission.html">admission</a>
-                                                    <a href="gallery.html">gallery</a>
-                                                    <a href="pricing-table.html">pricing tables</a>
-                                                    <a href="contact.html">contact</a>
-                                                </li>
-                                                <li class="col-lg-3">
-                                                    <a href="for-business.html">for business</a>
-                                                    <a href="sign-up.html">sign-up</a>
-                                                    <a href="login.html">login</a>
-                                                    <a href="recover.html">recover</a>
-                                                    <a href="shopping-cart.html">cart</a>
-                                                    <a href="checkout.html">checkout</a>
-                                                    <a href="error.html">page 404</a>
-                                                </li>
-                                                <li class="col-lg-3">
-                                                    <div class="menu-banner position-relative h-100">
-                                                        <div class="overlay rounded-rounded opacity-4"></div>
-                                                        <div
-                                                            class="menu-banner-content p-4 position-absolute bottom-0 left-0">
-                                                            <h4 class="fs-20 font-weight-bold pb-3 text-white">30
-                                                                days free trail for new users</h4>
-                                                            <a href="sign-up.html"
-                                                                class="btn theme-btn theme-btn-sm theme-btn-white">Start
-                                                                Learning <i
-                                                                    class="la la-arrow-right icon ml-1"></i></a>
+                            
+                            <nav class="main-menu" style="visibility: hidden">
+                            </nav><!-- end main-menu -->
+
+                            @auth    
+                                <div class="shop-cart course-cart pr-3 mr-3 border-right border-right-gray">
+                                    <ul>
+                                        <li>
+                                            <p class="shop-cart-btn d-flex align-items-center fs-16">
+                                                My Courses
+                                                <span class="la la-angle-down fs-13 ml-1"></span>
+                                            </p>
+                                            <ul class="cart-dropdown-menu after-none">
+                                                @foreach (auth()->user()->studentCourses as $course) 
+                                                    <li class="media media-card">
+                                                        <a href="lesson-details.html" class="media-img">
+                                                            <img class="mr-3" src="{{ asset($course->image) }}" alt="{{ $course->title }}">
+                                                        </a>
+                                                        <div class="media-body">
+                                                            <h5><a href="lesson-details.html">{{ $course->title }}</a></h5>
+                                                            <div class="skillbar-box pt-3">
+                                                                <div class="skillbar skillbar-skillbar" data-percent="{{ $course->completionPercentage }}%">
+                                                                    <div class="skillbar-bar skillbar--bar bg-1"></div>
+                                                                </div><!-- End Skill Bar -->
+                                                            </div><!-- End skillbar-box -->
                                                         </div>
-                                                        <img src="images/menu-banner-img.jpg" alt="menu banner image"
-                                                            class="w-100 h-100 rounded-rounded">
-                                                    </div>
+                                                    </li>
+                                                @endforeach
+                                            
+                                                <li>
+                                                    <a href="{{ route('users.courses.index', auth()->user()->id) }}" class="btn theme-btn w-100">Got to my course <i class="la la-arrow-right icon ml-1"></i></a>
                                                 </li>
                                             </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="#">blog <i class="la la-angle-down fs-12"></i></a>
-                                        <ul class="dropdown-menu-item">
-                                            <li><a href="blog-full-width.html">blog full width </a></li>
-                                            <li><a href="blog-no-sidebar.html">blog no sidebar</a></li>
-                                            <li><a href="blog-left-sidebar.html">blog left sidebar</a></li>
-                                            <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
-                                            <li><a href="blog-single.html">blog detail</a></li>
-                                        </ul>
-                                    </li>
-                                </ul><!-- end ul -->
-                            </nav><!-- end main-menu -->
+                                        </li>
+                                    </ul>
+                                </div><!-- end course-cart -->
+                            @endauth
 
                             <div class="shop-cart pr-3 mr-3 ">
                                 <ul class="header-cart">
@@ -323,17 +253,19 @@
                                                 <li>
                                                     <ul class="generic-list-item">
                                                         <li>
-                                                            <a href="my-courses.html">
-                                                                <i class="la la-file-video-o mr-1"></i> My courses
-                                                            </a>
+                                                            @auth
+                                                                <a href="{{ route('users.courses.index', auth()->user()->id) }}">
+                                                                    <i class="la la-file-video-o mr-1"></i> My courses
+                                                                </a>
+                                                            @endauth
                                                         </li>
                                                         <li>
-                                                            <a href="shopping-cart.html">
+                                                            <a href="{{ route('carts.index') }}">
                                                                 <i class="la la-shopping-basket mr-1"></i> My cart
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="my-courses.html">
+                                                            <a href="{{ route('users.courses.index', auth()->user()->id) }}#wishlist">
                                                                 <i class="la la-heart-o mr-1"></i> My wishlist
                                                             </a>
                                                         </li>
@@ -341,69 +273,13 @@
                                                             <div class="section-block"></div>
                                                         </li>
                                                         <li>
-                                                            <a href="dashboard.html">
-                                                                <i class="la la-bell mr-1"></i> Notifications
-                                                                <span class="badge bg-info text-white ml-2 p-1">9+</span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="dashboard-message.html">
-                                                                <i class="la la-envelope mr-1"></i> Messages
-                                                                <span class="badge bg-info text-white ml-2 p-1">12+</span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <div class="section-block"></div>
-                                                        </li>
-                                                        <li>
-                                                            <a href="dashboard-settings.html">
-                                                                <i class="la la-gear mr-1"></i> Settings
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="dashboard-purchase-history.html">
-                                                                <i class="la la-history mr-1"></i> Purchase history
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <div class="section-block"></div>
-                                                        </li>
-                                                        <li>
-                                                            <a href="student-detail.html">
+                                                            <a href="{{ route('profile.edit')}}">
                                                                 <i class="la la-user mr-1"></i> Public profile
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="dashboard-settings.html">
+                                                            <a href="{{ route('profile.change-password')}}">
                                                                 <i class="la la-edit mr-1"></i> Edit profile
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <div class="section-block"></div>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i class="la la-question mr-1"></i> Help
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="index.html">
-                                                                <i class="la la-power-off mr-1"></i> Logout
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <div class="section-block"></div>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class="position-relative">
-                                                                <span class="fs-17 font-weight-semi-bold d-block">Aduca for
-                                                                    Business</span>
-                                                                <span class="lh-20 d-block fs-14 text-gray">Bring learning
-                                                                    to your company</span>
-                                                                <span
-                                                                    class="position-absolute top-0 right-0 mt-3 mr-3 fs-18 text-gray">
-                                                                    <i class="la la-external-link"></i>
-                                                                </span>
                                                             </a>
                                                         </li>
                                                     </ul>

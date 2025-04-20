@@ -30,11 +30,12 @@ class QuizAttemptController extends Controller
     public function update(Course $course, Quiz $quiz, QuizAttempt $attempt)
     {
         $score = $this->quizAttemptService->updateAttempt($attempt);
-        
+
         $attempt->update([
             'score' => $score,
             'ended_at' => now(),
         ]);
+        
         $attempt->save();
 
         return response()->json([
