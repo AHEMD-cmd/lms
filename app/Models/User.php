@@ -152,6 +152,14 @@ class User extends Authenticatable
             ->exists();
     }
 
+    public function isArchivedCourse(Course $course): bool
+    {
+        return $this->studentCourses()
+            ->where('course_id', $course->id)
+            ->wherePivot('is_archived', true)
+            ->exists();
+    }
+
     public function toggleFavoriteCourse(Course $course)
     {
         $course = $this->studentCourses()->where('course_id', $course->id)->first();

@@ -236,7 +236,7 @@
                             </div><!-- end shop-cart -->
 
                             @auth
-                                <a href="{{ route('wish.list.index') }}">
+                                <a href="{{ route('users.courses.index', auth()->user()->id) }}#wishlist">
                                     <div class="shop-cart wishlist-cart pr-3 mr-3 ">
                                         <ul>
                                             <li>

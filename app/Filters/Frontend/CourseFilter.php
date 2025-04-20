@@ -9,7 +9,7 @@ class CourseFilter extends QueryFilter {
     {
         if (!empty($search)) {
             return $this->builder->where('title', 'like', "%$search%");
-        }
+        }   
         return $this->builder;
     }
     

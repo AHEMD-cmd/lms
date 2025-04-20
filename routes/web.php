@@ -11,17 +11,21 @@ use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\QuestionController;
 use App\Http\Controllers\Frontend\WishListController;
+use App\Http\Controllers\Frontend\CollectionController;
 use App\Http\Controllers\Frontend\InstructorController;
 use App\Http\Controllers\Frontend\QuizAnswerController;
 use App\Http\Controllers\Frontend\SocialAuthController;
+use App\Http\Controllers\Frontend\UserCourseController;
 use App\Http\Controllers\Frontend\QuizAttemptController;
 use App\Http\Controllers\Frontend\QuizQuestionController;
 use App\Http\Controllers\Frontend\UserProgressController;
 use App\Http\Controllers\Frontend\CourseLectureController;
-use App\Http\Controllers\Frontend\StripeWebhookController;
 use App\Http\Controllers\Frontend\QuestionUpvoteController;
 use App\Http\Controllers\Frontend\GetTempVideoUrlController;
+use App\Http\Controllers\Frontend\CourseCollectionController;
 use App\Http\Controllers\Frontend\LectureCompletedController;
+use App\Http\Controllers\Frontend\UserArchiveCourseController;
+use App\Http\Controllers\Frontend\UserFavoriteCourseController;
 use App\Http\Controllers\Frontend\AttemptNextQuestionController;
 use App\Http\Controllers\Frontend\PaymentMethodCheckoutController;
 use App\Http\Controllers\Frontend\AttemptPreviousQuestionController;
@@ -110,7 +114,20 @@ Route::middleware('auth')->group(function () {
         Route::get('/direct/paymentMethod', 'index')->middleware('auth')->name('direct.paymentMethod')->middleware('checkout.access');
         Route::post('/direct/paymentMethod/post', 'post')->middleware('auth')->name('direct.paymentMethod.post');
     });
+
+    ################################### User Courses Routes ###############################
+    Route::resource('users.courses', UserCourseController::class)->only(['index']);
+    Route::post('/courses/{course}/favorite', [UserFavoriteCourseController::class, 'update'])->name('courses.favorite');
+    Route::post('/courses/{course}/archive', [UserArchiveCourseController::class, 'update'])->name('courses.archive');
+
+
+    ############################### User Collections Routes ###############################
+    Route::resource('collections', CollectionController::class);
+
+    ############################### User Course Collections Routes ###########################
+    Route::post('collections-toggle/{collection}', [CourseCollectionController::class, 'update'])->name('collections-toggle');
+
+
+    Route::get('/user/courses/filter', [UserCourseController::class, 'filter'])->name('user.courses.filter');
 });
 
-
-Route::any('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook'])->name('stripe.webhook');

@@ -30,16 +30,4 @@ class PaymentMethodCheckoutController extends Controller
         $this->buyCourseService->purchase($request);
         return redirect()->route('home')->with('message', 'Payment successful!');
     }
-
-    // public function post(Request $request)
-    // {
-    //     $cartItems = CartService::getCartData();
-    //     $amount = $cartItems->sum('discounted_price');
-
-    //     $payment = new PaymentHandler($request->input('payment_method'));
-        
-    //     $payment->pay($amount, $request);
-
-    //     return redirect()->route('home')->with('message', 'Payment successful!');
-    // }
 }

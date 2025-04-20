@@ -24,6 +24,11 @@ class Course extends Model
         ]);
     }
 
+    public function collections()
+    {
+        return $this->belongsToMany(Collection::class, 'collection_courses', 'course_id', 'collection_id');
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'course_users', 'course_id', 'user_id');
@@ -100,7 +105,7 @@ class Course extends Model
 
     public function averageRating()
     {
-        return $this->reviews()->where('status', 1)->avg('rate') ?? 0;
+        return number_format($this->reviews()->where('status', 1)->avg('rate'), 1) ?? 0;
     }
 
     public function doesRateHaveFraction()
@@ -177,5 +182,36 @@ class Course extends Model
     public function announcements()
     {
         return $this->hasMany(Announcement::class);
+    }
+
+
+    public function getCompletionPercentageAttribute($userId = null)
+    {
+        // Use authenticated user if no specific user ID is provided
+        if (!$userId) {
+            $userId = auth()->id();
+        }
+
+        // If no user is authenticated or provided, return 0
+        if (!$userId) {
+            return 0;
+        }
+
+        // Get total number of lectures in the course
+        $totalLectures = $this->lectures()->count();
+
+        // If course has no lectures, return 0 to avoid division by zero
+        if ($totalLectures === 0) {
+            return 0;
+        }
+
+        // Count completed lectures for the user in this course
+        $completedLectures = \App\Models\LectureProgress::where('user_id', $userId)
+            ->where('course_id', $this->id)
+            ->where('is_completed', true)
+            ->count();
+
+        // Calculate and return the percentage
+        return round(($completedLectures / $totalLectures) * 100);
     }
 }

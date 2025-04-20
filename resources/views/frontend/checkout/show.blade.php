@@ -1,6 +1,6 @@
 @extends('layouts.frontend.master')
 
-@section('title', 'Wishlist')
+@section('title', 'Checkout')
 
 @section('styles')
     <script src="https://js.stripe.com/v3/"></script>

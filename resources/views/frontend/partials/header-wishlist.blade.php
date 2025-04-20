@@ -5,15 +5,14 @@
                 <img class="mr-3" src="{{ asset($course->image) }}" alt="{{ $course->title }}">
             </a>
             <div class="media-body">
-                <h5><a href="course-details.html">{{ $course->name }}</a>
-                </h5>
+                <h5><a href="course-details.html">{{ $course->title }}</a></h5>
                 <span class="d-block lh-18 py-1">{{ $course->instructor->name }}</span>
                 @if ($course->discount)
                     <p class="text-black font-weight-semi-bold lh-18">
                         {{ $course->discount }}
                         <span class="before-price fs-14">{{ $course->price }}</span>
                     </p>
-                    @else
+                @else
                     <p class="text-black font-weight-semi-bold lh-18">
                         {{ $course->price }}
                     </p>
@@ -35,7 +34,7 @@
 @endforeach
 @if ($wishlistedCourses->count() > 0)
     <li class="header-go-to-wishlist">
-        <a href="{{ route("wish.list.index") }}" class="btn theme-btn w-100">Got to wishlist <i
+        <a href="{{ route('users.courses.index', auth()->user()->id) }}#wishlist" class="btn theme-btn w-100">Got to wishlist <i
                 class="la la-arrow-right icon ml-1"></i></a>
     </li>
 @else
