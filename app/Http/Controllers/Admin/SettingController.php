@@ -23,11 +23,11 @@ class SettingController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('logo')) {
-            $data['logo'] = UpdateEditedPhoto($request->file('logo'), 'logos', $settings->logo, [120, 120]);
+            $data['logo'] = UpdateEditedPhoto($request->file('logo'), 'logos', $settings->logo, [140, 41]);
         }
 
         if ($request->hasFile('footer_logo')) {
-            $data['footer_logo'] = UpdateEditedPhoto($request->file('footer_logo'), 'logos', $settings->footer_logo, [120, 120]);
+            $data['footer_logo'] = UpdateEditedPhoto($request->file('footer_logo'), 'logos', $settings->footer_logo, [140, 41]);
         }
 
         if ($request->hasFile('about_us_big_image')) {

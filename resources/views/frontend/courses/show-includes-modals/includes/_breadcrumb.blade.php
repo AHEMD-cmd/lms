@@ -42,7 +42,7 @@
 
                         </div>
                         <span class="rating-total pl-1">({{ $course->reviews()->count() }} ratings)</span>
-                        <span class="student-total pl-2">100 students</span>
+                        <span class="student-total pl-2">{{ $course->users()->count() }} students</span>
                     </div>
                 </div><!-- end d-flex -->
                 <p class="pt-2 pb-1">Created by <a href="teacher-detail.html"

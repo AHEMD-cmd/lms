@@ -50,13 +50,13 @@ class CategoryController extends Controller
 
         $category->update($data);
 
-        return redirect()->back()->with('message', 'Category updated successfully');
+        return redirect()->route('admin.categories.index')->with('message', 'Category updated successfully');
     }
 
 
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->back()->with('message', 'Category deleted successfully');
+        return redirect()->route('admin.categories.index')->with('message', 'Category deleted successfully');
     }
 }

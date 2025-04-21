@@ -3,12 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
@@ -76,9 +77,23 @@ class User extends Authenticatable
         )->where('reviews.status', 1);
     }
 
+    /**
+     * Get the number of students for the instructor
+     *
+     * @return int
+     */
+    public function instructorStudentsCount()
+    {
+        return DB::table('course_users')
+            ->join('courses', 'course_users.course_id', '=', 'courses.id')
+            ->where('courses.instructor_id', $this->id)
+            ->distinct('course_users.user_id')
+            ->count('course_users.user_id');
+    }
+
     public function averageRating()
     {
-        return $this->instructorReviews()->avg('rate') ?? 0;
+        return number_format($this->instructorReviews()->avg('rate'), 1) ?? 0;
     }
 
     public function wishList()

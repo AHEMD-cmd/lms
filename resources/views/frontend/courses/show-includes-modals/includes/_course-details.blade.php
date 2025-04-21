@@ -138,12 +138,12 @@
                                     <ul class="generic-list-item pt-3">
                                         <li><i class="la la-star mr-2 text-color-3"></i>
                                             {{ $course->instructor->averageRating() }} Instructor Rating</li>
-                                        <li><i class="la la-user mr-2 text-color-3"></i> 45,786 Students</li>
+                                        <li><i class="la la-user mr-2 text-color-3"></i> {{ $course->users()->count() }} </li>
                                         <li><i class="la la-comment-o mr-2 text-color-3"></i>
                                             {{ $course->instructor->instructorReviews->count() }} Reviews</li>
                                         <li><i class="la la-play-circle-o mr-2 text-color-3"></i>
                                             {{ count($course->instructor->courses) }} Courses</li>
-                                        <li><a href="teacher-detail.html">View all Courses</a></li>
+                                        <li><a href="{{ route('instructors.show', $course->instructor->slug) }}">View all Courses</a></li>
                                     </ul>
                                 </div><!-- end instructor-img -->
                                 <div class="media-body">

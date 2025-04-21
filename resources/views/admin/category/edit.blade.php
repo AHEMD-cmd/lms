@@ -21,7 +21,7 @@
         <div class="card-body p-4">
             <h5 class="mb-4">Edit Category: {{ $category->name }}</h5>
 
-            <form action="{{ route('admin.categories.update', $category->id) }}" method="post" class="row g-3"
+            <form action="{{ route('admin.categories.update', $category->slug) }}" method="post" class="row g-3"
                 enctype="multipart/form-data">
                 @csrf
                 @method('PUT') <!-- Laravel method spoofing for PUT -->

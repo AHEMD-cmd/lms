@@ -29,6 +29,12 @@ class Course extends Model
         return $this->belongsToMany(Collection::class, 'collection_courses', 'course_id', 'collection_id');
     }
 
+    
+    /**
+     * The users that have purchased the course
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function users()
     {
         return $this->belongsToMany(User::class, 'course_users', 'course_id', 'user_id');
