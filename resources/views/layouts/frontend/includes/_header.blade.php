@@ -136,11 +136,11 @@
                                             <ul class="cart-dropdown-menu after-none">
                                                 @foreach (auth()->user()->studentCourses as $course) 
                                                     <li class="media media-card">
-                                                        <a href="lesson-details.html" class="media-img">
+                                                        <a href="{{ route('courses.lectures.index', $course->slug)}}" class="media-img">
                                                             <img class="mr-3" src="{{ asset($course->image) }}" alt="{{ $course->title }}">
                                                         </a>
                                                         <div class="media-body">
-                                                            <h5><a href="lesson-details.html">{{ $course->title }}</a></h5>
+                                                            <h5><a href="{{ route('courses.lectures.index', $course->slug)}}">{{ $course->title }}</a></h5>
                                                             <div class="skillbar-box pt-3">
                                                                 <div class="skillbar skillbar-skillbar" data-percent="{{ $course->completionPercentage }}%">
                                                                     <div class="skillbar-bar skillbar--bar bg-1"></div>

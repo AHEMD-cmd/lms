@@ -9,11 +9,11 @@
                     <li><a href="course-details.html"><i class="la la-arrow-left mr-2"></i>Back to Course</a></li>
                     <li>
                         <div class="d-flex align-items-center">
-                            <a href="course-details.html">
-                                <img src="{{ $course->image }}" alt="{{ $course->title }} thumbnail">
+                            <a href="{{ route('courses.lectures.index', $course->slug)}}">
+                                <img src="{{ asset($course->image) }}" alt="{{ $course->title }} thumbnail">
                             </a>
                             <p>
-                                <a href="course-details.html">{{ $course->title }}</a><span
+                                <a href="{{ route('courses.lectures.index', $course->slug)}}">{{ $course->title }}</a><span
                                     class="d-block fs-13">{{ $course->instructor->name }}</span>
                             </p>
                         </div>
